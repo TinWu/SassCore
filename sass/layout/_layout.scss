@@ -1,0 +1,260 @@
+
+// wrapper
+$wrapper-bg:            #fff !default;
+$content-spacing:       30px !default;
+
+// header
+$header-bg:             #315400 !default;
+$header-height:         183px !default;
+
+$menu:                  (top, 38px), (right, 1.5%) !default;
+$menu-link:             #C2D217 !default;
+$menu-link-hover:       #D5E8C2 !default;
+
+$banner-height:         270px !default;
+
+// footer
+$footer-height:         178px !default;
+$footer-bg:             #E5E6DE !default;
+$goTop:                 (bottom, 10px), (right, 15px) !default;
+$footer-height2:        140px !default;
+$footer-contact-color:  #406947 !default;
+$copyright-color:       #E3E5DC !default;
+
+
+/*      layout
+-----------------------------------------------------------------------*/
+// 有最小寬度，滿版
+%container {
+    position: relative;
+    min-width: $min-width;
+}
+
+// 有最大寬度，非滿版
+%center {
+    max-width: $max-width;
+    margin: 0 auto;
+}
+
+// 容器內主體部份(header、wrap、main、footer等)
+%box {
+    @extend %clearfix;
+
+    @include media(sm) {
+        padding: 0 ($gutter / 2);
+        width: 100%;
+    }
+}
+
+#wrapper {
+    @extend %container;
+    @if $lte7 {
+        _height: 100%;
+    }
+    min-height: 100%;
+    padding-bottom: $footer-height + $content-spacing; // 內容與footer間距
+    background: $wrapper-bg;
+}
+
+.wrap {
+    @extend %container;
+    @extend %box;
+    @extend %center;
+    @extend .text-left;
+}
+
+section, main {
+    @extend %container;
+    @extend %box;
+}
+
+main {
+    z-index: z(main);
+}
+
+
+// header
+// ----------------------------------------------------------------------
+#header {
+    height: $header-height;
+    z-index: z(header);
+
+    &::before {
+        content: '';
+        background: $header-bg;
+        height: 125px;
+        width: 100%;
+        position: absolute;
+        z-index: z(banner) + 1;
+    }
+}
+
+h1, #menu, .top-nav {
+    position: absolute;
+}
+
+h1 {
+    cursor: pointer; cursor: hand; // for ie
+    left: 0;
+    z-index: z(logo);
+
+    @include text-pic('logo.gif',305px,125px);
+    @include media('(min-width:992px) and (max-width: 1366px)') {
+        left: cp(20px);
+    }
+}
+
+#menu {
+    @extend %clearfix;
+
+    @each $attr, $value in $menu {
+        #{$attr}: $value;
+    };
+
+    z-index: z(menu);
+
+    a {
+        background-position: center 5px;
+        color: $menu-link;
+        font-size: em(18px);
+        font-weight: bold;
+        text-align: center;
+
+        display: block;
+        float: left;
+        padding-top: 24px;
+        width: 135px;
+
+        $selector: ();
+
+        @each $item in $pages {
+            $i: index($pages, $item);
+
+            $selector: append($selector, unquote(".#{$item} &:nth-child(#{$i})"), comma);
+        }
+
+        &:hover,
+        #{$selector} {
+            background: url(#{$img-path}/icon-menu.png) center 0 no-repeat;
+            color: $menu-link-hover;
+        }
+    }
+}
+
+.top-nav {
+    font-size: em(12px);
+
+    right: 46px; top: 10px;
+    z-index: z(menu)+1;
+
+    a {
+        color: $brand-secondary;
+        margin-right: 5px;
+
+        &:hover {
+            color: lighten($brand-secondary,30%)
+        }
+    }
+}
+
+#banner {
+    z-index: z(banner);
+
+    .swiper-slide {
+        background-position: center 0;
+        background-repeat: no-repeat;
+        @include text-hide;
+        @include size(100%, $banner-height);
+    }
+}
+
+
+// footer
+// ----------------------------------------------------------------------
+#footer {
+    margin-top: -($footer-height);
+    height: $footer-height;
+    z-index: z(footer);
+
+    .list-inline {
+        background: $footer-bg;
+        color: $footer-contact-color;
+        line-height: $footer-height2;
+        margin: 0;
+
+        a {
+            color: $footer-contact-color;
+
+            &:hover {
+                color: $brand-secondary;
+            }
+        }
+        em {
+            font-style: normal;
+
+            display: inline-block;
+            vertical-align: top;
+            min-width: 45px;
+            margin-right: 5px;
+        }
+        li {
+            background-attachment: fixed;
+            background: url(#{$img-path}/icon-contact.png) 0 0 no-repeat;
+            font-size: em(20px);
+            font-weight: 500;
+            line-height: nth($line-height,2);
+            text-align: left;
+            vertical-align: middle;
+
+            width: cp(290px); max-width: 330px;
+            min-height: 33px;
+            padding-left: 48px;
+
+            &:nth-child(1) {
+                width: cp(390px); max-width: 430px;
+            }
+            &:nth-child(2) {
+                background-position: 0 -100px;
+            }
+            &:nth-child(3) {
+                background-position: 0 -210px;
+
+                em {
+                    display: block;
+                    margin-bottom: -5px;
+                }
+            }
+        }
+    }
+}
+
+.copyright {
+    color: $copyright-color;
+    font-size: em(13px);
+
+    span {
+        display: inline-block;
+        vertical-align: middle;
+
+        @include text-pic('logo_s.gif',60px,16px);
+    }
+}
+
+.goTop {
+    display: none;
+    transition: all .5s ease;
+    opacity: .8;
+
+    z-index: z(goTop);
+    position: fixed;
+
+    @each $attr, $value in $goTop {
+        #{$attr}: $value;
+    }
+    @include text-pic('gotop.png', 50px, 30px);
+
+    &:hover {
+        background-image: url(#{$img-path}/gotop2.png);
+        opacity: 1
+    }
+}
