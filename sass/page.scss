@@ -19,15 +19,6 @@ $btn-font-size:    17px;
 @import "layout/layout";
 
 
-// 取第n個之後的pages值
-@function page($item) {
-    $page: ();
-    @for $i from $item through length($pages) {
-        $page: append($page, nth($pages, $i));
-    }
-    @return $page;
-}
-
 // header
 // ----------------------------------------------------------------------
 #banner {
@@ -151,7 +142,6 @@ aside {
 }
 
 article {
-    padding-bottom: 20px;
     header {
         color: $brand-secondary;
         font-size: em(30px);
@@ -176,14 +166,15 @@ article {
 
         width: cp(745px);
     }
+    .#{nth($pages, 4)} & {
+        padding-bottom: 20px;
+    }
 }
 
 // == about us
 //
-.#{nth($pages, 2)} table {
-    width: cp(400px);
-    min-width: 400px;
-    margin-left: 15px;
+.#{nth($pages, 2)} img.float-r {
+    padding-left: 15px;
 }
 
 // == products
@@ -194,6 +185,10 @@ article {
 }
 .#{nth($pages, 3)} table {
     @extend .full;
+
+    p {
+        margin: 0;
+    }
 }
 
 // == news
@@ -236,6 +231,20 @@ figure {
     }
 }
 
+.#{nth($pages, 4)} article {
+    @extend .clearfix;
+
+    img.float-r, img.float-l {
+        max-width: cp(450px);
+    }
+    img.float-r {
+        margin-left: 15px;
+    }
+    img.float-l {
+        margin-right: 15px;
+    }
+}
+
 // == contact
 .#{nth($pages, 5)} main {
     iframe {
@@ -245,6 +254,7 @@ figure {
         border-top: 3px solid $brand-secondary;
         border-bottom: 3px solid $brand-secondary;
         margin: 20px 0 0 20px;
+        max-width: 435px;
     }
     dt {
         clear: left;
