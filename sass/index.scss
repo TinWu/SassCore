@@ -2,188 +2,292 @@
 
 // var 變數，需放在 @import "helper/var" 之上才能覆蓋掉
 // ------------------------------------------------------------
-$img-path2:             '../images/index';
+$img-path2:         '../images/index';
+$img-banner:        '../images/index/banner';
 
-$wrapper-bg:            #fff url(../images/bg.gif) center 0 repeat-y;
-$content-spacing:       0;
+$header-height:     156px;
+$content-spacing:   0;
+$font-size-h3:      52px;
 
-$header-height:         560px;
-$menu:                  (top, 55px), (right, 1.5%);
-$banner-height:         600px;
+$footer-transY:     380px;
 
-$footer-bg:             #406947;
-$footer-height:         390px;
-$footer-height2:        126px;
-$footer-contact-color:  #D5E8C2;
-$copyright-color:       #323232;
+$btn-color:         #028BA4;
+$btn-hover-color:   #fff;
+$btn-bg-color:      #fff;
+$btn-bg-hover:      #028BA4;
+$btn-font-size:     13px;
+$btn-padding:       12px 20px;
 
 
 // import
 // ------------------------------------------------------------
+@import "helper/function";
 @import "helper/var";
 @import "helper/mixins";
 
 @import "base/basic";
-
-@import "component/classes";
-@import "component/btn";
+@import "base/form";
+@import "base/extend";
+@import "base/classes";
 
 @import "layout/layout";
 
-
-// header
-// ----------------------------------------------------------------------
-#header {
-    &::before {
-        height: 165px;
-        opacity: .76;
-    }
-    h1 {
-        background-image: url(#{$img-path2}/logo.png);
-        height: 165px;
-    }
-}
-
-@for $i from 1 through 3 {
-    #banner .i#{$i} {
-        background-image: url(#{$img-path2}/banner#{$i}.jpg);
-    }
-}
-
-
-// footer
-// ----------------------------------------------------------------------
-.copyright, #footer iframe {
-    display: inline-block;
-    vertical-align: middle;
-}
-.copyright {
-    margin-right: 140px;
-
-    span {
-        display: block;
-        background-image: url(#{$img-path2}/logo_s.gif);
-        width: 73px;
-        height: 20px;
-        margin-bottom: 10px;
-    }
-}
-#footer iframe {
-    margin: 20px 0 30px;
-}
+@import "module/btn";
+@import "module/modal";
 
 
 // main
 // ----------------------------------------------------------------------
-.info {
-    @extend %list-inline;
-    @extend .text-center;
+#wrapper {
+    padding-bottom: 0;
+}
 
-    background: url(#{$img-path2}/infoBg.png) center 0 no-repeat;
-    padding-top: 120px;
-    padding-bottom: 50px;
-    margin-top: -60px;
+footer {
+    background: rgba(232,235,237,.8);
+}
 
-    a {
-        @extend .circle;
+#banner {
+    background: url(#{$img-path2}/bg.png) center 0 no-repeat;
+    padding-top: 17px;
 
-        border: 5px solid #fff;
-        box-shadow: 0 3px 7px #8A8141;
-        background: #665A05 url(#{$img-path2}/info-pic.gif) center 0 no-repeat;
+    @include mq-max(tablet) { background-size: cover 100%; }
+}
+#banner, .swiper-slide {
+    height: 520px;
 
-        font-size: em(32px);
-        font-weight: bold;
+    @include mq(phone,tablet) { height: 620px; }
+}
 
-        display: block;
-        width: 280px; height: 280px;
-        padding-top: 190px;
+.swiper-wrapper {
+    @extend %list-unstyled;
+    margin-bottom: 0;
+}
+.swiper-slide {
+    background: url(#{$img-banner}1_bg.png) center center no-repeat;
+    padding-top: 35px;
+    padding-bottom: 30px;
 
-        &:hover {
-            transform: translateY(-10px);
-            opacity: .9
+    @include mq-max(tablet) {
+        padding-bottom: 130px;
+        background-size: auto cover;
+    }
+
+    header, .pic {
+        display: inline-block;
+        vertical-align: top;
+    }
+    header {
+        margin-right: 10px;
+        position: relative;
+        z-index: 20;
+
+        @include text-pic('index/banner1_title.png',530px,237px,$position: center 0);
+    }
+    .pic {
+        @include text-pic('index/banner1_pic.png',551px,269px,$position: center 0);
+        margin-top: 30px;
+    }
+    ol {
+        margin-left: -590px;
+
+        @include absolute(left 50% bottom 30px);
+
+        @include mq(break(tablet,+1), wide) {
+            left: 1%;
+            margin-left: 0;
+        }
+        @include mq-max(tablet) {
+            margin-left: 0;
+            margin-top: 20px;
+            left: 0; right: 0;
+            bottom: 15px;
         }
     }
     li {
-        margin: 0 30px;
+        background-attachment: fixed;
+        background: url(#{$img-banner}1_icon.png) 11px 0 no-repeat;
+        min-width: 90px;
+        padding-top: 80px;
 
-        &:nth-child(1) a {
-            color: #FDD317;
+        color: #4C4C4C;
+        font-size: em(14px);
+        text-align: center;
+
+        @for $i from 2 through 6 {
+            &:nth-child(#{$i}) {
+                background-position: (97px - (86px * $i)) 0;
+            }
         }
-        &:nth-child(2) a {
-            background-color: #43681B;
-            background-image: url(#{$img-path2}/info-pic2.gif);
-            color: #D5E8C2;
+        @include mq-max(break(tablet,-1)) {
+            background-image: url(#{$img-banner}1_icon2.png);
+            background-size: auto 72px;
         }
-        &:nth-child(3) a {
-            background-color: #B39F17;
-            background-image: url(#{$img-path2}/info-pic3.gif);
-            color: #254202;
+    }
+}
+.i1, .i2 {
+    @include mq(break(tablet,+1), wide) {
+        header { float: left; }
+    }
+    .pic {
+        @include mq-max(wide) {
+            @include absolute(right 1% top 30px);
+        }
+        @include mq-max(tablet) {
+            right: 0; left: 0;
+            bottom: 115px; top: auto;
+        }
+        @include mq-max(phone) {
+            bottom: 215px;
+        }
+    }
+}
+.i1 {
+    padding-top: 10px;
+
+    header {
+        margin-top: 35px;
+        @include mq-max(break(tablet,-1)) {
+            background-image: url(#{$img-banner}1_title2.png);
+            height: 225px;
+            margin-top: 0;
+        }
+    }
+    .pic {
+        margin-top: 60px;
+        @include mq-max(break(tablet,-1)) {
+            background-image: url(#{$img-banner}1_pic2.png);
+            height: 235px;
+            margin-top: 0;
+        }
+        // @include mq-max(phone) { height: 200px; }
+        @include mq-max(phone) { height: 138px; }
+    }
+}
+.i2 {
+    background-image: url(#{$img-banner}2_bg.jpg);
+
+    header {
+        background-image: url(#{$img-banner}2_title.png);
+        width: 705px; height: 321px;
+    }
+    .pic {
+        background-image: url(#{$img-banner}2_pic.png);
+        width: 519px; height: 339px;
+
+        @include mq-max(tablet) {
+            background-image: url(#{$img-banner}2_pic2.png);
+            height: 167px;
+        }
+        @include mq-max(phone) { height: 100px; }
+    }
+    li {
+        background-image: url(#{$img-banner}2_icon.png);
+        @include mq-max(break(tablet,-1)) {
+            background-image: url(#{$img-banner}2_icon2.png);
+        }
+    }
+}
+.i3 {
+    background-image: url(#{$img-banner}3_bg.gif);
+    padding-top: 10px;
+
+    @include mq-max(tablet) { background-position: center bottom; }
+
+    header {
+        background-image: url(#{$img-banner}3_title.png);
+        width: 436px; height: 218px;
+        margin-top: 85px;
+        margin-right: 20px;
+
+        @include mq-max(tablet) {
+            background-image: url(#{$img-banner}3_title2.png);
+            height: 185px;
+            margin: 0;
+        }
+    }
+    .pic {
+        background-image: url(#{$img-banner}3_pic.png);
+        width: 401px; height: 435px;
+
+        @include mq-max(tablet) {
+            @include absolute(bottom 115px left 0 right 0)
+        }
+        @include mq-max(phone) {
+            height: 240px;
+            bottom: 200px;
+        }
+    }
+    li {
+        background-image: url(#{$img-banner}3_icon.png);
+
+        @include mq-max(break(tablet,-1)) {
+            background-image: url(#{$img-banner}3_icon2.png);
         }
     }
 }
 
-.news {
-    background: #94BC1B;
-    padding: 60px 0 30px 0;
-
-    header {
-        color: #406947;
-        font-size: em(80px);
-        font-family: MElleHK, $font-family-base;
-        line-height: 1;
-        margin-bottom: 45px;
-    }
-    .swiper {
-        &-container {
+@include mq-max(tablet) {
+    .swiper-slide {
+        header, .pic {
+            background-size: contain;
             width: 100%;
-            max-width: 1150px;
-            padding: 0 70px;
-            height: 480px;
-            overflow: hidden;
-            margin: auto;
+            margin: 0;
         }
-        &-wrapper {
-            @extend %list-unstyled;
-        }
-        &-slide {
-            @extend .text-left;
-            @extend .float-l;
-
-            width: 435px;
-        }
-        &-pagination-bullet-active {
-            background: #D2E6B8;
-        }
+        header { margin: 0; }
     }
-    .cover {
-        height: 160px;
-        overflow: hidden;
+}
 
-        img {
-            max-width: 100%;
-            @include prefix(transform, translateY(-40%))
+.about {
+    background: #407E8F url(#{$img-path2}/infoBg.jpg) center 0 no-repeat fixed;
+    padding: 40px 0;
+    position: relative;
+
+    p, h3, nav a {
+        color: #fff;
+        text-align: left;
+    }
+    h3 {
+        margin-top: 0;
+        margin-bottom: $gutter;
+    }
+    p {
+        line-height: 2.2;
+        margin-bottom: 20px;
+
+        @include mq-max(tablet) { line-height: 1.7; }
+    }
+    nav a {
+        display: block;
+        margin-bottom: $gutter;
+
+        &:hover, &:active {
+            color: lighten($brand-secondary,40%);
         }
+        // @include mq-max(tablet) {
+        //     float: left;
+        //     padding-right: $gutter;
+        //     font-size: em(21px);
+        // }
     }
     .btn {
         margin-top: 20px;
+        float: right;
+
+        @include mq-max(tablet) { margin-top: 0; }
+    }
+    .col-3 {
+        min-width: 245px;
+        float: right;
     }
 }
-
-.swiper-button {
-    &-prev, &-next {
-        background: url(#{$img-path2}/arrow.gif) 0 0 no-repeat;
-        width: 30px; height: 60px;
-        margin-top: -45px;
+.col-8 {
+    .btn {
+        @include mq(wide) { margin-top: 52px; }
     }
+    @include mq-max(tablet) { margin-bottom: 30px; }
+}
 
-    &-prev, .swiper-container-rtl &-next {
-      left: 10px;
-      right: auto;
-    }
-
-    &-next, .swiper-container-rtl &-prev {
-        background-position: -89px 0;
-        right: 10px;
-        left: auto;
-    }
+#map-canvas {
+    width: 100%;
+    height: 380px;
 }
