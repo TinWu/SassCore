@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+//
+// == 情境 Contextual colors
+// ------------------------------------------------------------
+
+// reset default value
+button[class*="hover-"] {
+    padding: 0;
+    text-align: inherit;
+    transition: $transition-duration;
+}
+
+@each $theme, $color in $colors {
+    .text-#{$theme}, .hover-#{$theme} {
+        color: $color;
+    }
+    .hover-#{$theme} {
+        &:hover, &:focus {
+            color: dark($color, 20);
+        }
+    }
+    .bg-#{$theme} {
+        background: $color;
+    }
+}
+.text-light-yellow {
+    color: $light-warning;
+}
+.bg-light-gray {
+    background: #f8f8f8;
+}
+.bg-light-yellow {
+    background: light($light-warning, 60);
+}
+
+// label
+[class^=label],
+.label {
+    display: inline-block;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 3px;
+
+    background: light(color(), 5);
+    color: #fff;
+    font-size: em(14);
+    line-height: 1.1;
+    text-align: center;
+}
+
+em.label {
+    font-style: normal;
+}
+
+@each $theme, $color in (
+    success:   light(color(success), 20),
+    info:      light(color(info), 20),
+    warning:   light(color(warning), 20),
+    danger:    light(color(danger), 10),
+    muted:     dark(color(muted), 10)
+) {
+    .label-#{$theme} {
+        color: #fff;
+        background: $color;
+    }
+}
+
+.label-gray {
+    background: light(#9E9E9E, 8);
+}

@@ -1,0 +1,234 @@
+@charset "utf-8";
+
+@use "sass:math"; // 新版不能用/當除法，要引用這行用 math.div(n1,n2) 來除
+
+$isIndex:  true;
+
+$banner-height: 800px;
+
+
+// import
+// ------------------------------------------------------------
+@import "core/function"; // (置頂)
+
+@import "_client/setting"; // 覆寫下方的變數值
+@import "core/variables";
+@import "core/mixins";
+
+// output
+@import "basic/base";
+@import "basic/form";
+@import "basic/util";
+
+@import "_client/layout";
+@import "_client/state";
+@import "_client/classes";
+
+
+// output
+// ------------------------------------------------------------
+
+// == banner
+#banner {
+    height: $banner-height;
+
+    margin-top: -$header-height;
+    margin-bottom: -308px;
+
+    z-index: -1;
+
+    // .banner-img
+    .swiper-slide {
+        margin: 0;
+
+        background-position: center;
+        background-repeat: no-repeat;
+
+        min-height: $banner-height;
+
+        @include mq($wider) {
+            background-position: 0 center;
+        }
+        @include mq-max(break($wider, -1)) {
+            background-size: cover;
+        }
+    }
+}
+.banner-text {
+    @extend %text-white;
+
+    @include center(x);
+
+    letter-spacing: em(1);
+    font-size: em(82);
+    font-weight: normal;
+    text-shadow: 0 0 10px rgba(#000, .1);
+
+    top: 200px;
+}
+
+// == content
+.btn {
+    @include btn;
+
+    // size
+    @include sizing($btn-height, $btn-font-size, $btn-line-height, $btn-space);
+}
+
+// # 最新消息
+.latest-news {
+    position: relative;
+    padding-bottom: 120px;
+
+    @include el(before) {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 50%;
+        height: 308px;
+        background: #fff;
+    }
+}
+.news {
+    // ol 消息
+    @extend .font-lg, %list-unstyled;
+
+    line-height: 1.6;
+    position: relative;
+
+    @include el(before) {
+        border-left: 3px solid color(warning);
+        position: absolute;
+        left: 50px;
+        top: 50px;
+        bottom: 50px;
+    }
+
+    li {
+        cursor: pointer;
+
+        position: relative;
+        min-height: 100px;
+        padding-left: 120px;
+        margin-bottom: 20px;
+
+        display: flex;
+        align-items: center;
+    }
+    .date {
+        @extend .font-norm, %text-white, .bg-warning;
+
+        text-align: center;
+        line-height: 100px;
+
+        border-radius: 50%;
+        display: block;
+        width: 100px;
+        height: 100px;
+
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    // 裝飾圖
+    &-img {
+        margin: 190px 0 0;
+        float: right;
+    }
+
+    // 最新消息區
+    &-main {
+        @extend .p-l;
+
+        padding: 55px 48px;
+        width: calc(100% - 500px);
+        background: #fff;
+
+        position: relative;
+        z-index: 1;
+    }
+
+    // 標題
+    &-title {
+        @extend .text-secondary, .font-normal, .text-center;
+
+        font-size: em(42);
+        margin-right: 40px;
+
+        small {
+            @extend .text-muted, .mt-10;
+
+            display: block;
+            color: #d9ebd6;
+            font-size: em(44, 42);
+            letter-spacing: em(1.5);
+        }
+    }
+}
+
+.more {
+    color: color(secondary);
+    font-size: em(33);
+    letter-spacing: em(2);
+
+    position: relative;
+
+    @include el {
+        border-top: 1px solid color(muted);
+        width: 2em;
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+    }
+    &:after {
+        margin-left: 2em;
+    }
+    &:before {
+        margin-left: -4.2em;
+    }
+
+    &:hover {
+        color: light(color(info), 40);
+        font-weight: bold;
+    }
+}
+
+// 有影片區
+.info {
+    background: #f2f2f2 url(#{$img-path}/index/vedio-bg.jpg) no-repeat right 0;
+    position: relative;
+    padding: 60px 0 76px;
+
+    &-title {
+        @extend %text-white;
+
+        position: absolute;
+        left: 66%;
+        top: 15%;
+
+        font-size: em(35);
+        font-weight: normal;
+        line-height: 2;
+        letter-spacing: em(2);
+        text-shadow: 0 0 5px rgba(#000, .7)
+    }
+}
+.video {
+    &-icon {
+        position: absolute;
+        left: 58%;
+        bottom: 0;
+    }
+    &-contain {
+        @include fluid-aspect(16 9, iframe);
+    }
+}
+
+// 機關友好連結
+.links {
+    @extend .py-30;
+
+    background: #6b9e5e;
+}

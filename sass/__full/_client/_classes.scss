@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+
+// == 每頁共用的樣式
+// ------------------------------------------------------------
+
+// .list {
+//     @extend .mt-5;
+
+//     li {
+//         @extend .my-5;
+//     }
+// }
+// .list-line {
+//     @extend %list-unstyled, .my-0;
+
+//     li {
+//         @extend .py-s;
+
+//         &:not(:last-child) {
+//             border-bottom: 1px solid $border-color;
+//         }
+//     }
+// }
+

@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+$placeholders-selectors: () !default;
+
+//
+// == 壓縮 mixin - 壓縮合併樣式(佔位符%)
+// -----------------------------------------------------------------
+// https://alistapart.com/article/dry-ing-out-your-sass-mixins/
+
+// @include static(clearfix, flase)
+@mixin static($name, $extend: true) {
+    $selector: map-get($placeholders-selectors, $name);
+
+    @if $extend == true {
+        @if $selector == null {
+            $selector: unique-id();
+            $placeholders-selectors: map-merge($placeholders-selectors, ($name: $selector)) !global;
+
+            @at-root %#{$selector} {
+                @include static($name, false) {
+                    @content;
+                }
+            }
+        }
+        @at-root (without: media) {
+            @extend %#{$selector};
+        }
+    }
+    @else {
+        @content;
+    }
+}

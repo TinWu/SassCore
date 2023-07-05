@@ -1,0 +1,135 @@
+@charset "UTF-8";
+
+// utils
+@import "mixins/placeholders";   // 壓縮合併樣式(佔位符%)
+@import "mixins/pseudo";         // 做偽類 after,before
+@import "mixins/shape";          // 三角形
+@import "mixins/center";         // 置中
+@import "mixins/rem";            // rem單位
+@import "mixins/button";         // button
+@import "mixins/text";           // 文字相關
+@import "mixins/animation";      // 動畫
+
+@import "mixins/mq";             // RWD
+@import "mixins/grid";           // 網格系統
+@import "mixins/flex";           // flex系統
+
+
+//
+// == extend 原本放在util.scss裡，改成 mixin @include 方法
+// -----------------------------------------------------------------
+@mixin clearfix($ext:true) {
+    @include static(clearfix, $ext) {
+        @include el(after, table, $ext: $ext) {
+            clear: both;
+        }
+    }
+}
+
+// 用高度,字級大小,行高自動算元素間距
+@mixin sizing($height, $font-size: $font-size-base, $line-height: $line-height-base, $padding-x: $height*.5) {
+
+    $padding-y: pdy($height, $font-size, $line-height);
+
+    @if $font-size != $font-size-base {
+        @include rem('font-size', $font-size);
+    }
+    @if $line-height != $line-height-base {
+        line-height: $line-height;
+    }
+    @if $padding-x {
+        padding: $padding-y decimal( em($padding-x, $font-size), 2);
+    }
+    @else {
+        padding-top: $padding-y;
+        padding-bottom: $padding-y;
+    }
+}
+
+// https://gist.github.com/micahgodbolt/9075193
+// $navigation: (
+//   color: green,
+//   is-expanded: (
+//     background: green,
+//     is-hovered: ( background: pink, ),
+//   ),
+// );
+// @include stylus($navigation, is-expanded, is-hovered); => background: pink;
+@mixin stylus($map, $keys...) {
+    $i: 1;
+    $length: length($keys);
+    @while $length >= $i  {
+        $map: map-get($map, nth($keys, $i));
+        $i: $i + 1;
+    }
+    @each $property, $value in $map {
+        @if type-of($value) != map {
+            #{$property}: $value;
+        }
+    }
+}
+
+// RWD video src https://gist.github.com/jonathantneal/a9b8901273475d261dd3
+// @include fluid-asect(4 3, iframe);
+@mixin fluid-aspect($ratio: 1 1, $selector: "> :first-child") {
+    $selector: unquote($selector);
+
+    padding-bottom: percentage( math.div(nth($ratio, 2), nth($ratio, 1)) );
+    position: relative;
+
+    #{$selector} {
+        left: 0;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+}
+
+// 不用 rwd 的容器設定
+@mixin no-rwd($min-dw: $min-width, $min-w: $min-width) {
+    $ext: if($min-dw == $min-w, true, false);
+
+    @include static(norwd, $ext) {
+        @media only screen and (min-device-width: $min-dw) {
+            min-width: $min-width;
+        }
+    }
+}
+
+// container(set width)
+@mixin container($max-width: $max-width, $gap: $gutter, $ext: true) {
+
+    max-width: $max-width;
+
+    @include clearfix($ext);
+
+    @include static(mx-a, $ext) {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @if $gap {
+        @include mq-max($max-width + ($gap*2)) {
+            @include static(gap, $ext) {
+                padding-right: $gap;
+                padding-left: $gap;
+            }
+        }
+    }
+}
+
+// == 跨瀏覽器
+// -----------------------------------------------------------------
+// 用法：@include prefix((writing-mode: vertical-rl), ms webkit o);
+@mixin prefix($map, $vendors: webkit moz ms o) {
+    @each $prop, $value in $map {
+        @if $vendors {
+            @each $vendor in $vendors {
+                #{"-" + $vendor + "-" + $prop}: #{$value};
+            }
+        }
+        // Dump regular property anyway
+        #{$prop}: #{$value};
+    }
+}

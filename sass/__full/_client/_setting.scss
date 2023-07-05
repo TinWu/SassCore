@@ -1,0 +1,70 @@
+@charset "UTF-8";
+
+// == 這裡放自定義變數 + 覆寫 variables 裡的變數
+// import 順序最好在 variables 前面。但如果要放後面的話，下面要覆寫的變數不能加 !default
+
+@import url('//fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap');
+
+$img-path:                '../images' !default;
+$isIndex:                 false !default;
+
+
+// == color
+// ----------------------------------------------------------------------
+$colors: (
+    primary:           #4968a6,
+    secondary:         #55ad3c,
+    info:              #324e87,
+    success:           #70a65e,
+    warning:           #5986e3,
+    danger:            #E64D5E,
+    muted:             #d9ebd6
+);
+
+$component-active:      color(secondary);
+$border-color:          color(muted);
+
+
+// == ref: basic> custom
+// ----------------------------------------------------------------------
+$body-bg:               #fff !default;
+$body-color:            #4d4d4d;
+
+$font-family-sp:        'Nunito Sans';
+
+$link-color:            #152d61;
+$link-hover-color:      color(secondary);
+
+$table-cell-padding:    .5em .45em;
+$table-hover-color:     light(desaturate($border-color, 16), 60);
+
+$input-btn-height:      38px;
+$input-btn-radius:      false;
+
+$btn-bg:                color(secondary);
+$btn-hover-bg:          color(info);
+
+$input-placeholder-color: #b9c7cc;
+
+
+// == layout
+// ----------------------------------------------------------------------
+// wrapper
+$max-width:             1400px !default;
+
+$header-bg:             if($isIndex, rgba(#fff, .52), url(#{$img-path}/banner.jpg) no-repeat center 0) !default;
+$header-height:         163px !default; //86 by pc ,68 by mobile
+
+$footer-height:         120px !default;
+$footer-spacer:         if($isIndex, 0, 80px) !default;
+
+// z-index
+$zindex: (
+    'header',
+    'gotop',
+    'menu', // by mobile
+    'overlay',
+);
+
+// == proj only
+// ----------------------------------------------------------------------

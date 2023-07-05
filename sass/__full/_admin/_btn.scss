@@ -1,0 +1,92 @@
+@charset "UTF-8";
+
+//
+// button
+// ----------------------------------------------
+
+input.btn {
+    border: none;
+}
+
+.btn {
+    // default
+    @include btn;
+
+    // size
+    @include sizing($btn-height, $btn-font-size, $btn-line-height, $btn-space);
+
+    letter-spacing: .06em;
+
+    &:hover, &:active, &:focus {
+        background: $btn-hover-bg;
+        color: $btn-color;
+    }
+
+    &:disabled, &.disabled {
+        cursor: $cursor-disabled;
+        background: $btn-disabled-bg !important;
+        color: $btn-disabled-color !important;
+    }
+
+    .btn-stacked > & {
+        display: block;
+        width: 100%;
+
+        &:not(:last-of-type) { margin-bottom: .5rem; }
+    }
+
+    // btn theme
+    @each $theme, $color in (
+        // secondary: color(secondary),
+        success:   color(success),
+        info:      light(color(info), 30),
+        warning:   scale-color(color(warning), $lightness: -10.5%),
+        danger:    color(danger),
+        cancel:    desaturate(dark(color(muted), 5), 40)
+    ) {
+        &.#{$theme} {
+            background-color: $color;
+
+            &:hover, &:active {
+                background: dark($color, 6);
+            }
+
+            &.outline {
+                border-color: $color;
+                color: if(color-contrast($color) == #fff, dark($color, 45), $color);
+
+                &:hover, &:active {
+                    background: if(color-contrast($color) == #fff, light($color, 15), $color);
+                }
+            }
+        }
+    }
+    &.cancel {
+        color: dark(color(muted), 63);
+    }
+    &.outline {
+        background-color: $btn-color;
+        // box-shadow: none;
+        border: 1px solid light(color(), 15);
+        color: $btn-bg;
+
+        transform: none;
+
+        &:hover, &:active {
+            background-color: $btn-bg;
+            color: $btn-color;
+        }
+    }
+}
+
+//
+// button group
+// ----------------------------------------------
+// src: pure css => flex
+.btn-group {
+    @include btn-group;
+}
+
+.btn-group-stacked {
+    @include btn-group-stacked;
+}

@@ -1,0 +1,122 @@
+@charset "UTF-8";
+
+// == modal
+// <div id="uploadFile" class="modal">
+//   <form class="modal-container animate-top">
+//     <header class="modal-header">
+//       <button type="button" class="modal-close" data-close="modal">&times;</button>
+//     </header>
+//     <footer class="modal-footer">
+//       <button type="button" data-close="modal">回列表</button>
+//     </footer>
+//   </form>
+// </div>
+
+// overlay
+// html.overlay + body 隱藏卷軸
+.overlay {
+    &, body {
+        height: 100%; // for safari bug
+    }
+    body {
+        overflow: hidden;
+    }
+}
+.modal {
+    overflow-y: auto;
+    z-index: z(overlay);
+    -webkit-overflow-scrolling: touch;  // for safari bug
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    background-color: #000;
+    background-color: rgba(#000, .7);
+
+    @if $enable-RWD {
+        @include mq-max(break(sm, -1)) {
+            padding-top: 5%;
+        }
+    }
+
+    // fade effect
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s .2s, opacity .2s ease-in-out;
+
+    &.in {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity .2s ease-in-out;
+    }
+
+    $con-pd: spacer(30);
+
+    // 內容區塊
+    &-container {
+        @extend .center, .my-70, %bg-white;
+
+        box-shadow: 0 0 0 4px rgba(#fff, .15);
+        max-width: 80%;
+        padding: 0 $con-pd $con-pd $con-pd;
+
+        form:last-child {
+            @extend .mb-0;
+        }
+    }
+
+    // close btn
+    &-close {
+        @extend .font-xxl, .mr-s;
+
+        position: absolute;
+        top: 0;
+        right: 0;
+        opacity: .8;
+        transition: .35s ease-in;
+
+        &:hover, &:focus {
+            opacity: 1;
+            cursor: pointer;
+        }
+    }
+
+    %resize {
+        margin-left: (-$con-pd);
+        margin-right: (-$con-pd);
+    }
+
+    // header
+    &-header {
+        @extend .bg-secondary, .font-xl, .mb-30, %resize;
+
+        padding: spacer(10) 40px spacer(10) spacer(20);
+        position: relative;
+    }
+
+    // footer
+    &-footer {
+        @extend .py-15, .mt-30, .text-center, %resize;
+
+        border-top: 1px solid $border-color;
+        background: light(color(muted), 83);
+        margin-bottom: (-$con-pd);
+
+        .btn {
+            @extend .mx-5;
+        }
+    }
+}
+
+// 特效
+.animate-top {
+    position: relative;
+
+    @include diy-animate(slide-down, .4s) {
+        from { top: -300px; opacity: 0; }
+        to   { top: 0; opacity: 1; }
+    }
+}

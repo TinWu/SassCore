@@ -1,0 +1,305 @@
+@charset "UTF-8";
+@use 'sass:math';
+
+$index:           false;
+$user-state-height: 45px;
+
+
+// == import
+// ------------------------------------------------------------
+@import "function";          // 常用函數
+
+@import "_admin/setting";    // 覆寫下方的變數值
+@import "variables";         // 預設變數
+@import "mixins";            // 預寫css
+
+// output code
+@import "base";              // 基本Element form normalize.css v8.0.1
+@import "tables";            // 表格
+@import "forms";             // 表單
+@import "utils";             // 常用小工具
+
+// 本專案 plugin
+@import "_admin/layout";            // 整體排版
+@import "_admin/btn";
+@import "_admin/form-plug";
+@import "_admin/dropdown";
+@import "_admin/modal";
+@import "_admin/state";             // 狀態樣式 text,bg,label
+
+
+// == main
+// ------------------------------------------------------------
+
+@include mq(md) {
+    .seventy { max-width: 70%; }
+    .sixty   { max-width: 60%; }
+    .half    { max-width: 50%; }
+    .third   { max-width: 33.3%; }
+}
+
+.arrow {
+    display: inline-block;
+    border: solid color(success);
+    border-width: 0 2px 2px 0;
+    padding: 4px;
+    transition: .35s ease;
+
+    &.right { transform: rotate(-45deg); }
+    &.left  { transform: rotate(135deg); }
+    &.up    { transform: rotate(-135deg); }
+    &.down  { transform: rotate(45deg); }
+}
+
+.breadcrumb {
+    @extend %list-inline, .font-sm, .mb-0;
+
+    color: #555;
+    padding-left: 0;
+
+    li {
+        &:not(:last-child):after {
+            content: "/";
+            margin-left: 5px;
+        }
+    }
+}
+
+.title {
+    @extend .mb-l, .pb-10, .text-primary;
+
+    border-bottom: 1px solid $border-color;
+
+    h2 {
+        @extend .mb-10;
+        font-size: rem(28);
+    }
+
+    small {
+        @extend .ml-s;
+        color: darken(color(muted), 15);
+    }
+}
+
+// ## 列表
+// 列表上的按鈕
+.actionbar {
+    @extend .p-s;
+
+    background: dark($body-bg, 3.5);
+}
+
+// 列表上的搜尋
+.table-head {
+    font-size: $input-font-size;
+
+    .label {
+        color: #4D4D4D;
+        font-size: inherit;
+        vertical-align: middle;
+
+        &[class*=col] {
+            text-align: right;
+        }
+    }
+    .form-element {
+        margin-right: 5px;
+    }
+    .btn {
+        font-size: inherit;
+    }
+}
+
+.table-list {
+    @extend .table-bordered, %bg-white;
+}
+
+.table-list thead,
+.thead {
+    background: light(color(info), 60);
+
+    th:not([colspan]) {
+        border-bottom-width: 2px;
+    }
+}
+.item-edit {
+    width: 5%;
+    min-width: 54px;
+}
+
+// 列表頁腳 pager
+.table-foot {
+    @extend .p-5;
+
+    background: light($table-border-color, 25);
+}
+.pager {
+    font-size: get('font.sm');
+    text-align: center;
+
+    @include clearfix;
+
+    input, button {
+        height: 26px;
+        vertical-align: middle;
+    }
+    button {
+        color: dark(color(), 20);
+        font-size: 19px;
+        margin: 0 1px;
+        transition: .35s;
+
+        &:hover {
+            color: dark(color(), 45);
+        }
+        &[disabled] {
+            color: darken($input-border-color, 6);
+        }
+    }
+    span {
+        @extend .mx-s;
+    }
+    input {
+        @extend .mx-5, .text-center;
+        display: inline;
+        padding: 0;
+        width: 80px;
+    }
+}
+
+// ## 表單編輯
+.field {
+    margin-bottom: 16px;
+
+    @include mq(md) {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+
+        .form-element {
+            min-width: 360px;
+        }
+        .form-label {
+            flex-basis: 200px;
+            text-align: right;
+            padding-right: 16px;
+        }
+        .col-grow {
+            flex-grow: 1;
+
+            .form-element {
+                width: 100%;
+            }
+        }
+        .flx-top {
+            align-self: flex-start;
+            padding-top: 8px;
+        }
+    }
+}
+
+.submitbar {
+    text-align: center;
+
+    background: dark($body-bg, 2);
+    border-top: 2px solid #f8f8f8;
+
+    padding: 16px;
+    margin-top: 32px;
+    position: sticky;
+    left: $sidebar-width;
+    right: 0;
+    bottom: 0;
+
+    > .btn {
+        @extend .font-lg, .mx-s;
+    }
+}
+
+// ## 檔案上傳
+// <div class="uploaded">
+//   <button type="button" class="btn-del>&times;</button>
+//   <img />
+// </div>
+.uploads {
+    margin: 8px 0 0;
+    position: relative;
+}
+.uploaded {
+    $del-size: 21px;
+
+    @extend .font-md;
+
+    background-color: #fff;
+    border: 1px solid $border-color;
+    display: inline-block;
+    position: relative;
+    padding: 4px;
+    transition: 300ms;
+
+    &:not(:only-child) {
+        $mg: get(s) * .5;
+        margin: $mg $mg*2 $mg 0;
+    }
+    &:hover {
+        background-color: light(color(), 20);
+    }
+
+    // 圖片
+    img {
+        width: auto;
+        height: 80px;
+    }
+
+    // 刪除按鈕
+    + .upload-del {
+        border: none;
+        outline: none;
+
+        background: color(danger);
+        border-radius: 50%;
+        color: #fff;
+        font-size: inherit;
+        width: 22px;
+        height: 22px;
+
+        padding: 0;
+        position: absolute;
+        right: 0;
+        z-index: 1;
+
+        &:hover {
+            background: dark(color(danger), 15);
+        }
+    }
+}
+
+// ## 日期元件
+// 會被圖片上傳蓋住fix
+.react-datepicker-popper {
+    z-index: 10 !important;
+}
+.datepick {
+    display: inline-block;
+    width: 9em;
+
+    input {
+        width: 100% !important;
+    }
+}
+
+// ## this proj
+.qrcode {
+    border: 2px solid dark(color(muted), 3);
+    background: #fff;
+    display: inline-block;
+
+    img {
+        width: 200px;
+    }
+}
+
+.help {
+    cursor: help;
+    color: color(danger);
+}

@@ -1,0 +1,228 @@
+@charset "UTF-8";
+
+// == 每頁共用的樣式
+// ------------------------------------------------------------
+.mobile-hide {
+    @include mq-max(break(md, -1)) {
+        display: none;
+    }
+}
+
+.img-rwd {
+    @include mq-max(sm) {
+        overflow: scroll;
+        img { max-width: none; }
+    }
+}
+
+.margin { margin: 16px; }
+.margin-top { margin-top: 32px; }
+.margin-bottom { margin-bottom: 32px; }
+
+.hover-underline {
+    position: relative;
+
+    @include el(before) {
+        height: 1px;
+        width: 100%;
+        background: rgba(#8BE5E3,.6);
+
+        position: absolute;
+        top: 100%;
+        right: 0;
+        transform: scaleX(1);
+        transform-origin: 50%;
+        transition: 350ms, background 400ms;
+    }
+
+    &:hover, &:active {
+        &::before {
+            transform: scaleX(0);
+        }
+    }
+}
+
+%underline-style {
+    // background: url(#{$img-path}/line.gif) 0 bottom repeat-x;
+
+    border-bottom: 1px solid $border-color;
+}
+.underline {
+    @extend %underline-style;
+
+    padding-bottom: 32px;
+}
+.list-underline li {
+    @extend %underline-style;
+
+    padding: 8px 0;
+}
+
+// 最新消息列表
+.news-list {
+    @extend %list-unstyled, .list-underline;
+
+    li {
+        @include clearfix;
+    }
+
+    small {
+        display: block;
+        color: #B2B2B2;
+
+        @include mq-max(break(xs,-1)) {
+            margin-left: 90px;
+            margin-top: -5px;
+        }
+    }
+
+    .label {
+        @extend .pull-left, .text-center;
+
+        margin-right: 2%;
+        width: 14%;
+        min-width: 75px;
+
+        @if not $index {
+            max-width: 75px;
+        }
+    }
+    a {
+        @extend .pull-left;
+
+        color: #3d3d3d;
+        width: 83%;
+
+        &:hover, &:active { color: light(color(secondary), 10) }
+
+        small {
+            margin-bottom: 3px;
+        }
+
+        @include mq-max(sm) {
+            width: 78%;
+        }
+        @include mq-max(break(xs,-1)) {
+            width: 100%;
+            margin-top: -16px;
+
+            small { margin-bottom: 10px; }
+        }
+    }
+}
+
+// 日曆
+.list-calendar {
+    @extend %list-unstyled;
+
+    line-height: 1.5;
+
+    li {
+        margin-bottom: $gutter - 5;
+        position: relative;
+        padding-left: 80px;
+    }
+    small {
+        display: block;
+    }
+    .date {
+        @extend .text-center, %bg-white;;
+
+        font-size: em(22);
+        color: #A0BBC8;
+        border: 1px solid #B2E8F1;
+        border-radius: 3px;
+
+        display: block;
+        margin-right: 10px;
+        position: absolute;
+        left: 0;
+        width: 64px;
+
+        small {
+            padding: 0 7px;
+            font-size: em(12,22);
+            color: #fff;
+            background: #A0BBC8;
+        }
+    }
+
+    a {
+        color: #1D6EBB;
+
+        small { color: #91B1D0; }
+
+        &:hover, &:active {
+            color: color();
+
+            small { color: #87CEEB; }
+        }
+
+        @include mq-max(break(xs,-1)) {
+            display: block;
+            margin-top: -55px;
+            margin-left: 65px;
+        }
+    }
+}
+
+// == modal
+.modal {
+    z-index: z(overlay);
+    display: none;
+    overflow: auto;
+    padding-top: 12%;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    @include mq-max(break(xs,-1)) {
+        padding-top: 5%;
+    }
+
+    &-content {
+        margin: auto;
+        background-color: #fff;
+        position: relative;
+        width: 80%;
+        max-width: 800px;
+
+        @include diy-animate(slide-down, .4s) {
+            from { top: -300px; opacity: 0; }
+            to { top: 0; opacity: 1; }
+        }
+
+        @include mq-max(break(md,-1)) {
+            width: 96%;
+        }
+    }
+}
+
+.btn-close {
+    font-size: em(31);
+    color: #fff;
+
+    position: absolute;
+    top: 1%;
+    right: 1%;
+
+    &:hover, &:focus {
+        color: $light-warning;
+        cursor: pointer;
+    }
+}
+
+// == login
+.login {
+    label {
+        text-align: center;
+        flex-basis: 120px;
+        background: light(color(info), 80);
+        padding-top: 10px;
+    }
+}

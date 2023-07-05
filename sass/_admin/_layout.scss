@@ -1,0 +1,194 @@
+@charset "UTF-8";
+
+//       layout
+// -----------------------------------------------------------------------
+body {
+    padding-top: $header-height;
+}
+
+// header
+// ----------------------------------------------------------------------
+#header {
+    @if $header-bg     { background: $header-bg; }
+    @if $header-height { height: $header-height; }
+    z-index: z(header);
+
+    @if not $enable-RWD {
+        @include static(norwd) {
+            @media only screen and (min-device-width: $min-width) {
+                min-width: $min-width;
+            }
+        }
+    }
+
+    // this proj only
+    padding-right: $gutter;
+    padding-left: $gutter;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.site-title {
+    @extend .my-0, %text-white;
+
+    letter-spacing: .08em;
+
+    // this proj only
+    line-height: $header-height;
+
+    font-size: rem($header-height - (10*2));
+}
+
+// 右上方資訊選單(回首頁,登出等)
+.navbar {
+    margin-top: ($header-height - (15*1.2))*.5;
+
+    .nav-link {
+        @extend .text-white;
+
+        display: inline-block;
+        vertical-align: top;
+
+        &:hover {
+            color: rgba(#fff, .75);
+        }
+    }
+
+    button.nav-link {
+        cursor: pointer;
+    }
+
+    // 下拉式選單> 修改密碼 + 登出
+    // .dropdown {
+    //     &-content {
+    //         @extend .font-md;
+
+    //         min-width: 160px;
+    //         right: 0;
+    //         top: 100%;
+
+    //         &.in {
+    //             top: 170%;
+    //         }
+    //     }
+    // }
+}
+
+
+// main
+// ----------------------------------------------------------------------
+#main {
+    @extend .text-left;
+
+    padding: 0 $gutter 76px;
+    margin-left: $sidebar-width;
+
+    @if not $enable-RWD {
+        @include static(norwd);
+    }
+}
+
+
+// sidebar
+// ----------------------------------------------------------------------
+#sidebar {
+    // # initial
+    position: fixed;
+    top: $header-height;
+    left: 0;
+    bottom: 0;
+    overflow-y: auto;
+    z-index: z(sidebar);
+
+    width: $sidebar-width;
+    background: $sidebar-bg;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, .05);
+}
+
+// 第一層
+.navitm {
+    display: block; // for a or button
+    padding: 10px $nav-pdx 10px ($nav-pdx + $nav-item-size - 3);
+    transition: .3s ease;
+
+    color: $nav-color;
+
+    font-size: rem($nav-item-size);
+    line-height: 1.36;
+    text-indent: -($nav-pdx + $nav-item-size - 3);
+
+    &:before {
+        margin-left: 12px;
+        width: 22px;
+
+        color: $nav-icon-color;
+        text-indent: 0;
+        text-align: center;
+    }
+    &:hover, &:active, &.current {
+        color: dark(color(), 25);
+    }
+    &.current {
+        background: $body-bg;
+    }
+
+    @at-root button#{&} {
+        width: 100%;
+        text-align: inherit;
+    }
+}
+
+// # 選單摺疊效果
+.collapse {
+    // 展開鈕
+    &-toggle {
+        cursor: pointer;
+        position: relative;
+
+        // 箭頭
+        .arrow {
+            position: absolute;
+            top: 15px;
+            right: 12px;
+            border-color: $nav-icon-color;
+        }
+
+        &.active {
+            .arrow {
+                transform: rotate(-135deg);
+                top: 19px;
+            }
+        }
+    }
+
+    // 子選單
+    &-content {
+        margin-right: $gutter;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;      // 隱藏容器內部的內容（否則高度 0 也沒用）
+        transition: .35s cubic-bezier(0, 1, 0.5, 1);
+
+        &.in {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        a {
+            border-radius: 0 28px 28px 0;
+            color: $nav-color;
+
+            display: block;
+            margin-bottom: 1px;
+            padding: 8px $nav-pdx 8px ($nav-item-size + $nav-pdx + 10);
+
+            &:hover, &:active, &.active {
+                background: light(color(), 50);
+            }
+        }
+    }
+}
+

@@ -1,0 +1,211 @@
+@charset "UTF-8";
+
+$controls-color:         dark(desaturate(color(muted), 40), 7);
+$controls-color-checked: color(success);
+$controls-size:          $input-height * .6;
+
+
+//
+// == form control plug (radio,checkbox)
+// ------------------------------------------------------------
+// <label class="form-check">選項
+//     <input class="form-check-input" type="radio" name="r1">
+//     <i class="icon" aria-hidden="true"></i> => aria-hidden無障礙
+// </label>
+
+// comm
+.form-check {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+
+    padding-left: $controls-size + 5;
+
+    &:not(:only-child) {
+        margin-right: ($field-spacer*.6);
+        margin-bottom: 4px;
+    }
+
+    // 換行
+    &.stacked {
+        display: block;
+        margin-bottom: $field-spacer*.5;
+    }
+}
+
+.form-check-input {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+
+    ~ .icon {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: 350ms;
+    }
+
+    &[type="checkbox"] {
+        ~ .icon {
+            width: $controls-size;
+            height: $controls-size;
+            background: $controls-color;
+
+            // check icon
+            &:after {
+                content: '';
+                display: none;
+
+                position: absolute;
+                left: 6px;
+                top: 3px;
+                width: 7px;
+                height: 10px;
+                border: solid white;
+                border-width: 0 3px 3px 0;
+                transform: rotate(45deg);
+            }
+        }
+        &:checked ~ .icon{
+            background: $controls-color-checked;
+
+            &:after {
+                display: block;
+            }
+        }
+    }
+
+    &[type="radio"] {
+        ~ .icon {
+            background-color: $controls-color;
+            border-radius: 50%;
+            border-color: #fff;
+            width: $controls-size;
+            height: $controls-size;
+        }
+        &:checked {
+            ~ .icon {
+                box-shadow: 0 0 0 3px rgba($controls-color-checked, .5);
+                border: 3px solid #fff;
+                background: $controls-color-checked;
+            }
+        }
+    }
+}
+
+
+//
+// == 開關式 checkbox
+// 使用方法
+// <label class="switch">
+//   <input type="checkbox">
+//   <div class="slider round"></div>
+// </label>
+.slider {
+    cursor: pointer;
+    background-color: $input-border-color;
+    border-radius: $controls-size;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    transition: $input-transition;
+
+    @include el(before) {
+        position: absolute;
+        left: 2px;
+        bottom: 2px;
+        transition: $transition-duration;
+
+        height: $controls-size;
+        width: $controls-size;
+        background-color: white;
+        border-radius: 50%;
+    }
+}
+.switch {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: ($controls-size + 4)*1.5;
+    height: $controls-size + 4;
+
+    input {
+        display: none;
+
+        &:checked + .slider {
+            background: $controls-color-checked;
+            box-shadow: inset 1px 1px 1px darken($controls-color-checked, 5);
+            &:before {
+                transform: translateX($controls-size*0.63);
+            }
+        }
+        &:focus + .slider {
+            box-shadow: 0 0 1px $controls-color-checked;
+        }
+    }
+}
+
+//
+// == 後面的必填元素>不好用先隱藏
+// .form-element + .help {
+//     float: left;
+//     margin-left: -16px;
+//     margin-top: 12px;
+// }
+
+//
+// == 底線
+.input-underline {
+    @if $input-color        { color: $input-color; }
+    @if $input-border       { border: $input-border; }
+    @if $input-transition   { transition: $input-transition; }
+
+    background-color: transparent;
+    border-width: 0 0 $input-border-width 0;
+    // text-align: center;
+
+    &:focus {
+        outline: 0;
+
+        border-color: $component-active;
+
+        // 錯誤輸入
+        &:invalid {
+            border-color: color(danger);
+        }
+    }
+    &:disabled,
+    &[readonly] {
+        border-color: $input-border-color;
+    }
+}
+
+//
+// == textarea resise set
+.resize-ver {
+    resize: vertical;
+}
+.resize-hor {
+    resize: horizontal;
+}
+
+// == label字嵌在input裡面
+// eg. <label class="inner-label" data-label="起"><input type="date" name="start" class="form-element"></label>
+.inner-label {
+    &:before {
+        content: attr(data-label);
+        color: dark(color(muted), 30);
+        font-size: em(14);
+        position: absolute;
+        margin: 8px 0 0 5px;
+    }
+    .form-element {
+        padding-left: 22px;
+    }
+}

@@ -1,0 +1,92 @@
+@charset "UTF-8";
+
+//
+// == 三角形
+// -----------------------------------------------------------------
+@mixin btn(
+       $background: $btn-bg,
+       $textcolor:  $btn-color,
+       $radius:     $btn-radius,
+       $transition: $btn-transition,
+       $focus:      $btn-focus-shadow,
+       $active:     $btn-active-shadow,
+       $disabled:   $cursor-disabled,
+       $ext:        true
+   ) {
+    @include static(btn, $ext) {
+        // common
+        display: inline-block;
+        text-align: center;
+        vertical-align: middle;
+        user-select: none;
+        white-space: nowrap;
+
+        &:focus {
+            outline: 0;
+        }
+    }
+
+    @if $background { background: $background; }
+    @if $textcolor  { color: $textcolor; }
+    @if $radius     { border-radius:  $radius; }
+    @if $transition { transition: $transition; }
+
+    &:not(:disabled):not(.disabled) {
+        &:focus {
+            @if $focus { box-shadow: $focus; }
+        }
+        &:active {
+            @if $active { box-shadow: $active; }
+        }
+    }
+}
+
+@mixin btn-group {
+    // flex
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+
+    > .btn {
+        position: relative;
+        flex: 1 1 auto;
+
+        &:not(:last-child) {
+            border-right: 1px solid rgba(#000, .1);
+        }
+
+        @if $btn-radius {
+            &:not(:first-child) {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+            &:not(:last-child):not(.dropdown-toggle) {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+    }
+}
+
+@mixin btn-group-stacked {
+    > .btn {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid rgba(#000, .1);
+        }
+
+        @if $btn-radius {
+            &:not(:first-child) {
+                border-top-right-radius: 0;
+                border-top-left-radius: 0;
+            }
+            &:not(:last-child) {
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+    }
+}

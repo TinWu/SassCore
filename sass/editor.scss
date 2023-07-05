@@ -1,19 +1,113 @@
 @charset "UTF-8";
+@use 'sass:math';
 
-// import
+$line-height-base: 1.8;
+
+
+// == import
 // ------------------------------------------------------------
-@import "helper/var";
-@import "helper/mixins";
+@import "function";          // 常用函數
 
-@import "base/basic";
-@import "base/table";
+@import "_client/setting";   // 自定義+覆寫變數
+@import "variables";         // 預設變數
+@import "mixins";            // 預寫css
 
-// @import "component/classes";
+// output code
+@import "base";              // 基本Element form normalize.css v8.0.1
+@import "tables";            // 表格
+@import "utils";             // 常用小工具
 
-p {
-    text-align: left;
+
+// == main
+// ------------------------------------------------------------
+body {
+    margin: 10px 20px;
 }
 
-tbody {
-    border-left: 1px solid #fff;
+.th {
+    background: color(success);
+    color: #fff;
+}
+
+.table-list {
+    th {
+        white-space: nowrap;
+        width: 30%;
+    }
+
+    tr:hover {
+        background-color: $table-hover-color;
+
+        &, th {
+            transition: $transition-duration;
+        }
+        th {
+            background: light(color(success), 15);
+        }
+    }
+}
+
+.table-rwd {
+    @include mq-max(sm) {
+        tr, td            { display: block; }
+        thead, .empty, th { display: none; }
+        td { text-align: left; }
+
+        // <td data-th="title">text</td> => title text
+        [data-th]:before {
+            color: color(secondary);
+            content: attr(data-th)"：";
+            display: block;
+        }
+    }
+}
+
+// # 危老服務
+.faqs {
+    counter-reset: sn;
+}
+.faq {
+    &-title,
+    &-content {
+        line-height: 1.85;
+    }
+    &-title {
+        background: light(color(secondary), 85);
+        color: light(color(), 10);
+        counter-increment: sn;
+        padding: 8px 10px 8px 65px;
+        position: relative;
+
+        &::before {
+            $size: 42px;
+
+            color: light(color(secondary), 20);
+            content: counter(sn);
+            font-size: em(21);
+            font-weight: normal;
+            text-align: center;
+            line-height: $size;
+
+            display: block;
+            background: #fff;
+            border-radius: 50%;
+            width: $size;
+            height: $size;
+
+            @include center(y);
+            left: 10px;
+        }
+    }
+    &-content {
+        margin-bottom: 32px;
+    }
+}
+
+// 編輯器內頁
+.title {
+    color: color();
+    font-size: em(27);
+    font-weight: normal;
+    letter-spacing: em(1);
+    margin-bottom: em(12, 27);
 }

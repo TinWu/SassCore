@@ -1,0 +1,95 @@
+@charset "utf-8";
+
+// 自定義變數與覆寫預設變數veriables ↓
+$font-path: '../font' !default;
+
+// devanagari
+@font-face {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 200;
+    font-display: swap;
+    src: url(#{$font-path}/Poppins.woff2) format('woff2');
+    unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;
+}
+// latin-ext
+@font-face {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 200;
+    font-display: swap;
+    src: url(#{$font-path}/Poppins2.woff2) format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+// latin
+@font-face {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 200;
+    font-display: swap;
+    src: url(#{$font-path}/Poppins3.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+// == config
+// -----------------------------------------------------------------
+$index:                    false !default; // 判斷是否為前台 預設:page(true)
+$img-path:                 '../images' !default;
+
+$colors: (
+    primary:               #1EB9D2,
+    secondary:             #127281,
+    info:                  #5bc0de,
+    success:               #5cb85c,
+    warning:               #D8B257,
+    danger:                #EF8F7F,
+    muted:                 #EBEBEB
+);
+
+$border-color:             color(muted);
+
+$light-warning:            #EDE363;
+
+// == base
+// -----------------------------------------------------------------
+// font
+$font-family-sp:           'Poppins' !default;
+
+// <body>
+$body-bg:                   #fff !default;
+$body-color:                #333 !default;
+
+// <a>
+$link-color:                dark(color(), 5) !default;
+$link-hover-color:          color(secondary) !default;
+
+// <table>
+$table-border-color:        lighten(color(), 30);
+$table-bordered:            1px solid dark(color(muted), 10);
+$table-cell-padding:        8px;
+$table-hover-color:         #fffFD7;
+$table-striped-color:       #deeef5; // #f9f9f9
+
+// <form>
+$component-active:          color(info);
+$input-height:              if($index, 38px, 30px);
+// $input-color:               $body-color;
+$input-border-color:        #e5e5e5;
+$input-radius:              if($index, 5px, 3px);
+
+$input-placeholder-color:   #C7CBBD;
+
+
+// == layout
+// -----------------------------------------------------------------
+$max-width:                 1400px !default;
+
+$header-height:             175px !default;
+$header-height-m:           if($index, 145px, 140px) !default; // 行動版高度
+
+$footer-height:             448px !default;
+
+$mobile-bk:                 1119px !default;
+$mobile-zindex:             99 !default;
+
+$mobile-mw:                 230px !default; // 行動單選單寬度

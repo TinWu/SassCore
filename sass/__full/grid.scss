@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+@use "sass:math"; // 新版不能用/當除法，要引用這行用 math.div(n1,n2) 來除
+
+@import "core/function";
+@import "core/variables";
+@import "core/mixins";
+
+
+// output
+// ------------------------------------------------------------
+// 模擬 table
+.cells    { display: table; width:100%; }
+.cell     { display: table-cell; }
+
+.row {
+    // for float
+    @include clearfix;
+
+    // if 最外層沒有設 overflow: hidden; than 會出現橫向卷軸
+    margin: 0 ($gutter * -.5) em($field-spacer);
+}
+
+// 產出 col-1 ~ 12, flex-1 ~ 12
+@include make-grid-columns;
+
+// for flex
+// .flexs {
+//     @include flex-grid;
+
+//     @each $breakpoint, $value in $breakpoints {
+//         @include mq($value) {
+//             &-#{$breakpoint} { @include flex-grid; }
+//         }
+//     }
+// }
+// .flex {
+//     flex: 1;
+//     max-width: 100%;
+// }

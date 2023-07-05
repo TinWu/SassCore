@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+// $breakpoints in variables
+
+// == media
+// -----------------------------------------------------------------
+//
+// $orientation: landscape,portrait
+// @include mq(sm) => 768px
+// @include mq($orientation: landscape) => all and (orientation: landscape) 限橫向方向
+// @include mq(sm, $and: 'and (max-height: 58.75em)') => (min-width: 48em) and (max-height: 58.75em)
+// $xs-low: em(map-deep-get($breakpoints, xs)) - .01;
+// @include mq(md, lg, ', (max-width: #{$xs-low})') => @media (min-width: 61.25em) and (max-width: 74.99em), (max-width: 29.99em)
+// 2022 - new
+@mixin mq($min: 0, $max: 0, $and: false, $orientation: false) {
+    $query: '';
+    $min: if( type-of($min) == number, em($min), em(map-deep-get($breakpoints, $min)) );
+    $max: if( type-of($max) == number, em($max), em(map-deep-get($breakpoints, $max)) - .01 );
+
+    @if $min > 0     { $query: '#{$query} and (min-width: #{$min})'; }
+    @if $max > 0     { $query: '#{$query} and (max-width: #{$max})'; }
+    @if $orientation { $query: '#{$query} and (orientation: #{$orientation})'; }
+    @if $and         { $query: '#{$query + $and}'; }
+
+    // Remove unnecessary media query prefix 'all and '
+    @if ($query != '') {
+        $query: str-slice(unquote($query), 6);
+    }
+
+    @media #{$query} {
+        @content;
+    }
+}
+
+@mixin mq-max($value) {
+    @include mq($max: $value) {
+        @content;
+    };
+}
+

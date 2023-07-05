@@ -1,0 +1,196 @@
+@charset "UTF-8";
+
+/*      layout
+-----------------------------------------------------------------------*/
+body {
+    padding-top: $header-height;
+}
+
+// header
+// ----------------------------------------------------------------------
+#header {
+    @if $header-bg     { background: $header-bg; }
+    @if $header-height { height: $header-height; }
+    // position: relative;
+    z-index: z(header);
+
+    @if not $enable-RWD {
+        @include no-rwd;
+    }
+
+    // this proj only
+    padding-right: $gutter;
+    padding-left: $gutter;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.site-title {
+    @extend .my-0;
+
+    // this proj only
+    @include rem('font-size', 26);
+
+    color: light(color(info), 52);
+    font-weight: normal;
+    line-height: $header-height;
+}
+
+// 右上方資訊選單(回首頁,登出等)
+.navbar {
+    margin-top: ($header-height - (15*1.2))*.5;
+
+    .nav-link {
+        display: inline-block;
+        vertical-align: top;
+        color: light(color(info), 52);
+
+        &:hover {
+            color: light(color(warning), 70);
+        }
+    }
+
+    button.nav-link {
+        cursor: pointer;
+        transition: $transition-duration;
+    }
+
+    // 下拉式選單> 修改密碼 + 登出
+    .dropdown {
+        &-content {
+            @extend .font-md;
+
+            min-width: 160px;
+            right: 0;
+            top: 100%;
+
+            &.in {
+                top: 150%;
+            }
+        }
+    }
+}
+
+
+// main
+// ----------------------------------------------------------------------
+#main {
+    @extend .text-left;
+
+    padding: 0 $gutter 76px;
+    margin-left: $sidebar-width;
+
+    @if not $enable-RWD {
+        @include no-rwd;
+    }
+}
+
+
+// sidebar
+// ----------------------------------------------------------------------
+#sidebar {
+    // # initial
+    position: fixed;
+    top: $header-height;
+    left: 0;
+    bottom: 0;
+    overflow-y: auto;
+    z-index: z(sidebar);
+
+    width: $sidebar-width;
+    background: $sidebar-bg;
+
+    a { display: block; }
+
+    // # this proj
+    $nav-color: #4F4A49;
+    $nav-icon-color: rgba(#000, .17);
+    $padding-x:      10px;
+    $nav-icon-w:     28px + $padding-x;
+
+    // 第一層
+    .nav-item {
+        // display: block; // for a or button
+        padding: 10px 30px 10px $nav-icon-w;
+        position: relative;
+        transition: .3s ease;
+
+        border-bottom: 1px solid light($sidebar-bg, 60);
+        color: $nav-color;
+
+        line-height: 1.3;
+
+        @include rem('font-size', 17px);
+
+        // icon
+        &:before {
+            color: $nav-icon-color;
+
+            position: absolute;
+            left: 12px;
+            top: 13px;
+        }
+        &:hover, &:active, &:focus, &.current {
+            background: color(warning);
+        }
+    }
+    button.nav-item {
+        width: 100%;
+        text-align: inherit;
+    }
+
+    // # 展開收合選單
+    // 箭頭
+    .arrow {
+        position: absolute;
+        top: 15px;
+        right: 12px;
+        border-color: $nav-icon-color;
+    }
+
+    // 展開鈕
+    .collapse-toggle {
+        cursor: pointer;
+
+        &.expand {
+            .arrow {
+                transform: rotate(-135deg);
+            }
+        }
+        &.current {
+            .arrow {
+                transform: rotate(-45deg);
+            }
+        }
+    }
+
+    // 子選單
+    .collapse-content {
+        transition: .35s cubic-bezier(0, 1, 0.5, 1);
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;      // 隱藏容器內部的內容（否則高度 0 也沒用）
+
+        border-left: 4px solid dark($sidebar-bg, 15);
+        background: dark($sidebar-bg, 3.5);
+
+        &.in {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        a {
+            padding: 8px $padding-x 8px ($nav-icon-w - 4);
+
+            color: $nav-color;
+
+            &:hover, &:active, &:focus, &.active {
+                background: $body-bg;
+            }
+        }
+    }
+}
+

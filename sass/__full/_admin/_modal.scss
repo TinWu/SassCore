@@ -1,0 +1,119 @@
+@charset "UTF-8";
+
+// == modal (css版)
+// <div id="uploadFile" class="modal">
+//   <form class="modal-content animate-top">
+//     <header class="modal-header">
+//       <button type="button" class="modal-close" data-close="modal">&times;</button> => jquery
+//       <a href="#" class="modal-close">&times;</button>
+//     </header>
+//     <footer class="modal-footer">
+//       <button type="button" data-close="modal">回列表</button>
+//     </footer>
+//   </form>
+// </div>
+
+// overlay
+// html.overlay + body 隱藏卷軸
+.overlay {
+    &, body {
+        height: 100%; // for safari bug
+    }
+    body {
+        overflow: hidden;
+    }
+}
+.modal {
+    overflow-y: auto;
+    z-index: z(overlay);
+    -webkit-overflow-scrolling: touch;  // for safari bug
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    background-color: #000;
+    background-color: rgba(#000, .6);
+
+    @if $enable-RWD {
+        @include mq-max(break(sm, -1)) {
+            padding-top: 5%;
+        }
+    }
+
+    // fade effect
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s .2s, opacity .2s ease-in-out;
+
+    // Display the modal when targeted
+    &.in {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity .2s ease-in-out;
+    }
+
+    $con-pd: get('l');
+
+    // The modal box
+    &-container {
+        @extend .center, .my-70, %bg-white;
+
+        box-shadow: 0 0 0 4px rgba(#fff, .15);
+        padding: 0 $con-pd $con-pd $con-pd;
+        width: 80%;
+        max-width: 960px;
+
+        @include diy-animate(slide-down, .4s) {
+            from { top: -300px; opacity: 0; }
+            to   { top: 0; opacity: 1; }
+        }
+
+        form:last-child {
+            @extend .mb-0;
+        }
+    }
+
+    // close btn
+    &-close {
+        @extend %text-white, .font-xxxl;
+
+        position: absolute;
+        top: -5px;
+        right: get(s);
+        transition: .35s ease-in;
+
+        &:hover, &:focus {
+            color: color(warning);
+            cursor: pointer;
+        }
+    }
+
+    %resize {
+        margin-left: (-$con-pd);
+        margin-right: (-$con-pd);
+    }
+
+    // header
+    &-header {
+        @extend %text-white, .bg-primary, .font-xl, .mb-30, %resize;
+
+        padding: get('10') 40px get('10') get('20');
+        position: relative;
+    }
+
+    // footer
+    &-footer {
+        @extend .py-15, .mt-30, .text-center, %resize;
+
+        border-top: 2px solid rgba(#000, .03);
+        background: light(color(info), 95);
+        margin-bottom: (-$con-pd);
+
+        .btn {
+            @extend .mx-5;
+        }
+    }
+}

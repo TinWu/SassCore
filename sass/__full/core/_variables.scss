@@ -1,0 +1,261 @@
+@charset "UTF-8";
+
+//
+// == config
+// ----------------------------------------------------------------------
+$enable-RWD:                     true !default;
+$lte7:                           false !default;
+
+// function> map-get> color()
+$colors: (
+    primary:    #25BB8D,
+    secondary:  #175361,
+    muted:      #aaa,
+    success:    #7BD160,
+    info:       #007BA1,
+    warning:    #C7EC99,
+    danger:     #FF5F73
+) !default;
+
+//
+// == common
+// ----------------------------------------------------------------------
+$border-width:                   1px !default;
+$border-color:                   #ddd !default;
+$border-radius:                  .25em !default;
+
+$component-active:               color() !default;
+$cursor-disabled:                not-allowed !default;
+$transition-duration:            300ms !default; // effect times
+
+//
+// == base
+// -----------------------------------------------------------------
+
+// font
+$font-size-base:                 16px !default;
+$line-height-base:               1.2 !default;
+$font-family-sp:                 false !default;
+$font-family:                    system-ui, -apple-system, "微軟正黑體", "Microsoft JhengHei", '游明朝体', YuMincho, '游明朝', 'Yu Mincho', "Hiragino Kaku Gothic Pro", Meiryo, "MS PGothic", sans-serif !default;
+$font-family-base:               if($font-family-sp, append($font-family-sp, $font-family, comma), $font-family) !default;
+
+// <body>
+$body-bg:                        #fff !default;
+$body-color:                     #4d4d4d !default;
+$body-letter-spacing:            .03em !default;
+
+// <h1>
+$font-size-h1:                   $font-size-base * 2.25 !default;   // 36px
+$h1-margin:                      .67em 0 !default;
+
+// <hr>
+$hr-margin:                      1.25em 0 !default;
+$hr-border:                      solid $border-color !default;
+$hr-width:                       $border-width !default;
+
+// <a>
+$link-color:                     color() !default;
+$link-decoration:                none !default;
+$link-hover-color:               darken($link-color, 15) !default;
+$link-hover-decoration:          false !default;
+$link-transition:                color 350ms, background 300ms ease !default;
+
+// <button>
+$button-focus:                   0 !default; // button:focus { outline: 0; }
+
+//
+// == table
+// -----------------------------------------------------------------
+$table-color:                    false !default;
+$table-bg:                       false !default;
+$table-border-width:             $border-width !default;
+$table-border-style:             solid !default;
+$table-border-color:             $border-color !default;
+
+$table-cell-text-align:          center !default;
+$table-cell-vertical-align:      middle !default;
+$table-cell-border-width:        0 0 $table-border-width !default;
+$table-cell-padding:             .35em .3em !default;
+
+// 滑鼠移過變色
+$table-hover-color:              #fffFD7 !default;
+
+// 斑馬紋條列式表格
+$table-striped-color:            #f8f9fa !default; // #f9f9f9
+$table-bg-active:                false !default;
+$table-striped-list:             'even' !default;   // even, odd
+
+$table-rwd:                      true !default;
+
+//
+// == Buttons + Forms
+// -----------------------------------------------------------------
+$input-btn-height:               28px !default;
+$input-btn-font-size:            15px !default;
+$input-btn-line-height:          $line-height-base !default; // base:1.2
+$input-btn-space:                $input-btn-height*.25 !default; // padding-x
+$input-btn-radius:               $border-radius !default;
+
+$input-btn-focus-width:          .2rem !default;
+$input-btn-focus-opacity:        .3 !default;
+$input-btn-focus-box-shadow:     0 0 0 $input-btn-focus-width rgba($component-active, $input-btn-focus-opacity) !default;
+
+$input-btn-disabled-bg:          color(muted) !default;
+
+//
+// == btn
+// -----------------------------------------------------------------
+// 尺寸
+$btn-height:                     $input-btn-height !default;
+$btn-font-size:                  $input-btn-font-size !default;
+$btn-line-height:                $input-btn-line-height !default;
+$btn-space:                      $input-btn-space !default; // padding-x
+
+$btn-bg:                         color() !default;
+$btn-color:                      #fff !default;
+$btn-radius:                     $input-btn-radius !default;
+$btn-transition:                 $transition-duration !default;
+$btn-hover-bg:                   if( length($btn-bg)>1, darken(nth($btn-bg, 1), 6), darken($btn-bg, 6) ) !default;
+
+$btn-disabled-bg:                $input-btn-disabled-bg !default;
+$btn-disabled-color:             dark($input-btn-disabled-bg, 26) !default;
+
+$btn-focus-shadow:               $input-btn-focus-box-shadow !default;
+$btn-active-shadow:              inset 0 3px 5px rgba(#000, $input-btn-focus-opacity) !default;
+
+//
+// == form
+// -----------------------------------------------------------------
+$form-appearance:                none !default;
+
+// 尺寸
+$input-border-width:             $border-width !default;
+$input-height:                   $input-btn-height !default; //if($input-border-width, $input-btn-height - ($input-border-width * 2), $input-btn-height)
+$input-font-size:                $input-btn-font-size !default;
+$input-line-height:              $input-btn-line-height !default;
+$input-space:                    $input-btn-space !default; // padding-x
+
+$input-bg:                       #fff !default;
+$input-color:                    $body-color !default;
+$input-border-color:             $border-color !default;
+$input-border:                   $input-border-width solid $input-border-color !default;
+$input-radius:                   $input-btn-radius !default;
+$input-transition:               border-color ease-in-out $transition-duration, box-shadow ease-in-out $transition-duration !default;
+
+$input-inner-shadow:             inset 0 1px 1px rgba(#000,.075) !default;
+$input-focus-shadow:             $input-btn-focus-box-shadow !default;
+
+$input-disabled-bg:              $input-btn-disabled-bg !default;
+$input-placeholder-color:        lighten($input-color, 40) !default;
+
+$input-stylus: () !default;
+$input-stylus: map-merge(
+    (
+        is-focus: (
+            border-color: $component-active,
+            box-shadow: if($input-inner-shadow, append(#{$input-inner-shadow}, $input-focus-shadow, comma), $input-focus-shadow),
+            is-invalid: (
+                border-color: #FF4444,
+                box-shadow: 0 0 0 $input-btn-focus-width rgba(#FF4444, $input-btn-focus-opacity)
+            )
+        ),
+        is-placeholder: (
+            color: $input-placeholder-color
+        ),
+        is-disabled: ( // = readonly
+            background-color: $input-disabled-bg
+        )
+    ),
+    $input-stylus
+);
+
+$select-caret:  url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$input-placeholder-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>") !default;
+$select-stylus: () !default;
+$select-stylus: map-merge(
+    (
+        padding: 0 1.4em 0 decimal( em($input-space, $input-font-size), 2),
+        background: $input-bg escape-svg($select-caret) no-repeat right 6px center / 10px 12px
+    ),
+    $select-stylus
+);
+
+$input-group-btn: (
+    color: $btn-color,
+    background: $btn-bg,
+    is-hover: (
+        background: $btn-hover-bg,
+    )
+) !default;
+
+$label-my: pdy($input-height, $input-font-size, $input-line-height) !default;
+$field-spacer: em(15px) !default;
+
+
+//
+// == util
+// -----------------------------------------------------------------
+$spacer: $font-size-base !default;  // 16px
+
+// function> map-get: spacer()
+$spacers: () !default;
+$spacers: map-merge(
+    (
+        '0':   0,
+        's':   $spacer*.5,     // 8px
+        'm':   $spacer,        // 16px
+        'l':   $spacer*1.5,    // 24px
+        'xl':  $spacer*3,      // 48px
+        '2':   $spacer*.125,   // 2px
+        '5':   $spacer*.3125,  // 5px
+        '10':  $spacer*.625,   // 10px
+        '15':  $spacer*.9375,  // 15px
+        '20':  $spacer*1.25,   // 20px
+        '30':  $spacer*1.875,  // 30px
+        '60':  $spacer*3.75,   // 60px
+        '70':  $spacer*4.375,  // 70px
+    ),
+    $spacers
+);
+
+// function> map-get> get()
+$font-config: () !default;
+$font-config: map-merge(
+    (
+        font: (
+            tiny:   12px,
+            sm:     14px,
+            md:     15px,
+            lg:     17px,
+            xl:     24px,
+            xxl:    32px,
+            xxxl:   48px,
+            jumbo:  64px
+        )
+    ),
+    $font-config
+);
+
+$config: map-merge($spacers, $font-config) !default;
+
+
+
+//
+// == grid, RWD
+// -----------------------------------------------------------------
+$gutter:                16px !default;
+$grid-columns:          12 !default;
+$grid-gap:              1.6 !default;
+
+$mobile:                375px !default;  // 380px,
+$phone:                 568px !default;  // 480px,
+$tablet:                768px !default;  // 768px,
+$desktop:               1024px !default; // 980px,
+$wide:                  1200px !default;
+$wider:                 1400px !default;
+
+$breakpoints: (
+    xs:  $phone,
+    sm:  $tablet,
+    md:  $desktop,
+    lg:  $wide
+);

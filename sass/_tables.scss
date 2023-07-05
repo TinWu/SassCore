@@ -1,0 +1,93 @@
+@charset "UTF-8";
+
+// common
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+
+    @if $table-bg    { background-color: $table-bg; }
+    @if $table-color { color: $table-color; }
+
+    // 固定欄寬度
+    &.fixed {
+        table-layout: fixed;
+        word-wrap: break-word;
+        word-break: break-all;
+    }
+}
+
+th, td {
+    text-align: $table-cell-text-align;
+    vertical-align: $table-cell-vertical-align;
+
+    border: $table-bordered;
+    border-width: $table-cell-border-width;
+    padding: $table-cell-padding;
+
+    thead & {
+        border-width: 0;
+    }
+}
+
+thead,
+tbody:nth-last-child(n+2) {
+    border-bottom: $table-border-width*2 $table-border-style $table-border-color;
+}
+
+
+// plugin
+// 四邊框線
+.table-bordered {
+    border: $table-bordered;
+
+    th, td {
+        border-width: $table-border-width;
+    }
+}
+
+// 斑馬紋條 (必須在變色上面)
+@if $table-striped-color {
+    .striped {
+        tr, &-tbody tbody {
+            &:nth-child(#{$table-striped-list}) {
+                background-color: $table-striped-color;
+            }
+        }
+    }
+}
+
+// 滑鼠移過變色
+@if $table-hover-color {
+    .table-hover {
+        tr, th, td {
+            transition: $transition-duration;
+        }
+        tbody {
+            &:hover > tr > [rowspan],
+            > tr:hover {
+                background-color: $table-hover-color;
+            }
+            > tr:hover {
+                th, td {
+                    background-color: transparent !important;
+                }
+            }
+        }
+    }
+    // .tbody-hover {
+    //     tbody {
+    //         &:hover > tr > [rowspan] {
+    //             @extend %table-hover;
+    //         }
+
+    //         > tr:hover {
+    //             @extend %table-hover;
+
+    //             th, td {
+    //                 @extend %table-hover-reset;
+    //             }
+    //         }
+    //     }
+    // }
+}

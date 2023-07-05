@@ -1,0 +1,352 @@
+@charset "utf-8";
+
+//       layout
+// -----------------------------------------------------------------------
+html, body {
+    height: 100%;
+}
+
+#wrapper {
+    min-height: 100%;
+    margin-bottom: -$footer-height;
+    padding-bottom: $footer-height + 30;
+}
+
+.container {
+    @include container;
+}
+
+@include mq(md) {
+    #sidebar {
+        float: right;
+        width: $sidebar-width;
+    }
+
+    #content {
+        &.pull-left {
+            float: left;
+            width: calc(100% - #{$sidebar-width+30});
+        }
+    }
+}
+
+//       header
+// -----------------------------------------------------------------------
+#header {
+    margin: 0 auto 50px;
+    padding: 30px 30px 0;
+    z-index: 1;
+
+    border-bottom: 9px solid #292929;
+
+    @include clearfix;
+
+    @include mq(sm) {
+        position: relative;
+
+        @include el(before, $ext:false) {
+            position: absolute;
+            left: 0;
+            bottom: 3px;
+            border-bottom: 1px solid #dadada;
+            width: 100%;
+        }
+    }
+}
+
+// logo
+.logo {
+    background: url(#{$img-path}/logo.png) 0 0 no-repeat;
+    cursor: pointer;
+    color: #888;
+    font-size: em(12);
+    font-weight: normal;
+
+    float: left;
+    min-height: 60px;
+    padding: 42px 0 0 108px;
+    margin: 0 0 25px;
+
+    span {
+        @include text-hide;
+    }
+}
+
+// 主選單
+#menu {
+    @include mq($mobile-bk + 1) {
+        float: right;
+        margin-top: 15px;
+    }
+
+    // 手機選單樣式
+    @include mq-max($mobile-bk) {
+        // comm
+        // position: fixed;
+        // left: 0;
+        // top: 0;
+        // bottom: 0;
+        // width: 100%;
+        // overflow-y: auto;
+        // z-index: $mobile-zindex;
+
+        // theme
+        clear: both;
+
+        // effect
+        height: 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: 350ms ease, opacity 200ms;
+
+        &.open {
+            padding-bottom: 30px;
+            height: auto;
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
+.nav-item {
+    min-width: 90px;
+    position: relative;
+
+    @include mq(lg) {
+        min-width: 110px;
+    }
+
+    // icon arrow
+    @include el(after) {
+        width: 6px;
+        height: 6px;
+        border: solid #999;
+        border-width: 0 1px 1px 0;
+        transform: rotate(45deg);
+        transition: 400ms 50ms;
+
+        opacity: 0;
+
+        @include center(6px);
+        top: 5px;
+    }
+
+    @include mq($mobile-bk + 1) {
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+        margin: 0 10px;
+
+        &:hover, &:active, &.current {
+            .en { opacity: 0; }
+            .ch { opacity: 1; }
+            &::after {
+                top: 22px;
+                opacity: 1;
+            }
+        }
+    }
+    @include mq-max($mobile-bk) {
+        display: block;
+        margin: 0;
+        padding: 10px;
+        border-bottom: 1px solid #dadada;
+
+        &:hover, &:active, &.current {
+            .en { color: #000; }
+            .ch { color: color(); }
+        }
+    }
+}
+.nav-circle {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    width: 28px;
+    height: 28px;
+    margin-right: 5px;
+    position: relative;
+    transition: .4s;
+
+    background-color: #777;
+    border-radius: 50%;
+
+    @include mq-max($mobile-bk) {
+        margin-top: 15px;
+    }
+
+    &:hover, &.current {
+        background-color: color();
+    }
+
+    &::before {
+        color: #fff;
+        font-size: em(13);
+        line-height: 28px !important;
+        margin: 0 !important;
+        top: 0 !important;
+    }
+}
+
+// 手機選單展開收合鈕
+.menu-toggle {
+    display: none;
+
+    cursor: pointer;
+    transition: 600ms;
+    z-index: $mobile-zindex + 1;
+
+    // theme
+    $toggle-pd: 10px;
+    $i-space:   4px;
+
+    float: right;
+
+    background: #333;
+    margin-top: 10px;
+    padding: $toggle-pd $toggle-pd ($toggle-pd - $i-space);
+
+    i {
+        display: block;
+        width: 22px;
+        height: 3px;
+        margin-bottom: $i-space;
+        border-radius: 3px;
+        background: #fff;
+        transition: 400ms;
+
+        &:first-child {
+            transform-origin: 0% 0%;
+        }
+        &:last-child {
+            transform-origin: 0% 100%;
+        }
+    }
+
+    &:hover,
+    &.active {
+        background: color();
+    }
+
+    &.active {
+        i {
+            transform: rotate(45deg) translate(3px, -3px); //translate(-2px, -1px)
+
+            &:nth-last-child(2) {
+                opacity: 0;
+                transform: rotate(0deg) scale(0.2, 0.2);
+            }
+            &:last-child {
+                transform: rotate(-45deg) translate(3px, 4px); //translate(0, -1px)
+            }
+        }
+    }
+
+    @include mq-max($mobile-bk) {
+        display: block;
+    }
+}
+
+//       footer
+// -----------------------------------------------------------------------
+#footer {
+    min-height: $footer-height;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    border-top: 7px solid color(muted);
+
+    font-size: em(14);
+
+    @include container;
+}
+
+.copyright {
+    margin-top: 12px;
+
+    em {
+        font-style: normal;
+        font-size: em(20, 14);
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+}
+
+.foot-info {
+    list-style: none;
+    line-height: 1.6;
+
+    @include mq-max(sm) {
+        padding-left: 0;
+    }
+
+    @include mq(sm, md) {
+        border-left: 1px solid color(muted);
+    }
+
+    li {
+        padding-left: 30px;
+        position: relative;
+
+        @include mq(md) {
+            float: left;
+            width: 50%;
+
+            &:last-child {
+                border-left: 1px solid color(muted);
+            }
+        }
+
+        &::before {
+            font-size: em(22, 14);
+            position: absolute !important;
+            left: 0;
+        }
+
+        &.addr {
+            padding-bottom: 12px;
+
+            @include mq(md) {
+                margin-right: 15px;
+                width: 200px;
+            }
+        }
+        &.contact {
+            @include mq(md) {
+                padding-left: 52px;
+
+                &::before {
+                    left: 16px;
+                }
+            }
+        }
+    }
+}
+
+.gotop {
+    background: #e4e4e4;
+    border-radius: 50%;
+    color: $body-color;
+    text-align: center;
+
+    display: block;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+
+    transition: 300ms;
+    opacity: .5;
+    z-index: 100;
+
+    &::before {
+        font-size: em(9);
+        margin: -2px 0 0 -4px !important;
+        line-height: 40px !important;
+    }
+
+    &:hover {
+        color: #000;
+        opacity: 1;
+    }
+}

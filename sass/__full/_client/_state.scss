@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+//
+// == 情境 Contextual colors
+// ------------------------------------------------------------
+
+// reset default value
+button[class*="hover-"] {
+    padding: 0;
+    text-align: inherit;
+    transition: $transition-duration;
+}
+// $colors in variables.scss
+@each $theme, $color in $colors {
+    .text-#{$theme}, .hover-#{$theme} {
+        color: $color;
+    }
+    .hover-#{$theme} {
+        &:hover, &:focus {
+            color: dark($color, 20);
+        }
+    }
+    .bg-#{$theme} {
+        background: $color;
+    }
+}
+

@@ -1,0 +1,29 @@
+{
+	"build_systems":
+	[
+		{
+			"cmd": ["sass", "--watch", "${project_path:${folder}}", "--no-quiet", "--no-source-map"], //$file:${file_path}/css/${file_base_name}.css
+			"file_regex": "(/|\\\\|^)(?!_)(\\w+)\\.(sass|less|scss)$",
+			"line_regex": "Line ([0-9]+):",
+			"name": "sass-proj",
+			"working_dir": "${project_path:${folder}}", //"D:\\scssMin"
+			"selector": "source.sass, source.scss",
+			"windows":
+			{
+				"shell": "true",
+			},
+		}
+	],
+	"folders":
+	[
+		{
+			"path": ".",
+		},
+		{
+			"path": "K:\\work\\_sass\\bootstrap",
+		},
+		{
+			"path": "K:\\work\\_sass\\pure"
+		},
+	],
+}

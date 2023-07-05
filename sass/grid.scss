@@ -1,9 +1,47 @@
 @charset "UTF-8";
+@use 'sass:math';
 
-@import "helper/function";
-@import "helper/var";
-@import "helper/mixins";
+$gutter: 30px;
 
-@import "base/extend";
+@import "function";  // 常用函數
+@import "variables"; // 預設變數
+@import "mixins";    // 預寫css
 
-@import "layout/grid";
+
+// == output
+// ------------------------------------------------------------
+
+//
+// 2021 upt flex
+.row {
+    // for flex
+    @include flex(wrap);
+    margin: 0 ($gutter * -.5);
+
+    @each $breakpoint, $value in $breakpoints {
+        @include mq($value) {
+            &-#{$breakpoint} {
+                @include flex(wrap);
+                margin: 0 ($gutter * -.5);
+            }
+        }
+    }
+}
+
+
+// 產出 col-1 ~ 12
+@include make-grid-columns(12, $gutter);
+
+
+// 清除內距
+.pd0 {
+    [class*='col-'] {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    &[class*='row'] {
+        // if 最外層沒有設 overflow: hidden; => 會出現橫向卷軸
+        margin-left: 0;
+        margin-right: 0;
+    }
+}

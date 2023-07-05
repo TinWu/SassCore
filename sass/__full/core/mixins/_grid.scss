@@ -1,0 +1,86 @@
+@charset "UTF-8";
+
+// 使用方法 四捨五入: decimal($number, 2) in function
+// (100% / 12 * 1) - (1.6 * 12)
+// width: grid(1, 12, 1.6); => width: 6.86%;
+@function grid($i, $columns, $gap: null) {
+    $width: math.div(100%, $columns) * $i;
+
+    // if $gap 有值
+    @if $gap {
+        // if 單位是px時轉換為百分比 else 都去單位
+        $gap: if(unit($gap) == px, percentage( math.div($gap, $font-size-base) ), strip-unit($gap));
+        $width: $width - $gap;
+    }
+
+    @return decimal($width, 2);
+}
+
+@mixin make-grid-columns($columns: 12, $gap: $grid-gap, $break: $breakpoints) {
+
+    // 全營幕通用
+    %grid-comm {
+        float: left;
+        padding-left: ($gap*.5);
+        padding-right: ($gap*.5);
+        position: relative;   // For pull, push
+        min-height: 1px;      // Prevent columns from collapsing when empty
+    }
+    @for $i from 1 through $columns {
+        .col-#{$i} {
+            @extend %grid-comm;
+            width: grid($i, $columns);
+        }
+        @if $i != $columns {
+            @each $abbrev, $prop in ( push: left, pull: right, offset: margin-left ) {
+                .#{$abbrev}-#{$i} {
+                    #{$prop}: grid($i, $columns);
+                }
+            }
+        }
+    }
+
+    @each $breakpoint, $value in $break {
+
+        @include mq($value) {
+            $col-selector: ();
+
+            @for $i from 1 through $columns {
+                $col-selector: $col-selector, '.col-#{$breakpoint}-#{$i}';
+
+                .col-#{$breakpoint}-#{$i} {
+                    width: grid($i, $columns);
+                }
+
+                @if $i != $columns {
+                   @each $abbrev, $prop in ( push: left, pull: right, offset: margin-left ) {
+                       .#{$abbrev}-#{$breakpoint}-#{$i} {
+                           #{$prop}: grid($i, $columns);
+                       }
+                   }
+                }
+            }
+
+            #{$col-selector} {
+                float: left;
+                padding-left: ($gap*.5);
+                padding-right: ($gap*.5);
+                position: relative;   // For pull, push
+                min-height: 1px;      // Prevent columns from collapsing when empty
+            }
+
+            // flex
+            // .flex-#{$breakpoint} {
+            //     flex-basis: 0;
+            //     flex-grow: 1px;
+            //     max-width: 100%;
+            // }
+            // .flex-#{$breakpoint}-auto {
+            //     flex: 0 0 auto;
+            //     width: auto;
+            //     max-width: 100%; // Reset earlier grid tiers
+            // }
+        }
+    }
+}
+

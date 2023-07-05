@@ -1,0 +1,281 @@
+@charset "UTF-8";
+
+// == base
+// -----------------------------------------------------------------
+// ## 去單位
+@function strip-unit($number) {
+    @if type-of($number) == "number" and not unitless($number) {
+        @return math.div($number, ($number * 0 + 1));
+    }
+    @return $number;
+}
+
+// ## 四捨五入幾位數
+// _decimal.scss | MIT License | gist.github.com/terkel/4373420
+// @example
+//     decimal(0.333)    => 0
+//     decimal(0.333, 1) => 0.3
+//     decimal(0.333, 2) => 0.33
+//     decimal(0.666)    => 1
+//     decimal(0.666, 1) => 0.7
+//     decimal(0.666, 2) => 0.67
+
+@function decimal($number, $digits: 0, $mode: round) {
+    $n: 1;
+
+    // $number must be a number
+    @if type-of($number) != number { @return $number; }
+
+    // $digits must be a unitless number
+    @if type-of($digits) != number { @return $number; }
+    @else if not unitless($digits) { @return $number; }
+
+    @if $digits > 0 {
+        @for $i from 1 through $digits {
+            $n: $n * 10;
+        }
+    }
+
+    @if $mode == round      { @return math.div(round($number * $n), $n); } // 四捨五入
+    @else if $mode == ceil  { @return math.div(ceil($number * $n), $n); }  // 無條件進位
+    @else if $mode == floor { @return math.div(floor($number * $n), $n); } // 無條捨去
+    @else                   { @return $number; }
+}
+
+// == px to other
+// -----------------------------------------------------------------
+@function em($number, $base: $font-size-base, $decimal: 2) {
+    @if unit($number) == px or unitless($number) {
+        $number: math.div(strip-unit($number), strip-unit($base)) * 1em;
+    }
+    @if $decimal {
+        $number: decimal($number, $decimal);
+    }
+    @return $number;
+}
+
+// to rem
+@function rem($number, $base: $font-size-base) {
+    @if unit($number) == px or unitless($number) {
+        $math: math.div( strip-unit($number), strip-unit($base) ) * 1rem;
+        $number: if($number > 0, decimal($math, 2), 0);
+    }
+    @return $number;
+}
+
+// == string 相關
+// -----------------------------------------------------------------
+// ## 取代變數 @author Hugo Giraudel src: https://css-tricks.com/snippets/sass/str-replace-function/
+// => 改用這線上 https://yoksel.github.io/url-encoder/
+@function str-replace($string, $search, $replace: "") {
+    $index: str-index($string, $search);
+
+    @if $index {
+        @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+    }
+
+    @return $string;
+}
+
+@function escape-svg($string) {
+    @each $char, $encoded in (
+        ("<", "%3C"),
+        (">", "%3E"),
+        ("#", "%23"),
+        ("(", "%28"),
+        (")", "%29"),
+    ) {
+        $string: str-replace($string, $char, $encoded);
+    }
+    @return 'url("data:image/svg+xml,' + $string + '")';
+}
+
+// == 取得多層次map的值
+// href https://itnext.io/advanced-use-of-sass-maps-bd5a47ca0d1a
+// -----------------------------------------------------------------
+// map-deep-get($config, "heading", "font", "weight")
+@function map-deep-get($map, $keys...) {
+    @if type-of($map) != 'map' {
+        @error 'The argument $map: `#{$map}` is of incorrect type: `#{type-of($map)}`. Type of `Map` is required!';
+    }
+    @each $key in $keys {
+        $map: map-get($map, $key);
+    }
+    @return $map;
+}
+
+// @src https://itnext.io/advanced-use-of-sass-maps-bd5a47ca0d1a
+// ## 字串 =>　list
+// str-explode('some-things-will-never-change', '-') => @return some, things, will, never, change
+@function str-explode($string, $delimiter: '') {
+    @if type-of($string) != 'string'         { @error 'not `#{$string}`'; }
+    @else if type-of($delimiter) != 'string' { @error 'not `#{$string}`'; }
+
+    $result: ();
+    $running: true;
+
+    @if str-length($delimiter) == 0 {
+        @for $i from 1 through str-length($string) {
+            $result: append($result, str-slice($string, $i, $i));
+        }
+        @return $result;
+    }
+
+    @while $running {
+        $index: str-index($string, $delimiter);
+
+        @if $index != null {
+            $item: str-slice($string, 1, ($index - 1));
+            $result: append($result, $item);
+            $string: str-slice($string, ($index + str-length($delimiter)));
+        }
+        @else {
+            $running: false;
+        }
+    }
+
+    @return append($result, $string);
+}
+// get('heading.font.weight', $config)
+@function get($key, $map: $config) {
+    $keys: str-explode($key, '.');
+
+    @return map-deep-get($map, $keys...);
+}
+
+// == color
+// -----------------------------------------------------------------
+// 取顏色的亮度
+// luminance(#fff) => 1
+// luminance(#000) => 0
+@function luminance($color) {
+    $linear-channel-values: 0 .0003035269835488375 .000607053967097675 .0009105809506465125 .00121410793419535 .0015176349177441874 .001821161901293025 .0021246888848418626 .0024282158683907 .0027317428519395373 .003035269835488375 .003346535763899161 .003676507324047436 .004024717018496307 .004391442037410293 .004776953480693729 .005181516702338386 .005605391624202723 .006048833022857054 .006512090792594475 .006995410187265387 .007499032043226175 .008023192985384994 .008568125618069307 .009134058702220787 .00972121732023785 .010329823029626936 .010960094006488246 .011612245179743885 .012286488356915872 .012983032342173012 .013702083047289686 .014443843596092545 .01520851442291271 .01599629336550963 .016807375752887384 .017641954488384078 .018500220128379697 .019382360956935723 .0202885630566524 .021219010376003555 .022173884793387385 .02315336617811041 .024157632448504756 .02518685962736163 .026241221894849898 .027320891639074894 .028426039504420793 .0295568344378088 .030713443732993635 .03189603307301153 .033104766570885055 .03433980680868217 .03560131487502034 .03688945040110004 .0382043715953465 .03954623527673284 .04091519690685319 .042311410620809675 .043735029256973465 .04518620438567554 .046665086336880095 .04817182422688942 .04970656598412723 .05126945837404324 .052860647023180246 .05448027644244237 .05612849004960009 .05780543019106723 .0595112381629812 .06124605423161761 .06301001765316767 .06480326669290577 .06662593864377289 .06847816984440017 .07036009569659588 .07227185068231748 .07421356838014963 .07618538148130785 .07818742180518633 .08021982031446832 .0822827071298148 .08437621154414882 .08650046203654976 .08865558628577294 .09084171118340768 .09305896284668745 .0953074666309647 .09758734714186246 .09989872824711389 .10224173308810132 .10461648409110419 .10702310297826761 .10946171077829933 .1119324278369056 .11443537382697373 .11697066775851084 .11953842798834562 .12213877222960187 .12477181756095049 .12743768043564743 .1301364766903643 .13286832155381798 .13563332965520566 .13843161503245183 .14126329114027164 .14412847085805777 .14702726649759498 .14995978981060856 .15292615199615017 .1559264637078274 .1589608350608804 .162029375639111 .1651321945016676 .16826940018969075 .1714411007328226 .17464740365558504 .17788841598362912 .18116424424986022 .184474994500441 .18782077230067787 .19120168274079138 .1946178304415758 .19806931955994886 .20155625379439707 .20507873639031693 .20863687014525575 .21223075741405523 .21586050011389926 .2195261997292692 .2232279573168085 .22696587351009836 .23074004852434915 .23455058216100522 .238397573812271 .24228112246555486 .24620132670783548 .25015828472995344 .25415209433082675 .2581828529215958 .26225065752969623 .26635560480286247 .2704977910130658 .27467731206038465 .2788942634768104 .2831487404299921 .2874408377269175 .29177064981753587 .2961382707983211 .3005437944157765 .3049873140698863 .30946892281750854 .31398871337571754 .31854677812509186 .32314320911295075 .3277780980565422 .33245153634617935 .33716361504833037 .3419144249086609 .3467040563550296 .35153259950043936 .3564001441459435 .3613067797835095 .3662525955988395 .3712376804741491 .3762621229909065 .38132601143253014 .386429433787049 .39157247774972326 .39675523072562685 .4019777798321958 .4072402119017367 .41254261348390375 .4178850708481375 .4232676699860717 .4286904966139066 .43415363617474895 .4396571738409188 .44520119451622786 .45078578283822346 .45641102318040466 .4620769996544071 .467783796112159 .47353149614800955 .4793201831008268 .4851499400560704 .4910208498478356 .4969329950608704 .5028864580325687 .5088813208549338 .5149176653765214 .5209955732043543 .5271151257058131 .5332764040105052 .5394794890121072 .5457244613701866 .5520114015120001 .5583403896342679 .5647115057049292 .5711248294648731 .5775804404296506 .5840784178911641 .5906188409193369 .5972017883637634 .6038273388553378 .6104955708078648 .6172065624196511 .6239603916750761 .6307571363461468 .6375968739940326 .6444796819705821 .6514056374198242 .6583748172794485 .665387298282272 .6724431569576875 .6795424696330938 .6866853124353135 .6938717612919899 .7011018919329731 .7083757798916868 .7156935005064807 .7230551289219693 .7304607400903537 .7379104087727308 .7454042095403874 .7529422167760779 .7605245046752924 .768151147247507 .7758222183174236 .7835377915261935 .7912979403326302 .799102738014409 .8069522576692516 .8148465722161012 .8227857543962835 .8307698767746546 .83879901174074 .846873231509858 .8549926081242338 .8631572134541023 .8713671191987972 .8796223968878317 .8879231178819663 .8962693533742664 .9046611743911496 .9130986517934192 .9215818562772946 .9301108583754237 .938685728457888 .9473065367331999 .9559733532492861 .9646862478944651 .9734452903984125 .9822505503331171 .9911020971138298 1;
+    // $linear-channel-values are our Lookup Table of constants
+    $red: nth($linear-channel-values, red($color) + 1);
+    $green: nth($linear-channel-values, green($color) + 1);
+    $blue: nth($linear-channel-values, blue($color) + 1);
+    $calculation: .2126 * $red + .7152 * $green + .0722 * $blue;
+    @return $calculation;
+}
+
+// 算顏色對比值, w3c建議對比為 4.5 以上
+@function contrast($fg, $bg:#fff) {
+    // Adapted from: https://github.com/LeaVerou/contrast-ratio/blob/gh-pages/color.js
+    // Formula: http://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
+    $l1: luminance($fg) + 0.05;
+    $l2: luminance($bg) + 0.05;
+    $r: math.div($l1, $l2);
+
+    $ratio: if( $l2 > $l1, math.div(1, $r), math.div(round($r * 100), 100) );
+
+    @return $ratio;
+}
+
+// 反轉色
+// [ref] https://alex-page.github.io/sass-a11ycolor/#main-function-AU-a11ycolor
+// or https://css-tricks.com/programming-sass-to-create-accessible-color-combinations/
+@function a11ycolor($fg, $bg, $ratioKey:'small') {
+    $ratios: (
+        'large': 3,
+        'small': 4.5
+    );
+    $ratio: map-get($ratios, $ratioKey);
+
+    // 對比度夠就直接回傳原色
+    @if contrast($fg, $bg) >= $ratio {
+        @return $fg;
+    }
+
+    // 對比度不夠則找出相近色
+    $a11yLightness: lightness($fg);
+
+    $isBgDark: contrast(#000, $bg) >= $ratio; // true or flase
+    $isBgLight: contrast(#fff, $bg) >= $ratio; // true or flase
+    $midHsl: math.div(100,255); // 255 color / 100% HSL
+    $minLightness: 0;
+    $maxLightness: 100;
+    $isDarkColor: false;
+
+    // 判斷背景是黑底還白底
+    @if $isBgDark and $isBgLight {
+        @if ($a11yLightness >= 50) {
+            $minLightness: $a11yLightness;
+        }
+        @else {
+            $maxLightness: $a11yLightness;
+            $isDarkColor: true;
+        }
+    }
+    @else if $isBgDark {
+        $maxLightness: $a11yLightness;
+        $isDarkColor: true;
+    }
+    // 非黑底時
+    @else {
+        $minLightness: $a11yLightness;
+    }
+
+    // 回傳色
+    $foundColor: '';
+
+    // 找出對比度足夠的顏色
+    @while ($foundColor == '') {
+        $midLightness: ($minLightness + $maxLightness) * .5;
+        $midColor: hsl(
+            hue($fg),
+            saturation($fg),
+            $midLightness
+        );
+        $resetColor: mix($midColor, $midColor);
+
+        @if contrast($resetColor, $bg) >= $ratio {
+            @if $maxLightness - $minLightness < $midHsl { // 255 color / 100% HSL
+                $foundColor: $resetColor;
+            }
+            @if $isDarkColor {
+                $minLightness: $midLightness;
+            }
+            @else {
+                $maxLightness: $midLightness;
+            }
+        }
+        @else if $isDarkColor {
+            $maxLightness: $midLightness;
+        }
+        @else {
+            $minLightness: $midLightness;
+        }
+    }
+    @return $foundColor;
+}
+
+// 取得組合色
+@function color($value: "primary", $map: $colors) {
+    @return if(map-has-key($map, $value), map-get($map, $value), null);
+}
+
+// 漸淡色 => color: light(#BADA55, 42%);
+@function light($color, $percentage) {
+    $percentage: if(unitless($percentage), $percentage * 1%, $percentage);
+    @return scale-color($color, $lightness: $percentage);
+}
+
+// 漸濃色 => background-color: dark(#663399, 42%);
+@function dark($color, $percentage) {
+    $percentage: if(unitless($percentage), $percentage * 1%, $percentage);
+    @return scale-color($color, $saturation: (-$percentage), $lightness: (-$percentage));
+}
+
+// == misc
+// -----------------------------------------------------------------
+// height => padding-y
+@function pdy($height, $font-size: $font-size-base, $line-height: $line-height-base) {
+    $val: ($height - ($font-size * $line-height)) * .5;
+    @return em($val, $font-size);
+}
+
+// z-index
+@function z($name) {
+    $index: index($zindex, $name);
+    @return $index;
+}

@@ -1,0 +1,1710 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"animate",
+				"animation-name"
+			],
+			[
+				"mid",
+				"midLightness"
+			],
+			[
+				"m",
+				"maxLightness"
+			],
+			[
+				"ls",
+				"letter-spacing\tproperty"
+			],
+			[
+				"tr",
+				"trs\ttransition: ${1:prop} ${2:time};"
+			],
+			[
+				"pre",
+				"pre-wrap"
+			],
+			[
+				"whs",
+				"whs-n\twhite-space: normal;"
+			],
+			[
+				"wh",
+				"whs-nw\twhite-space: nowrap;"
+			],
+			[
+				"_",
+				"_images/"
+			],
+			[
+				"cu",
+				"cur-d\tcursor: default;"
+			],
+			[
+				"td",
+				"td-n\ttext-decoration: none;"
+			],
+			[
+				"bgsz",
+				"bgsz-ct\tbackground-size: contain;"
+			],
+			[
+				"brand",
+				"brand-primary"
+			],
+			[
+				"ov",
+				"overlay"
+			],
+			[
+				"form",
+				"form-element"
+			],
+			[
+				"br",
+				"brand-primary"
+			],
+			[
+				"bx",
+				"bxz-bb\tbox-sizing: border-box;"
+			],
+			[
+				"Con",
+				"ContactUs"
+			],
+			[
+				"Ex",
+				"Export_list"
+			],
+			[
+				"Im",
+				"Import_list"
+			],
+			[
+				"text",
+				"text-xs-center"
+			],
+			[
+				"text-xs-",
+				"text-xs-right"
+			],
+			[
+				"re",
+				"readonly\tAttr"
+			],
+			[
+				"btn",
+				"btn-link"
+			],
+			[
+				"w3",
+				"w3-round"
+			],
+			[
+				"s",
+				"style\tAttr"
+			],
+			[
+				"bo",
+				"body-bg"
+			],
+			[
+				"sp",
+				"spacer"
+			],
+			[
+				"sel",
+				"select"
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"bxsh",
+				"bxsh-ra\tbox-shadow: ${1:inset }${2:h} ${3:v} ${4:blur} ${5:spread }rgba(${6:0}, ${7:0}, ${8:0}, .${9:5});"
+			],
+			[
+				"mw",
+				"min-width"
+			],
+			[
+				"side",
+				"sidebar-width"
+			],
+			[
+				"fo",
+				"focus"
+			],
+			[
+				"img",
+				"img-index"
+			],
+			[
+				"bran",
+				"brand-primary"
+			],
+			[
+				"bgz",
+				"bgsz-ct\tbackground-size: contain;"
+			],
+			[
+				"logo",
+				"logo-boe"
+			],
+			[
+				"li",
+				"lisp-i\tlist-style-position: inside;"
+			],
+			[
+				"prefix",
+				"prefixes"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"g",
+				"gutter"
+			],
+			[
+				"min",
+				"min-width"
+			],
+			[
+				"gray",
+				"gray-light"
+			],
+			[
+				"no",
+				"no-repeat"
+			],
+			[
+				"nth",
+				"nth-child"
+			],
+			[
+				"nth-o",
+				"nth-of-type"
+			],
+			[
+				"ma",
+				"margin"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "_client/_btn.scss",
+			"settings":
+			{
+				"buffer_size": 1554,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			},
+			"undo_stack":
+			[
+				[
+					3,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAFIEAAAAAAAAUwQAAAAAAAAAAAAAUwQAAAAAAABfBAAAAAAAAAAAAAA",
+					"BAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAUgQAAAAAAABSBAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					4,
+					1,
+					"paste_and_indent",
+					null,
+					"AQAAAF8EAAAAAAAAPgUAAAAAAAAAAAAA",
+					"BAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvwAAAAABAAAAXwQAAAAAAABfBAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					13,
+					1,
+					"insert",
+					{
+						"characters": "\n@"
+					},
+					"AwAAAJAEAAAAAAAAkQQAAAAAAAAAAAAAkQQAAAAAAAChBAAAAAAAAAAAAAChBAAAAAAAAKIEAAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAJAEAAAAAAAAkAQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					15,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAAKIEAAAAAAAAowQAAAAAAAAAAAAAogQAAAAAAACjBAAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAKIEAAAAAAAAogQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					16,
+					1,
+					"left_delete",
+					null,
+					"AQAAAKIEAAAAAAAAogQAAAAAAAADAAAA6Leh",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAKMEAAAAAAAAowQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					17,
+					1,
+					"insert",
+					{
+						"characters": "if"
+					},
+					"AgAAAKIEAAAAAAAAowQAAAAAAAAAAAAAowQAAAAAAACkBAAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAKIEAAAAAAAAogQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					18,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAKQEAAAAAAAApQQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAKQEAAAAAAAApAQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					19,
+					1,
+					"insert",
+					{
+						"characters": "cont"
+					},
+					"BAAAAKUEAAAAAAAApgQAAAAAAAAAAAAApgQAAAAAAACnBAAAAAAAAAAAAACnBAAAAAAAAKgEAAAAAAAAAAAAAKgEAAAAAAAAqQQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAKUEAAAAAAAApQQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					20,
+					1,
+					"insert",
+					{
+						"characters": "ra"
+					},
+					"AgAAAKkEAAAAAAAAqgQAAAAAAAAAAAAAqgQAAAAAAACrBAAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAKkEAAAAAAAAqQQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					21,
+					1,
+					"insert",
+					{
+						"characters": "st"
+					},
+					"AgAAAKsEAAAAAAAArAQAAAAAAAAAAAAArAQAAAAAAACtBAAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAKsEAAAAAAAAqwQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					22,
+					1,
+					"insert_snippet",
+					{
+						"contents": "($0)"
+					},
+					"AQAAAK0EAAAAAAAArwQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAK0EAAAAAAAArQQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					25,
+					1,
+					"insert",
+					{
+						"characters": "$color,"
+					},
+					"BwAAAK4EAAAAAAAArwQAAAAAAAAAAAAArwQAAAAAAACwBAAAAAAAAAAAAACwBAAAAAAAALEEAAAAAAAAAAAAALEEAAAAAAAAsgQAAAAAAAAAAAAAsgQAAAAAAACzBAAAAAAAAAAAAACzBAAAAAAAALQEAAAAAAAAAAAAALQEAAAAAAAAtQQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAK4EAAAAAAAArgQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					26,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAALUEAAAAAAAAtgQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAALUEAAAAAAAAtQQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					27,
+					1,
+					"insert",
+					{
+						"characters": "#fff"
+					},
+					"BAAAALYEAAAAAAAAtwQAAAAAAAAAAAAAtwQAAAAAAAC4BAAAAAAAAAAAAAC4BAAAAAAAALkEAAAAAAAAAAAAALkEAAAAAAAAugQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAALYEAAAAAAAAtgQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					29,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAALsEAAAAAAAAvAQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAALsEAAAAAAAAuwQAAAAAAAD////////vfw"
+				],
+				[
+					30,
+					1,
+					"insert",
+					{
+						"characters": ">="
+					},
+					"AgAAALwEAAAAAAAAvQQAAAAAAAAAAAAAvQQAAAAAAAC+BAAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAALwEAAAAAAAAvAQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					31,
+					1,
+					"insert",
+					{
+						"characters": " 4.5"
+					},
+					"BAAAAL4EAAAAAAAAvwQAAAAAAAAAAAAAvwQAAAAAAADABAAAAAAAAAAAAADABAAAAAAAAMEEAAAAAAAAAAAAAMEEAAAAAAAAwgQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAL4EAAAAAAAAvgQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					32,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAMIEAAAAAAAAwwQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAMIEAAAAAAAAwgQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					33,
+					1,
+					"insert_snippet",
+					{
+						"contents": "{$0}"
+					},
+					"AQAAAMMEAAAAAAAAxQQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAMMEAAAAAAAAwwQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					34,
+					1,
+					"run_macro_file",
+					{
+						"file": "res://Packages/Default/Add Line in Braces.sublime-macro"
+					},
+					"BgAAAMQEAAAAAAAAxQQAAAAAAAAAAAAAxQQAAAAAAADVBAAAAAAAAAAAAADVBAAAAAAAANYEAAAAAAAAAAAAANYEAAAAAAAA5gQAAAAAAAAAAAAAxQQAAAAAAADFBAAAAAAAABAAAAAgICAgICAgICAgICAgICAgxQQAAAAAAADZBAAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAMQEAAAAAAAAxAQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					36,
+					1,
+					"swap_line_up",
+					null,
+					"AgAAAOwEAAAAAAAA7AQAAAAAAAAwAAAAICAgICAgICAgICAgICAgIGNvbG9yOiBhMTF5Y29sb3IoJGNvbG9yLCAjZmZmKTsK2gQAAAAAAAAKBQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAAFAAAAAAAAAAUAAAAAAAAAAAAAAIBmQA"
+				],
+				[
+					38,
+					1,
+					"insert",
+					{
+						"characters": "\t"
+					},
+					"AgAAAOoEAAAAAAAA7gQAAAAAAAAAAAAAxQQAAAAAAADFBAAAAAAAABQAAAAgICAgICAgICAgICAgICAgICAgIA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAOoEAAAAAAAA6gQAAAAAAAAAAAAAAABiQA"
+				],
+				[
+					41,
+					1,
+					"right_delete",
+					null,
+					"AQAAAMQEAAAAAAAAxAQAAAAAAAABAAAACg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAMQEAAAAAAAAxAQAAAAAAAD////////vfw"
+				],
+				[
+					43,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAJAEAAAAAAAAkQQAAAAAAAAAAAAAkQQAAAAAAAChBAAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAJAEAAAAAAAAkAQAAAAAAAAAAAAAALB8QA"
+				],
+				[
+					54,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"BgAAAJ4DAAAAAAAAnwMAAAAAAAAAAAAAnwMAAAAAAACvAwAAAAAAAAAAAACiBAAAAAAAAKIEAAAAAAAAEAAAACAgICAgICAgICAgICAgICCvAwAAAAAAALADAAAAAAAAAAAAALADAAAAAAAAwAMAAAAAAAAAAAAAnwMAAAAAAACfAwAAAAAAABAAAAAgICAgICAgICAgICAgICAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAJ4DAAAAAAAAngMAAAAAAAD////////vfw"
+				],
+				[
+					55,
+					1,
+					"paste_and_indent",
+					null,
+					"AQAAALADAAAAAAAAGQQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAALADAAAAAAAAsAMAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					59,
+					1,
+					"insert",
+					{
+						"characters": "#fff,"
+					},
+					"BQAAAL0DAAAAAAAAvgMAAAAAAAAAAAAAvgMAAAAAAAC/AwAAAAAAAAAAAAC/AwAAAAAAAMADAAAAAAAAAAAAAMADAAAAAAAAwQMAAAAAAAAAAAAAwQMAAAAAAADCAwAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAL0DAAAAAAAAvQMAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					60,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAMIDAAAAAAAAwwMAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAMIDAAAAAAAAwgMAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					62,
+					6,
+					"right_delete",
+					null,
+					"BgAAAMkDAAAAAAAAyQMAAAAAAAABAAAALMkDAAAAAAAAyQMAAAAAAAABAAAAIMkDAAAAAAAAyQMAAAAAAAABAAAAI8kDAAAAAAAAyQMAAAAAAAABAAAAZskDAAAAAAAAyQMAAAAAAAABAAAAZskDAAAAAAAAyQMAAAAAAAABAAAAZg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAMkDAAAAAAAAyQMAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					66,
+					1,
+					"insert",
+					{
+						"characters": "#fff"
+					},
+					"BQAAAPkDAAAAAAAA+gMAAAAAAAAAAAAA+gMAAAAAAAD6AwAAAAAAAAYAAAAkY29sb3L6AwAAAAAAAPsDAAAAAAAAAAAAAPsDAAAAAAAA/AMAAAAAAAAAAAAA/AMAAAAAAAD9AwAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAP8DAAAAAAAA+QMAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					69,
+					1,
+					"insert",
+					{
+						"characters": "$color"
+					},
+					"BwAAAP8DAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAQAAAAjZmZmAAQAAAAAAAABBAAAAAAAAAAAAAABBAAAAAAAAAIEAAAAAAAAAAAAAAIEAAAAAAAAAwQAAAAAAAAAAAAAAwQAAAAAAAAEBAAAAAAAAAAAAAAEBAAAAAAAAAUEAAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAP8DAAAAAAAAAwQAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					72,
+					2,
+					"swap_line_up",
+					null,
+					"BAAAAEEFAAAAAAAAQQUAAAAAAAA0AAAAICAgICAgICAgICAgICAgICAgICBjb2xvcjogYTExeWNvbG9yKCRjb2xvciwgI2ZmZik7Cg0FAAAAAAAAQQUAAAAAAAAAAAAADQUAAAAAAAANBQAAAAAAADQAAAAgICAgICAgICAgICAgICAgICAgIGNvbG9yOiBhMTF5Y29sb3IoJGNvbG9yLCAjZmZmKTsKDAUAAAAAAABABQAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAHIFAAAAAAAAcgUAAAAAAAAAAAAAAJB7QA"
+				],
+				[
+					73,
+					1,
+					"unindent",
+					null,
+					"AQAAAAwFAAAAAAAADAUAAAAAAAAEAAAAICAgIA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAD0FAAAAAAAAPQUAAAAAAAAAAAAAAJB7QA"
+				],
+				[
+					78,
+					1,
+					"cut",
+					null,
+					"AQAAAD0FAAAAAAAAPQUAAAAAAABFAAAAICAgICAgICAgICAgICAgIEBpZiBjb250cmFzdCgkY29sb3IsICNmZmYpID49IDQuNSB7CiAgICAgICAgICAgICAgICB9",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAIIFAAAAAAAAPQUAAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					79,
+					2,
+					"left_delete",
+					null,
+					"AgAAADwFAAAAAAAAPAUAAAAAAAABAAAACjsFAAAAAAAAOwUAAAAAAAABAAAACg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAD0FAAAAAAAAPQUAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					92,
+					1,
+					"insert",
+					{
+						"characters": "<"
+					},
+					"AgAAAMsDAAAAAAAAzAMAAAAAAAAAAAAAzAMAAAAAAADMAwAAAAAAAAIAAAA+PQ",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAM0DAAAAAAAAywMAAAAAAAAAAAAAAADwvw"
+				]
+			]
+		},
+		{
+			"file": "_mixins.scss",
+			"settings":
+			{
+				"buffer_size": 5408,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			},
+			"undo_stack":
+			[
+				[
+					3,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"AgAAABkLAAAAAAAAGgsAAAAAAAAAAAAAGgsAAAAAAAAbCwAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAABkLAAAAAAAAGQsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					4,
+					1,
+					"paste",
+					null,
+					"AQAAABsLAAAAAAAAkQsAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAABsLAAAAAAAAGwsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					6,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAABoLAAAAAAAAGwsAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAABoLAAAAAAAAGgsAAAAAAAAAAAAAAAAiQA"
+				],
+				[
+					7,
+					1,
+					"toggle_comment",
+					{
+						"block": false
+					},
+					"AQAAABsLAAAAAAAAHgsAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAABsLAAAAAAAAGwsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					9,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAAB4LAAAAAAAAHwsAAAAAAAAAAAAAHgsAAAAAAAAfCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAB4LAAAAAAAAHgsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					11,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAAB8LAAAAAAAAIAsAAAAAAAAAAAAAHwsAAAAAAAAgCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAB8LAAAAAAAAHwsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					13,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAACALAAAAAAAAIQsAAAAAAAAAAAAAIAsAAAAAAAAhCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACALAAAAAAAAIAsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					15,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAACELAAAAAAAAIgsAAAAAAAAAAAAAIQsAAAAAAAAiCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACELAAAAAAAAIQsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					17,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAACILAAAAAAAAIwsAAAAAAAAAAAAAIgsAAAAAAAAjCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACILAAAAAAAAIgsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					19,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAACMLAAAAAAAAJAsAAAAAAAAAAAAAIwsAAAAAAAAkCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACMLAAAAAAAAIwsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					21,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAACQLAAAAAAAAJQsAAAAAAAAAAAAAJAsAAAAAAAAlCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACQLAAAAAAAAJAsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					23,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAACULAAAAAAAAJgsAAAAAAAAAAAAAJQsAAAAAAAAmCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACULAAAAAAAAJQsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					25,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAACYLAAAAAAAAJwsAAAAAAAAAAAAAJgsAAAAAAAAnCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACYLAAAAAAAAJgsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					26,
+					2,
+					"left_delete",
+					null,
+					"AgAAACYLAAAAAAAAJgsAAAAAAAADAAAA5a2XJQsAAAAAAAAlCwAAAAAAAAMAAADliqA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACcLAAAAAAAAJwsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					28,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAACULAAAAAAAAJgsAAAAAAAAAAAAAJQsAAAAAAAAmCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACULAAAAAAAAJQsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					30,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAACYLAAAAAAAAJwsAAAAAAAAAAAAAJgsAAAAAAAAnCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACYLAAAAAAAAJgsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					32,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAACcLAAAAAAAAKAsAAAAAAAAAAAAAJwsAAAAAAAAoCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACcLAAAAAAAAJwsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					33,
+					1,
+					"left_delete",
+					null,
+					"AQAAACcLAAAAAAAAJwsAAAAAAAADAAAA6Imy",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACgLAAAAAAAAKAsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					35,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAACcLAAAAAAAAKAsAAAAAAAAAAAAAJwsAAAAAAAAoCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACcLAAAAAAAAJwsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					37,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAACgLAAAAAAAAKQsAAAAAAAAAAAAAKAsAAAAAAAApCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACgLAAAAAAAAKAsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					38,
+					1,
+					"insert_snippet",
+					{
+						"contents": "($0)"
+					},
+					"AQAAACkLAAAAAAAAKwsAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACkLAAAAAAAAKQsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					40,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAACoLAAAAAAAAKwsAAAAAAAAAAAAAKgsAAAAAAAArCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACoLAAAAAAAAKgsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					42,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAACsLAAAAAAAALAsAAAAAAAAAAAAAKwsAAAAAAAAsCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACsLAAAAAAAAKwsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					44,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAACwLAAAAAAAALQsAAAAAAAAAAAAALAsAAAAAAAAtCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAACwLAAAAAAAALAsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					46,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAAC0LAAAAAAAALgsAAAAAAAAAAAAALQsAAAAAAAAuCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAC0LAAAAAAAALQsAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					48,
+					1,
+					"sequence",
+					{
+						"commands":
+						[
+						]
+					},
+					"AgAAAC4LAAAAAAAALwsAAAAAAAAAAAAALgsAAAAAAAAvCwAAAAAAAAEAAAAg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAC4LAAAAAAAALgsAAAAAAAAAAAAAAADwvw"
+				]
+			]
+		},
+		{
+			"file": "index.scss",
+			"settings":
+			{
+				"buffer_size": 1293,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: r",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: i",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 432.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/K/work/_sass/scssMin",
+		"/K/work/_sass/scssMin/_admin",
+		"/K/work/_sass/scssMin/_client"
+	],
+	"file_history":
+	[
+		"/K/work/_sass/scssMin/_function.scss",
+		"/K/work/_sass/scssMin/_mixins.scss",
+		"/K/work/_sass/scssMin/mixins/_mq.scss",
+		"/K/work/_sass/scssMin/grid.scss",
+		"/K/work/_sass/scssMin/_util.scss",
+		"/K/work/_sass/scssMin/_client/_form-plug.scss",
+		"/K/work/_sass/scssMin/admin.scss",
+		"/K/work/_sass/scssMin/page.scss",
+		"/K/work/_sass/scssMin/index.scss",
+		"/K/work/_sass/scssMin/__full/_client/_forms.scss",
+		"/K/work/_sass/scssMin/__full/_admin/_forms.scss",
+		"/K/work/_sass/scssMin/__full/_admin/_modules.scss",
+		"/K/work/_sass/scssMin/grid.css",
+		"/K/work/_sass/scssMin/__full/core/_mixins.scss",
+		"/K/work/_sass/scssMin/__full/core/mixins/_shape.scss",
+		"/K/work/_sass/scssMin/__full/_admin/_layout.scss",
+		"/K/work/_sass/scssMin/mixins/_grid.scss",
+		"/K/work/_sass/scssMin/__full/core/mixins/_grid.scss",
+		"/K/work/_sass/scssMin/__full/grid.scss",
+		"/D/Often/JC_C072010_EEI/OutWeb/Content/css/login.css",
+		"/K/work/_sass/scssMin/__full/core/_function.scss",
+		"/K/work/_sass/scssMin/__full/core/mixins/_text.scss",
+		"/K/work/_sass/scssMin/__full/basic/_util.scss",
+		"/D/_APP/JCAOD_C07_PresentReport/lib/StyWidget/GlobalStyle.dart",
+		"/K/work/_sass/scssMin/_client/_btn.scss",
+		"/K/work/_sass/scssMin/_form.scss",
+		"/K/work/_sass/bootstrap/scss/_functions.scss",
+		"/K/work/_sass/scssMin/__full/core/_variables.scss",
+		"/K/work/_sass/scssMin/_variables.scss",
+		"/K/work/_sass/bootstrap/scss/_utilities.scss",
+		"/K/work/_sass/bootstrap/scss/mixins/_utilities.scss",
+		"/K/work/_sass/scssMin/__full/core/mixins/_mq.scss",
+		"/K/work/_sass/scssMin/__full/_admin/_btn.scss",
+		"/K/work/_sass/scssMin/mixins/_flex.scss",
+		"/D/Often/JC_C071715_EMIS/OutWeb/Content/sass/element/_type.scss",
+		"/D/Often/JC_C071715_EMIS/OutWeb/Content/sass/element/_basic.scss",
+		"/D/Often/JC_C071715_EMIS/OutWeb/Content/sass/vendor/_normalize.scss",
+		"/K/work/_sass/scssMin/scssMin.sublime-project",
+		"/K/work/_sass/scssMin/_table.scss",
+		"/K/work/_sass/scssMin/_layout.scss",
+		"/K/work/_sass/scssMin/__full/admin.scss",
+		"/K/work/_sass/scssMin/__mini/_function.scss",
+		"/K/work/_sass/scssMin/__mini/mixins/_flex.scss",
+		"/K/work/_sass/scssMin/core/mixins/_grid.scss",
+		"/K/work/_sass/scssMin/__mini/_base.scss",
+		"/K/work/_sass/scssMin/core/_function.scss",
+		"/D/VS_seldom/JC_C071611_WaterPipe/Site.Master",
+		"/K/work/_sass/scssMin/core/_mixins.scss",
+		"/K/work/_sass/scssMin/__mini/_mixins.scss",
+		"/K/work/_sass/scssMin/core/_variables.scss",
+		"/D/VS_seldom/JC_C071611_WaterPipe/System1.Master",
+		"/K/work/_sass/scssMin/basic/_util.scss",
+		"/D/VS_seldom/JC_C071611_WaterPipe/Content/sass/_variables.scss",
+		"/K/work/_sass/scssMin/core/mixins/_button.scss",
+		"/K/work/_sass/scssMin/_client/_state.scss",
+		"/D/VSTF2/TWMG2019/TWMG2019/Content/css/index.css",
+		"/K/work/_sass/scssMin/__mini/page.scss",
+		"/K/work/_sass/scssMin/__mini/mixins/_grid.scss",
+		"/K/work/_sass/scssMin/basic/_form.scss",
+		"/K/work/_sass/scssMin/login.scss",
+		"/K/work/_sass/scssMin/popup.scss",
+		"/K/work/_sass/scssMin/vendor/open-iconic.scss",
+		"/K/work/_sass/scssMin/__mini/vendor/open-iconic.scss",
+		"/Z/Tin/index.html",
+		"/K/work/_sass/scssMin/basic/_base.scss",
+		"/K/work/網站/_sass/pure/src/buttons/css/buttons-core.css",
+		"/K/work/網站/_sass/pure/src/buttons/css/buttons.css",
+		"/K/work/網站/_sass/bootstrap/scss/_buttons.scss",
+		"/K/work/_sass/scssMin/basic/_btn.scss",
+		"/K/work/網站/_sass/bootstrap/scss/mixins/_border-radius.scss",
+		"/K/work/網站/_sass/tentcss/src/04_elements/_forms.scss",
+		"/K/work/網站/_sass/bootstrap/scss/mixins/_forms.scss",
+		"/K/work/網站/_sass/bootstrap/scss/_forms.scss",
+		"/C/Users/Tin/Desktop/bulma-0.7.2/sass/grid/columns.sass",
+		"/D/scssMin/core/_variables.scss",
+		"/D/scssMin/basic/_util.scss",
+		"/D/scssMin/basic/_btn.scss",
+		"/D/scssMin/core/_mixins.scss",
+		"/D/scssMin/core/_function.scss",
+		"/D/scssMin/core/mixins/_placeholders.scss",
+		"/D/scssMin/scssMin.sublime-project",
+		"/K/work/網站/_sass/bootstrap/scss/mixins/_screen-reader.scss",
+		"/D/EEI_Steel_CSS/Experimental/_scss/element/_table.scss",
+		"/D/scssMin/core/mixins/_animation.scss",
+		"/D/scssMin/core/mixins/_mq.scss",
+		"/D/scssMin/core/mixins/_grid.scss",
+		"/D/scssMin/core/mixins/_pseudo.scss",
+		"/D/scssMin/style.scss",
+		"/D/scssMin/css/style.css",
+		"/K/tool/pc-software/Sublime Text Build 3114 x64/Data/Packages/User/SCSS-custom.sublime-build",
+		"/D/scssMin/basic/_base.scss",
+		"/D/scssMin/core/mixins/_text.scss",
+		"/D/EEI_Steel_CSS/scssMini.sublime-project",
+		"/D/scssMin/basic/_form.scss",
+		"/D/scssMin/basic/_table.scss",
+		"/D/scssMin/core/mixins/_center.scss",
+		"/D/scssMin/element/_base.scss",
+		"/D/EEI_Steel_CSS/Experimental/_scss/element/_basic.scss",
+		"/D/EEI_Steel_CSS/Experimental/MainDoor.css",
+		"/D/EEI_Steel_CSS/Experimental/_scss/element/_form.scss",
+		"/D/EEI_Steel_CSS/Experimental/_scss/base/_basic.scss",
+		"/Z/Tin/emis/Login_v3.html",
+		"/K/work/_政府機關/綠基會_再利用/webDemo/page.html",
+		"/K/work/_政府機關/綠基會_再利用/webDemo/images/layout.css",
+		"/K/work/_政府機關/綠基會_再利用/webDemo/index2.html",
+		"/Z/Tin/Reuse/index2.html",
+		"/Z/Tin/IE-tab.html",
+		"/Z/Tin/emis/Login.html",
+		"/Z/Tin/Reuse/page.html",
+		"/Z/Tin/Reuse/page2.html",
+		"/K/work/_政府機關/綠基會_再利用/webDemo/page2.html",
+		"/Z/Tin/1zlife.html",
+		"/Z/Tin/video.html",
+		"/Z/Tin/kiev_vcr_0402.mp4",
+		"/Z/stacey/Ballet/SleepingBeauty/index.html",
+		"/Z/Tin/lalamama/test.html",
+		"/K/work/_政府機關/綠基會_再利用/webDemo/index.html",
+		"/Z/Tin/longi-new/index.html",
+		"/Z/Tin/Academy/index.html",
+		"/Z/Tin/TeamForce/page.html",
+		"/Z/Tin/renhai/L_CT/_css/layout.css",
+		"/Z/Tin/renhai/L_CS/_css/layout.css",
+		"/Z/Tin/renhai/L_EN/_css/layout.css",
+		"/Z/Tin/renhai/L_JP/_css/layout.css",
+		"/Z/Tin/TeamForce/index.html",
+		"/Z/Tin/renhai/L_JP/_include/header.asp",
+		"/Z/Tin/renhai/L_EN/_include/header.asp",
+		"/Z/Tin/renhai/L_CS/_include/header.asp"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 122.0,
+		"where_history":
+		[
+			"K:\\work\\_sass\\scssMin",
+			"K:\\work\\_sass\\scssMin, -*.json",
+			"K:\\work\\_sass\\scssMin",
+			"<open files>",
+			"D:\\VSTF2\\C601614_ChaominTrading\\ChaominTrading\\Content\\sass",
+			"<open files>",
+			"D:\\VSTF2\\C601614_ChaominTrading\\ChaominTrading\\Views\\Products",
+			"\\\\192.168.0.12\\01_demo\\01_Web_05_Chaomin\\OutWeb",
+			"<open files>",
+			"D:\\VSTF2\\C601614_ChaominTrading\\ChaominTrading\\Content\\sass",
+			"D:\\VSTF2\\C481610_TGPFWeb\\Work.WebProj\\Content\\sass",
+			"D:\\VSTF2\\C481610_TGPFWeb\\Work.WebProj\\Content\\sass\\_admin",
+			"D:\\VSTF2\\C481610_TGPFWeb\\Work.WebProj\\Content\\_BK_sass",
+			"D:\\VSTF2\\C481610_TGPFWeb\\Work.WebProj\\Content",
+			"D:\\VSTF2\\C451508_Smith\\Work.WebProj\\Content\\sass",
+			"D:\\VSTF2\\C451508_Smith\\Work.WebProj\\_Code\\SysDoc",
+			"D:\\VSTF2\\C451508_Smith\\Work.WebProj\\Content\\sass",
+			"D:\\VSTF2\\C441506_ChangYu\\Work.WebProj\\Content\\sass"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"$ratio",
+			"breaks",
+			"$media-max",
+			"$media-min",
+			"breakpoints",
+			"get-breakpoint-width",
+			"標籤：",
+			"平台：",
+			"作者：",
+			"作者",
+			" ",
+			"/2",
+			"grid-set",
+			"math.div",
+			"$height",
+			"$width",
+			"animationName",
+			"      ",
+			"       ",
+			"$minHexDiff",
+			"minHexDiff",
+			"$isWhiteBgContrast",
+			"$isBlackBgContrast",
+			"pow",
+			"$font-size-root",
+			"ol",
+			"divide",
+			"print",
+			"map",
+			"print",
+			"2",
+			"$breakpoint",
+			"math.div($gap, 2)",
+			"math.div($gap,2)",
+			"grid($i, $columns, null)",
+			"pad-y",
+			"grid-gap",
+			"$input-shadow",
+			"$input-btn-border-width",
+			"$radius",
+			"$key",
+			"$theme-name",
+			"$theme",
+			"$btn-color",
+			"color",
+			"$input-extend",
+			"themify",
+			"$input-focus",
+			"$value",
+			"attr",
+			"body",
+			"$label-line-height",
+			"$btn",
+			"$btn-font-size",
+			"fs",
+			"$btn-bg-disabled",
+			"$pd-radio",
+			"radio",
+			"$pdx-radio",
+			" // $spacer*0.8 $spacer*2 $spacer*.8 $spacer*2.6",
+			"$back",
+			"color:",
+			"$background",
+			"l1",
+			"$initial",
+			"brightness",
+			"color_luminance",
+			"$inherit",
+			"$base-color",
+			"$value",
+			"$color",
+			"type",
+			"theme",
+			"$color",
+			"selector",
+			"$color-map",
+			"$c1",
+			"$type",
+			"$text-color",
+			"disabled",
+			"light",
+			"make-col(",
+			"$mq-base-font-size",
+			"$break",
+			"mq-px2em",
+			"mixin-dryer",
+			"$black",
+			"$form-label-line-height",
+			"focus",
+			"hr",
+			"item",
+			"$value",
+			"-y",
+			"$",
+			";\n",
+			"$",
+			"border-style",
+			"$grey-darker",
+			"table-background-color",
+			"table",
+			" $table-color-border",
+			"div",
+			"tabindex=\"1\" aria-selected=\"false\"",
+			" aria-selected=\"false\"",
+			">>",
+			"true",
+			" tabindex=\"1\"",
+			" class=\"scroll\"",
+			"lawyers-head",
+			"scritpt",
+			"h2",
+			"header",
+			"item",
+			"myIndex",
+			".slide",
+			"#slideshow",
+			"report",
+			"p",
+			"li",
+			"TSBA 大桃園超級籃球聯盟",
+			"White Radish",
+			"Perilla frutescens",
+			"韓國芝麻葉",
+			"baby corn",
+			"Baby corn",
+			"BABY CORN",
+			"Baby Corn",
+			"進口玉米筍"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"",
+			"pdy",
+			"寶程國際集團",
+			"白蘿蔔",
+			"m-x-a",
+			"diy-animate",
+			"CONTCAT US",
+			"IMPORT",
+			"Baby Corn",
+			"Asparagus",
+			"Chinese Cabbage",
+			"Count size:",
+			"Packing:",
+			"Taiwan",
+			"Production Season:",
+			"Cultivation Regions:",
+			"BANANA",
+			"IMPORT",
+			"",
+			"BACK",
+			"EXPORT",
+			"MANGO",
+			"PINEAPPLE",
+			"Broccoli",
+			"",
+			"</strong>",
+			"<strong>",
+			"</li>",
+			"<li>",
+			"strong",
+			"li",
+			"strong",
+			"Lettuce",
+			"<!--[if lt IE 9]><script src=\"../_JScript/IE9.js\"></script><![endif]-->",
+			"<!--[if lt IE 9]><script src=\"../../L_CT/_JScript/IE9.js\"></script><![endif]-->",
+			"玉米筍",
+			"進口蘆筍",
+			"Products/Export_list",
+			"進口大白菜",
+			"香蕉",
+			"芒果",
+			"鳳梨",
+			"Products/",
+			"</dd></dl>",
+			"<dl><dt>",
+			"%container-fluid",
+			"%container",
+			"col-xs-10",
+			"col-xs-2",
+			"label-primary w3-round\">已付款",
+			"待付",
+			"已付",
+			"待收",
+			"proj-timeline",
+			"project-timeline",
+			"Tin",
+			"小潔",
+			"Tin(切版/校稿)",
+			"2017, 0",
+			"2016, 11",
+			"2016, 10",
+			"2016, 9",
+			"10",
+			"9",
+			"All(測試+上線)(尚未簽約)",
+			"程式(ASP.NET)",
+			"Tin(切版/校稿)",
+			"Tin(設計)",
+			"(\\d{4}-\\d{2}-\\d{2})",
+			"Date(\\d{4}-\\d{2}-\\d{2})",
+			"%float",
+			"%float-l",
+			"<p class=\"text-indent\">",
+			"<p class=\"text-indent>",
+			"type=\"number\" min=\"0\"",
+			"$enable-ckb-rdo",
+			"",
+			"icon-open",
+			"\"",
+			"\",",
+			"icon-",
+			"btn-group",
+			"@if $btn-border-radius {\n    border-top-right-radius: 0;\n    border-top-left-radius: 0;\n  }",
+			"@if $btn-border-radius {\n    border-bottom-right-radius: 0;\n    border-bottom-left-radius: 0;\n  }",
+			"@if $btn-border-radius {\n    border-bottom-left-radius: 0;\n    border-top-left-radius: 0;\n  }",
+			"@if $btn-border-radius {\n    border-bottom-right-radius: 0;\n    border-top-right-radius: 0;\n  }",
+			"德鄉",
+			"button-group",
+			"striped",
+			"",
+			"collapse-content",
+			"",
+			"$muted",
+			"content: unicode($",
+			"\"",
+			"$input-placeholder",
+			"$input-border-focus",
+			"form-element",
+			"search-round",
+			"blurIsNum input-text\" type=\"text\" style=\"width:60px\"",
+			"",
+			")",
+			"(",
+			"sub",
+			"(",
+			")",
+			"",
+			"rows=\"3\" class=\"input-text\"></textarea>",
+			"blurIsNum input-text",
+			"rows=\"3\"",
+			"",
+			"blurCal input-text align-c",
+			"",
+			"type=\"text\" class=\"blurCal input-text\"",
+			" 度",
+			")",
+			"(",
+			"",
+			"<textarea class=\"input-text\"",
+			"type=\"text\" class=\"blurIsNum input-text\"",
+			"/Content/backstageCss/",
+			".",
+			"",
+			"/ ",
+			"",
+			"問與答",
+			"newsEdit",
+			"newsAdd"
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "_client/_btn.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1554,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1071,
+								1071
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": true,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Sass/Syntaxes/SCSS.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 825.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "_mixins.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5408,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Sass/Syntaxes/SCSS.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "index.scss",
+					"selected": true,
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 1293,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								18,
+								35
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Sass/Syntaxes/SCSS.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 44.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.doc":
+	{
+		"height": 0.0
+	},
+	"output.exec":
+	{
+		"height": 107.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.mdpopups":
+	{
+		"height": 0.0
+	},
+	"output.sftp":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 138.0
+	},
+	"pinned_build_system": "sass-proj",
+	"project": "scssMin.sublime-project",
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": false,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"modu",
+				"scssMin\\__full\\_admin\\_modules.scss"
+			],
+			[
+				"form",
+				"scssMin\\__full\\_admin\\_forms.scss"
+			],
+			[
+				"forms",
+				"scssMin\\__full\\_client\\_forms.scss"
+			],
+			[
+				"mixins",
+				"scssMin\\__full\\core\\_mixins.scss"
+			],
+			[
+				"shape",
+				"scssMin\\__full\\core\\mixins\\_shape.scss"
+			],
+			[
+				"modules",
+				"scssMin\\__full\\_admin\\_modules.scss"
+			],
+			[
+				"layou",
+				"scssMin\\__full\\_admin\\_layout.scss"
+			],
+			[
+				"fun",
+				"scssMin\\__full\\core\\_function.scss"
+			],
+			[
+				"mixin",
+				"scssMin\\_mixins.scss"
+			],
+			[
+				"btn",
+				"scssMin\\_client\\_btn.scss"
+			],
+			[
+				"function",
+				"scssMin\\_function.scss"
+			],
+			[
+				"text",
+				"scssMin\\__full\\core\\mixins\\_text.scss"
+			],
+			[
+				"var",
+				"scssMin\\_variables.scss"
+			],
+			[
+				"grid",
+				"scssMin\\mixins\\_grid.scss"
+			],
+			[
+				"flex",
+				"scssMin\\mixins\\_flex.scss"
+			],
+			[
+				"fle",
+				"scssMin\\__mini\\mixins\\_flex.scss"
+			],
+			[
+				"bt",
+				"scssMin\\core\\mixins\\_button.scss"
+			],
+			[
+				"mixi",
+				"scssMin\\__mini\\_mixins.scss"
+			],
+			[
+				"util",
+				"scssMin\\basic\\_util.scss"
+			],
+			[
+				"bas",
+				"scssMin\\basic\\_base.scss"
+			],
+			[
+				"pla",
+				"scssMin\\core\\mixins\\_placeholders.scss"
+			],
+			[
+				"hea",
+				"Tin\\renhai\\L_JP\\_include\\header.asp"
+			],
+			[
+				"header",
+				"Tin\\renhai\\L_EN\\_include\\header.asp"
+			],
+			[
+				"l_jp/lay",
+				"Tin\\renhai\\L_JP\\_css\\layout.css"
+			],
+			[
+				"l_layout.css",
+				"Tin\\renhai\\L_EN\\_css\\layout.css"
+			],
+			[
+				"sett",
+				"Content\\sass\\_client\\_settings.scss"
+			],
+			[
+				"inde",
+				"Views\\Index\\Index.cshtml"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"K:\\work\\_project\\再利用.sublime-project"
+			],
+			[
+				"erl",
+				"K:\\work\\_project\\ERL生產性質申報.sublime-project"
+			],
+			[
+				"eei",
+				"K:\\work\\_project\\EEI六大產業(合併).sublime-project"
+			],
+			[
+				"朝",
+				"K:\\work\\_project\\朝敏.sublime-project"
+			],
+			[
+				"ty",
+				"K:\\work\\_project\\TYBA.sublime-project"
+			],
+			[
+				"em",
+				"K:\\work\\_project\\EMIS.sublime-project"
+			],
+			[
+				"再",
+				"K:\\work\\_project\\再利用.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 239.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

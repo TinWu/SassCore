@@ -1,0 +1,225 @@
+@charset "utf-8";
+
+@use "sass:math"; // 新版不能用/當除法，要引用這行用 math.div(n1,n2) 來除
+
+$isAdmin:          true;
+$page:             popup;
+
+$user-state-height: 45px;
+
+// import
+// ------------------------------------------------------------
+@import "core/function"; // (置頂)
+
+@import "_admin/setting"; // 本專案變數要放在 variables上，可以覆蓋掉 variables 的值
+@import "core/variables";
+@import "core/mixins";
+
+// output
+@import "basic/base";
+@import "basic/table";
+@import "basic/form";
+@import "basic/util";
+
+// 本專案 plugin
+@import "_admin/btn";
+@import "_admin/state";
+@import "_admin/forms";
+@import "_admin/modal";
+@import "_admin/modules"; // (置底)
+
+
+// output
+// ------------------------------------------------------------
+
+// 標題
+.head {
+    @extend .mb-10;
+    color: color(secondary);
+    font-size: em(30);
+}
+
+// == popup
+// 特效 展開收合評核
+%effect-slide {
+    transition: $transition-duration*2;
+}
+
+.popup-main {
+    @extend %effect-slide;
+
+    -webkit-overflow-scrolling: touch;  // for safari bug
+    overflow-x: auto;
+    height: 100%;
+}
+
+.slide {
+    $width: 460px;
+
+    // 展開時外框 '.popup-main slide-in'
+    &-in {
+        width: calc(100% - #{$width});
+
+        .slide-expand {
+            right: 0;
+        }
+        .submit-bar.fixed-bottom {
+            right: $width;
+        }
+    }
+
+    // 評核紀錄
+    &-expand {
+        @extend .bg-muted, %effect-slide, .pb-l;
+
+        position: fixed;
+        top: 0;
+        right: -($width);
+        overflow: hidden;
+        z-index: 999;
+
+        border-left: 1px solid $border-color;
+        width: $width;
+        height: 100%;
+
+        &:hover {
+            -webkit-overflow-scrolling: touch;  // for safari bug
+            overflow: auto;
+        }
+    }
+
+    // 評核開關
+    &-toggle {
+        @extend .p-5, %effect-slide;
+
+        cursor: pointer;
+        width: 32px;
+
+        opacity: .9;
+        position: fixed;
+        right: 0;
+        top: 46px;
+
+        color: dark(color(danger), 32);
+        background-color: rgba(light(color(danger), 58), .6);
+        border-radius: 8px 0 0 8px;
+        box-shadow: 0 1px 3px rgba(#000, .2);
+
+        &:before {
+            font-size: 50%;
+            margin-bottom: 3px;
+        }
+        &:hover, &.active {
+            @extend %text-white;
+
+            background-color: color(danger);
+            opacity: 1;
+        }
+        &.active {
+            right: $width;
+
+            &:before {
+                content: '\e02f';
+            }
+        }
+    }
+}
+
+// # 申報用戶資料
+.user-info {
+    @extend %table-border-no, .mb-30;
+
+    width: 100%;
+
+    .item {
+        @extend .text-nowrap;
+        background: light(color(success), 70);
+
+        width: 13%;
+    }
+
+    td {
+        @extend .text-left, .text-primary;
+
+        background: desaturate(light(color(warning), 90), 80);
+    }
+}
+
+//
+// 申報表-列表> 展開樣式
+.expand-tog {
+
+    @include el(before, $content: '\002B') {
+        font: bolder em(30)/#{30px} Arial;
+    }
+
+    &.active:before {
+        content: '\2212'
+    }
+}
+.expand-container {
+    // background: light(color(muted), 60);
+
+    display: none;
+
+    &.in {
+        @extend .p-l;
+
+        display: block;
+
+        @at-root td#{&} {
+            display: table-cell;
+        }
+
+        @include diy-animate(slide-in, .4s) {
+            from {
+                top: -300px;
+                opacity: 0;
+            }
+            to {
+                top: 0;
+                opacity: 1;
+            }
+        }
+    }
+}
+.table-inner-list {
+    @extend %full, %bg-white;
+
+    caption {
+        background: light(color(success), 55);
+        color: dark(color(success), 45);
+    }
+    thead {
+        background: dark(color(muted), 3);
+    }
+}
+
+// 10.4、11.4 算式樣式(除法)
+.division {
+    align-items: center;
+
+    hr {
+        @extend .my-2;
+        border-color: inherit;
+    }
+}
+
+// 表4 樹狀圖
+.relative {
+    position: relative;
+}
+.tree {
+    @include el(before) {
+        width: 20px;
+        height: 12px;
+        bottom: 5px;
+        position: absolute;
+        border: 1px solid color(info);
+        border-width: 0 0 1px 1px;
+        top: 0;
+        left: -23px;
+    }
+}
+
+

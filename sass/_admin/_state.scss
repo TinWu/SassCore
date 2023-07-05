@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+//
+// == 情境 Contextual colors
+// ------------------------------------------------------------
+
+// reset default value
+button[class*="hover-"] {
+    padding: 0;
+    text-align: inherit;
+}
+// $colors in variables.scss
+@each $theme, $color in $colors {
+    .text-#{$theme}, .hover-#{$theme} {
+        color: dark($color, 13);
+    }
+    .hover-#{$theme} {
+        &:hover, &:focus {
+            color: dark($color, 30);
+        }
+    }
+    .bg-#{$theme} {
+        background: $color;
+    }
+}
+
+
+//
+// == label, panel
+// ------------------------------------------------------------
+// label
+[class*=label-] {
+    @extend .font-tiny;
+
+    display: inline-block;
+    border-radius: 2px;
+    padding: .1em .3em;
+
+    &:not(:only-of-type) { margin: .2em; }
+}
+[class*=panel-] {
+    @extend .p-5;
+    line-height: 1.5;
+}
+
+// label + panel theme
+@each $theme, $color in (
+    success:  desaturate(light(scale-color(color(success), $blue:-80%), 70), 35%),
+    info:     light(color(info), 16),
+    warning:  light(color(warning), 74),
+    danger:   light(color(danger), 68),
+) {
+    .label-#{$theme}, .panel-#{$theme} {
+        background: $color;
+        color: dark($color, 52);
+        border: 1px solid dark($color, 7.5);
+    }
+}
+.label-muted {
+    $color: light(color(muted), 45);
+
+    background: $color;
+    color: dark($color, 50);
+    border: 1px solid dark($color, 7.5);
+}

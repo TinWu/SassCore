@@ -1,0 +1,90 @@
+@charset "UTF-8";
+
+//
+// button
+// ----------------------------------------------
+
+input.btn {
+    border: none;
+}
+
+.btn {
+    // default
+    @include btn;
+
+    // size
+    @include sizing($btn-height, $btn-font-size, $btn-line-height, $btn-space);
+
+    letter-spacing: if($isIndex, null, .06em);
+
+    &:hover, &:active, &:focus {
+        background-color: $btn-hover-bg;
+        color: #fff; // $btn-color
+    }
+
+    &:disabled, &.disabled {
+        cursor: $cursor-disabled;
+
+        background: $btn-disabled-bg;
+        color: $btn-disabled-color;
+    }
+
+    .btn-stacked > & {
+        display: block;
+        width: 100%;
+
+        &:not(:last-of-type) { margin-bottom: .5rem; }
+    }
+
+    // btn theme
+    @each $theme, $color in (
+        // success:   darken(color(success), 2),
+        info:      light(color(info), 30),
+        // warning:   scale-color(color(warning), $lightness: -10.5%),
+        // danger:    color(danger),
+        // cancel:    light(color(muted), 45)
+    ) {
+        &.#{$theme} {
+            background-color: $color;
+
+            &:hover, &:active {
+                background: dark($color, 15);
+            }
+
+            &.outline {
+                border-color: $color;
+                color: if(color-contrast($color) == #fff, dark($color, 45), $color);
+
+                &:hover, &:active {
+                    background: if(color-contrast($color) == #fff, light($color, 15), $color);
+                }
+            }
+        }
+    }
+    &.outline {
+        background-color: $btn-color;
+        // box-shadow: none;
+        border: 1px solid light($btn-bg, 30);
+        color: dark($btn-bg, 15);
+
+        transform: none;
+
+        &:hover, &:active {
+            background-color: $btn-bg;
+            color: $btn-color;
+        }
+    }
+
+    &.lg {
+        // font-size: em(21);
+        @include sizing(21px*2.2, 21px);
+    }
+}
+
+//
+// button group
+// ----------------------------------------------
+// src: pure css => flex
+.btn-group {
+    @include btn-group;
+}

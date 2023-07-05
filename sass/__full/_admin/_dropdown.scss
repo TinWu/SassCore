@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+//
+// == dropdown
+// ------------------------------------------------------------
+.dropdown {
+    position: relative;
+
+    &-content {
+        @extend %bg-white, .text-left;
+
+        position: absolute;
+        top: 110%;
+
+        box-shadow: 1px 3px 10px rgba(#000, .2);
+        z-index: 1;
+
+        visibility: hidden;
+        opacity: 0;
+        transition: .2s, opacity .2s ease-in-out;
+
+        &.in {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity .2s ease;
+        }
+
+        a {
+            @extend .py-15, .px-10, .text-secondary;
+
+            display: block;
+            padding: 12px 10px;
+
+            &:hover, &.active {
+                background: color(muted);
+            }
+        }
+
+        // 仿super select
+        // &.search-box {
+        //     min-width: 300px;
+        //     padding: 8px 8px 0;
+
+        //     .select {
+        //         overflow-y: auto;
+        //         max-height: 280px;
+        //         margin-left: -8px;
+        //         margin-right: -8px;
+        //     }
+        // }
+
+    }
+
+    // arrow
+    i {
+        // @extend .ml-s;
+
+        // border-color: inherit;
+        // top: -4px;
+        position: relative;
+    }
+    &-toggle.active i {
+        transform: rotate(-135deg);
+        top: 0;
+    }
+}

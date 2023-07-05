@@ -1,0 +1,87 @@
+@charset "UTF-8";
+
+@import url('//fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+// == 這裡放自定義變數 + 覆寫 variables 裡的變數
+// import 順序最好在 variables 前面。但如果要放後面的話，下面要覆寫的變數不能加 !default
+
+$img-path:                  '../images' !default;
+$page:                      false !default; // admin, popup, login
+$enable-RWD:                false;
+
+
+// == color
+// ----------------------------------------------------------------------
+$colors: (
+    primary:       #9C1816, // 紅
+    secondary:     #665652, // 咖
+    success:       #7FB338, // 金 B38838
+    info:          #B38838, // 暖黃 F0B97A
+    warning:       #F0CC7E, // 黃
+    danger:        #C43C3A,
+    muted:         #F2F1ED
+);
+
+$border-color:              dark(color(muted), 5);
+$component-active:          color(success);
+
+$border-radius:             5px;
+
+
+// == ref: basic> custom
+// ----------------------------------------------------------------------
+$font-family-sp:            'Montserrat'; // https://fonts.google.com/
+
+$body-bg:                   #fff;
+$link-hover-color:          color(secondary);
+
+// table
+$table-striped-color:       light(color(muted), 42);
+$table-hover-color:         #FAF8DA; //light(color(warning), 75)
+$table-cell-padding:        .52em .42em;
+
+// input-btn
+$input-btn-height:          32px;
+$input-btn-disabled-bg:     light(color(muted), 80);
+$input-btn-spacer:          $input-btn-height*.2;
+
+// btn
+$btn-bg:                    light(color(), 45);
+$btn-spacer:                16px;
+
+// form
+$input-border-color:        dark(color(muted), 12);
+$input-radius:              3px;
+$input-disabled-bg:         #efefef;
+
+
+// == layout
+// ----------------------------------------------------------------------
+// wrapper
+$max-width:             1400px !default;
+$min-width:             1200px !default;
+
+// header
+$header-height:         48px !default;
+$header-bg:             color() !default;
+
+// sidebar
+$sidebar-width:         220px;
+$sidebar-bg:            color(muted);
+
+// breadcrumb
+$breadcrumb-height:     40px;
+
+// z-index
+$zindex: (
+    'main',
+    'footer',
+    'sidebar',
+    'header',
+    'logo',
+    'menu',
+    'goTop',
+    'datepicker',
+    'tooltip',
+    'overlay',
+);

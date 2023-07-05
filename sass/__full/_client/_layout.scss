@@ -1,0 +1,410 @@
+@charset "UTF-8";
+
+$mobie-width: $desktop - 1;
+
+
+/*      layout
+-----------------------------------------------------------------------*/
+// html {
+//     scroll-behavior: smooth; // 滑滾動
+// }
+// 讓頁腳置底
+html, body {
+    height: 100%;
+}
+#wrapper {
+    min-height: 100%;
+    margin-bottom: -$footer-height;
+    padding-bottom: $footer-height + $footer-spacer;
+}
+.overlay {
+    overflow: hidden;
+}
+
+.container {
+    @include container;
+
+    &.small {
+        max-width: 1000px;
+    }
+}
+
+
+// header
+// ----------------------------------------------------------------------
+#header {
+    @if $header-bg     { background: $header-bg; }
+    @if $header-height { min-height: $header-height; }
+
+    @if not $enable-RWD {
+        @include no-rwd;
+    }
+
+    // this proj
+    position: relative;
+    z-index: 1;
+    padding-top: 15px;
+}
+
+.logo {
+    @extend .pull-left, .mt-0;
+
+    color: color();
+    font-size: em(30);
+    font-weight: normal;
+
+    padding-top: 10px;
+    margin-bottom: 25px;
+
+    @if not $isIndex {
+        cursor: pointer;
+    }
+
+    small {
+        display: block;
+    }
+}
+
+// 右上功能項
+.top-items {
+    @extend .text-right;
+
+    float: right;
+}
+.top-nav {
+    @extend .mb-10;
+}
+.search {
+    .form-element {
+        border-width: 0;
+        box-shadow: none;
+        width: 276px;
+
+        &:focus {
+            @include stylus($input-stylus, is-focus);
+        }
+    }
+
+    &-btn {
+        @include btn;
+        padding: 0 12px;
+
+        &:hover, &:active {
+            background: light(color(), 15);
+        }
+    }
+}
+// 字級大中小
+.fontzoom {
+    border-radius: 50%;
+    padding: 3px 5px;
+
+    &.current {
+        background: #fff;
+    }
+    &.lg {
+        font-size: em(19);
+    }
+    &.sm {
+        font-size: em(15);
+    }
+}
+
+// 分隔線(網站導覽)
+.divider {
+    @extend .mx-s;
+
+    display: inline-block;
+    border-left: 1px solid $body-color;
+    height: 12px;
+}
+
+.menu {
+    background: rgba(#fff, .8);
+    text-align: center;
+
+    // 手機選單樣式
+    @include mq-max($mobie-width) {
+        // comm
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        overflow-y: auto;
+        z-index: z(menu);
+
+        // theme
+        background-color: rgba(#000, .8);
+        padding: 35px $gutter 0;
+
+        // effect
+        opacity: 0;
+        visibility: hidden;
+        transition: 1200ms;
+
+        &.open {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
+.nav-link {
+    display: inline-block;
+    vertical-align: middle;
+
+    color: color(info);
+    font-size: em(21);
+    letter-spacing: em(2);
+
+    @include mq(break($mobie-width, + 1)) {
+        padding: 12px 32px;
+        margin: 0 -3px 0 0;
+        min-width: 220px;
+
+        &:hover, &.active {
+            color: #fff;
+            background-color: color(secondary);
+        }
+        &.active {
+            position: relative;
+
+            &::after {
+                content: '';
+                display: block;
+
+                @include center(x);
+                @include arrow(down, 30px, 8px, color(secondary));
+
+                top: 100%;
+            }
+        }
+    }
+    @include mq-max($mobie-width) {
+        display: block;
+        margin-top: 30px;
+        margin-bottom: 8px;
+
+        color: #fff;
+        font-size: em(23);
+
+        &.active {
+            color: light(color(info), 20);
+        }
+    }
+}
+
+// 子選單
+.submenu {
+    @include mq(break($mobie-width, +1)) {
+        background-color: color(muted);
+        padding: spacer(xl) 5%;
+
+        position: absolute;
+        left: 0;
+        right: 0;
+        z-index: z(submenu);
+
+        top: 90%;
+        opacity: 0;
+        visibility: hidden;
+        transition: 800ms, top 300ms 200ms;
+
+        .dropdown:hover & {
+            top: 100%;
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+}
+.sub-nav {
+    @extend %bg-white, .text-center;
+
+    display: inline-block;
+    padding: 8px 15px;
+    margin: 0 2px 8px;
+
+    color: color(secondary);
+
+    @include mq(break($mobie-width, +1)) {
+        @include sizing(82px, 27px, 1.2, 8px);
+
+        width: 19.5%;
+    }
+    @include mq-max($mobie-width) {
+        background: dark(color(muted), 5);
+        font-size: em(18);
+    }
+
+    &:hover, &.active {
+        background: color();
+        color: inherit;
+    }
+}
+
+// 手機選單展開收合鈕
+.mobile-toggle {
+    display: none;
+
+    cursor: pointer;
+    background: none;
+    position: relative;
+    transition: 600ms;
+    z-index: z(menu) + 1;
+
+    float: right;
+    width: 38px;
+    height: 28px;
+    top: 8px;
+
+    @if $isIndex {
+        right: $gutter;
+    }
+
+    .inner {
+        position: relative;
+        display: block;
+
+        @include el(all) {
+            position: absolute;
+            left: 0;
+            top: 9px;
+        }
+
+        &, &:before, &:after {
+            background: color();
+            border-radius: 2px;
+            height: 2px;
+            width: 100%;
+            transition: 400ms ease;
+        }
+
+        &:after {
+            top: 18px;
+        }
+    }
+
+    &.active {
+        position: fixed;
+        right: $gutter;
+
+        .inner {
+            background: transparent;
+
+            &:before {
+                transform: rotate(45deg) translate(-1px, 0px);
+            }
+            &::after {
+                transform: rotate(-45deg) translate(6px, -7px);
+            }
+        }
+    }
+
+    @include mq-max($mobie-width) {
+        display: block;
+    }
+}
+
+// footer
+// ----------------------------------------------------------------------
+
+#footer {
+    min-height: $footer-height;
+
+    // this proj
+    @extend %text-white, .text-left;
+
+    background: #79b36a;
+    padding: 22px 0;
+}
+
+.foot-contact {
+    display: flex;
+    align-items: center;
+    margin: 0 0 10px;
+
+    dd {
+        border-left: 1px solid #fff;
+        padding-left: 12px;
+        margin-left: 12px;
+    }
+    strong {
+        display: block;
+    }
+}
+.itrilogo {
+    $bg: 'data:image/png;base64,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';
+    background: url($bg) no-repeat 0 0;
+    width: 147px;
+    height: 34px;
+
+    @include text-hide;
+}
+.aplus {
+    float: right;
+    margin-top: -54px;
+
+    img {
+        width: 125px;
+    }
+}
+
+.copyright {
+    @extend .font-sm;
+}
+
+// gotop
+.gotop {
+    position: fixed;
+    right: 2%;
+    bottom: 2%;
+    z-index: z(gotop);
+    opacity: 0;
+
+    background: rgba(#000, .2);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    padding-top: 20px;
+    text-align: center;
+
+    @include el(before, inline-block) {
+        border: solid #fff;
+        border-width: 0 1px 1px 0;
+        padding: 8px;
+        transition: .35s ease;
+        transform: rotate(-135deg);
+    }
+
+    span {
+        display: block;
+        margin-top: -16px;
+        opacity: 0;
+        transition: .5s;
+        color: #fff;
+    }
+
+    &:hover {
+        background: rgba(color(secondary), .55);
+        span {
+            opacity: 1;
+        }
+        &:before {
+            transform: translateY(-8px) rotate(-135deg);
+        }
+    }
+}
+
+.fade-in {
+    @include diy-animate(fade-in, ease 1s forwards) {
+        from { bottom: -1%; opacity: 0; }
+        to   { bottom: 2%; opacity: 1; }
+    }
+}
+.fade-out {
+    @include diy-animate(fade-out, ease 1s forwards) {
+        from   { bottom: 2%; opacity: 1; }
+        to { bottom: -1%; opacity: 0; }
+    }
+}

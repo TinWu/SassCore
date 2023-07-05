@@ -1,0 +1,289 @@
+@charset "utf-8";
+
+@use "sass:math"; // 新版不能用/當除法，要引用這行用 math.div(n1,n2) 來除
+
+$max-width:             840px;
+$btn-font-size:         24px;
+$btn-height:            52px;
+
+$input-font-size:       16px;
+$input-height:          42px;
+
+$body-bg:               #fff url(../images/login.jpg) no-repeat center;
+
+
+// import
+// ------------------------------------------------------------
+@import "core/function"; // (置頂)
+
+@import "_client/setting"; // 覆寫下方的變數值
+
+@import "core/variables";
+@import "core/mixins";
+
+// output
+@import "basic/base";
+@import "basic/form";
+@import "basic/util";
+
+@import "_admin/btn";
+@import "_admin/state";
+
+
+// output
+// ------------------------------------------------------------
+
+//
+// == layout
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin-bottom: 120px;
+}
+
+.container {
+    @include container(1200px);
+}
+
+// #header
+.logo {
+    @extend .text-center;
+
+    color: color();
+    font-size: em(50);
+    font-weight: normal;
+
+    cursor: pointer;
+    width: intrinsic;           /* Safari/WebKit uses a non-standard name */
+    width: -moz-max-content;    /* Firefox/Gecko */
+    width: -webkit-max-content;
+    margin: 5.5% auto 0;
+
+    small {
+        display: block;
+    }
+}
+
+// #footer
+#footer {
+    min-height: 120px;
+
+    // this proj
+    @extend %text-white, .text-left;
+
+    background: #79b36a;
+    padding: 22px 0;
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.foot-contact {
+    display: flex;
+    align-items: center;
+    margin: 0 0 10px;
+
+    dd {
+        border-left: 1px solid #fff;
+        padding-left: 12px;
+        margin-left: 12px;
+    }
+    strong {
+        display: block;
+    }
+}
+.itrilogo {
+    $bg: 'data:image/png;base64,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';
+    background: url($bg) no-repeat 0 0;
+    width: 147px;
+    height: 34px;
+
+    @include text-hide;
+}
+.aplus {
+    float: right;
+    margin-top: -54px;
+
+    img {
+        width: 125px;
+    }
+}
+
+.copyright {
+    @extend .font-sm;
+}
+
+// == main
+main {
+    @extend %bg-white;
+
+    display: flex;
+    max-width: $max-width;
+    margin-top: 42px;
+
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+}
+
+// # sidebar
+.sidebar {
+    background: dark(color(warning), 5);
+    position: relative;
+    flex: 32%;
+}
+.system-text {
+    @extend %text-white, .m-0;
+
+    display: block;
+    text-align: right;
+
+    position: absolute;
+    top: 25px;
+    right: 20px;
+
+    font-size: em(50);
+    letter-spacing: em(3);
+    line-height: 1.3;
+}
+
+
+// # content
+
+// login form
+.login {
+    padding: 40px;
+    flex: 68%;
+}
+
+.inner-icon {
+    position: relative;
+
+    @include el(before) {
+        @extend .text-center;
+
+        color: dark(color(muted), 10);
+
+        position: absolute !important;
+        width: 36px;
+        top: 50% !important;
+        left: 0;
+        transform: translateY(-50%);
+
+        z-index: 3;
+    }
+
+    .form-element {
+        padding-left: 36px;
+    }
+}
+
+.btn {
+    min-width: 173px;
+
+    &:hover {
+        color: #fff;
+    }
+}
+
+// # css modal
+// The modal's background
+.modal {
+    display: none;
+    overflow-y: auto;
+    z-index: 999;
+    -webkit-overflow-scrolling: touch;  // for safari bug
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    background-color: #000;
+    background-color: rgba(#000, .7);
+
+    @if $enable-RWD {
+        @include mq-max(break(sm, -1)) {
+            padding-top: 5%;
+        }
+    }
+
+    // fade effect
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s .2s, opacity .2s ease-in-out;
+
+    // Display the modal when targeted
+    &:target {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity .2s ease-in-out;
+
+        display: block;
+    }
+
+    $con-pd: get('30');
+
+    // The modal box
+    &-content {
+        @extend .center, .my-70, %bg-white;
+
+        box-shadow: 0 0 0 4px rgba(#fff, .15);
+        padding: 0 $con-pd $con-pd $con-pd;
+        width: 80%;
+        max-width: 960px;
+
+        @include diy-animate(slide-down, .4s) {
+            from { top: -300px; opacity: 0; }
+            to   { top: 0; opacity: 1; }
+        }
+
+        form:last-child {
+            @extend .mb-0;
+        }
+    }
+
+    // close btn
+    &-close {
+        @extend %text-white, .font-xxxl;
+
+        position: absolute;
+        top: -5px;
+        right: get(s);
+        transition: .35s ease-in;
+
+        &:hover, &:focus {
+            color: color(warning);
+            cursor: pointer;
+        }
+    }
+
+    %resize {
+        margin-left: (-$con-pd);
+        margin-right: (-$con-pd);
+    }
+
+    // header
+    &-header {
+        @extend %text-white, .bg-secondary, .font-xl, .mb-30, %resize;
+
+        padding: get('10') 40px get('10') get('20');
+        position: relative;
+    }
+
+    // footer
+    &-footer {
+        @extend .py-15, .mt-30, .text-center, %resize;
+
+        border-top: 1px solid $border-color;
+        background: light(color(muted), 83);
+        margin-bottom: (-$con-pd);
+
+        .btn {
+            @extend .mx-5;
+        }
+    }
+}

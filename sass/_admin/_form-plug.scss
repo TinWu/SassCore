@@ -1,0 +1,113 @@
+@charset "UTF-8";
+
+$controls-color:         #fff;
+$controls-color-checked: color(success);
+$controls-size:          $input-height * .8;
+
+//
+// == form control plug (radio,checkbox)
+// ------------------------------------------------------------
+// <label class="form-check">選項
+//     <input class="form-check-input" type="radio" name="r1">
+//     <i class="icon" aria-hidden="true"></i> => aria-hidden無障礙
+// </label>
+
+// comm
+.form-check {
+    display: inline-block;
+    cursor: pointer;
+    padding-left: $controls-size + 5;
+    margin: 3px 10px 3px 0;
+    min-height: $controls-size;
+    position: relative;
+
+    // 換行
+    &.stacked {
+        display: block;
+        margin-bottom: 8px;
+    }
+}
+
+.form-check-input {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+
+    ~ .icon {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: 350ms;
+        background-color: $controls-color;
+        border: 1px solid $input-border-color;
+    }
+
+    &[type="checkbox"] {
+        ~ .icon {
+            width: $controls-size;
+            height: $controls-size;
+            background: $controls-color;
+
+            // check icon
+            &:after {
+                content: '';
+                display: none;
+
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                width: 7px;
+                height: 10px;
+                border: solid white;
+                border-width: 0 3px 3px 0;
+                transform: translate(-50%, -65%) rotate(45deg);
+            }
+        }
+        &:checked ~ .icon{
+            background: $controls-color-checked;
+
+            &:after {
+                display: block;
+            }
+        }
+    }
+
+    &[type="radio"] {
+        ~ .icon {
+            background-color: $controls-color;
+            border-radius: 50%;
+            border-color: dark($border-color, 10);
+            width: $controls-size - 4;
+            height: $controls-size - 4;
+        }
+        &:checked {
+            ~ .icon {
+                box-shadow: 0 0 0 3px rgba($controls-color-checked, .5);
+                border: 3px solid #fff;
+                background: $controls-color-checked;
+            }
+        }
+    }
+}
+
+// 底線模式
+.input-underline {
+    border: none;
+    border-bottom: 1px solid $input-border-color;
+
+    &:focus {
+        outline: 0;
+        border-color: #2316db;
+    }
+}
+
+//
+// == textarea resise set
+.resize-ver {
+    resize: vertical;
+}
+.resize-hor {
+    resize: horizontal;
+}

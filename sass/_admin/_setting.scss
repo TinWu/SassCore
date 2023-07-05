@@ -1,0 +1,94 @@
+@charset "UTF-8";
+
+@import url('//fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+// == 這裡放自定義變數 + 覆寫 variables 裡的變數
+// import 順序最好在 variables 前面。但如果要放後面的話，下面要覆寫的變數不能加 !default
+
+$index:                     false !default; // 判斷是否為首頁 (login = 後台首頁)
+$img-path:                  '../images' !default;
+$enable-RWD:                false;
+
+
+// == color
+// ----------------------------------------------------------------------
+$colors: (
+    primary:       #EBD16C,
+    secondary:     #529DCB,
+    success:       #5BBA9C,
+    info:          #85b8cb,
+    warning:       #f2ab39,
+    danger:        #fe7773,
+    muted:         #f9f8f6
+);
+
+$border-color:              dark(color(muted), 5);
+$component-active:          color(success);
+
+
+// == ref: base> custom
+// ----------------------------------------------------------------------
+// <font>
+$font-family-sp:            'Montserrat'; // https://fonts.google.com/
+
+// <body>
+$body-bg:                   color(muted);
+
+// <a>
+$link-color:                color(secondary);
+$link-hover-color:          color(success);
+
+// <table>
+$table-striped-color:       light(color(muted), 25);
+$table-hover-color:         dark(color(muted), 3); //light(#FAF0BB, 13)
+$table-cell-padding:        .52em .42em;
+
+// <form>
+$input-height:              if($index, 40px, 32px);
+$input-radius:              5px;
+$input-border-color:        dark(color(muted), 12);
+$input-disabled-bg:         light(color(muted), 80);
+$input-placeholder-color:   light(#000, 70);
+
+// == util
+// -----------------------------------------------------------------
+$spacers: (
+    '5':   5px,
+    '15':  15px,
+    '30':  30px
+);
+
+// == layout
+// ----------------------------------------------------------------------
+// wrapper
+$max-width:             1400px !default;
+$min-width:             1200px !default;
+
+// header
+$header-height:         52px !default;
+$header-bg:             color(secondary) !default;
+
+// sidebar
+$sidebar-width:         220px;
+$sidebar-bg:            #fff;
+
+$nav-color:             #3C4B54;
+$nav-icon-color:        desaturate(dark($sidebar-bg, 20), 40);
+$nav-pdx:               12px;
+$nav-item-size:         18px;
+
+// breadcrumb
+$breadcrumb-height:     40px;
+
+// z-index
+$zindex: (
+    'main',
+    'footer',
+    'sidebar',
+    'header',
+    'logo',
+    'menu',
+    'goTop',
+    'datepicker',
+    'overlay',
+);

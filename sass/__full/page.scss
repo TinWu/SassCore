@@ -1,0 +1,241 @@
+@charset "utf-8";
+
+@use "sass:math"; // 新版不能用/當除法，要引用這行用 math.div(n1,n2) 來除
+
+// import
+// ------------------------------------------------------------
+@import "core/function"; // (置頂)
+
+@import "_client/setting"; // 覆寫下方的變數值
+@import "core/variables";
+@import "core/mixins";
+
+// output
+@import "basic/base";
+@import "basic/table";
+@import "basic/form";
+@import "basic/util";
+
+@import "_client/layout";
+@import "_client/btn";
+@import "_client/forms";
+@import "_client/state";
+@import "_client/classes";
+
+
+// output
+// ------------------------------------------------------------
+
+// == common
+
+.title {
+    font-size: em(25);
+    font-weight: normal;
+    border-left: 5px solid color(secondary);
+
+    margin: 50px 0 30px;
+    padding-left: 16px;
+
+    small {
+        color: #aaa;
+    }
+}
+
+.sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+// 編輯表格
+.table-edit {
+    @extend .table-bordered, .mb-m;
+
+    width: 100%;
+    border-width: 3px;
+
+    thead {
+        @extend .font-lg;
+        background: color();
+        color: #fff;
+    }
+    .item {
+        @extend .text-primary;
+        background: light($table-border-color, 70);
+    }
+    // .sub-item {
+    //     @extend .text-secondary;
+    //     background: light($table-border-color, 70);
+    // }
+
+    .form-element {
+        max-width: 100%;
+    }
+}
+.thead {
+    @extend %text-white;
+    background: light(color(info), 30); //dark(color(warning), 15)
+}
+.item-edit {
+    width: 5%;
+    min-width: 54px;
+}
+.submit-bar {
+    margin-top: 40px;
+
+    .btn {
+        font-size: em(21);
+        padding: 15px 20px;
+    }
+}
+
+// == 最新消息, 法規列表
+.list-border {
+    @extend %list-unstyled;
+
+    li {
+        @extend .mb-m;
+
+        border: 1px solid color(muted);
+        line-height: 1.45;
+
+        position: relative;
+        padding: 16px 16px 16px 120px;
+
+        &[onclick] {
+            cursor: pointer;
+            transition: 350ms;
+
+            &:hover {
+                background: light(color(muted), 60);
+            }
+        }
+    }
+
+    .date {
+        @extend .font-norm, %text-white, .bg-warning;
+
+        display: inline-block;
+        padding: 2px 5px;
+
+        position: absolute;
+        left: get(m);
+        top: get(m);
+    }
+
+    a {
+        display: inline-block;
+        font-size: em(19);
+
+        &:not(:last-child) {
+            @extend .mb-s;
+        }
+    }
+}
+
+// content
+.news-title {
+    @extend .mb-l, .pb-m, .text-primary;
+
+    border-bottom: 1px solid light(color(muted), 45);
+    font-size: em(27);
+
+    .date {
+        @extend .mb-s, .font-lg, .text-secondary;
+
+        display: block;
+    }
+}
+
+// 問題集
+.tags {
+    @extend .p-s, .mb-xl;
+    background: light(color(muted), 50);
+}
+.tag {
+    @extend %bg-white;
+
+    display: inline-block;
+    padding: 8px 12px;
+    margin-right: 5px;
+
+    &:hover, &.active {
+        background: color(secondary);
+        color: #fff;
+    }
+}
+
+.q {
+    @extend .p-s;
+
+    background: #f2f2f2;
+    position: relative;
+    padding-left: 50px;
+    margin: 30px 0 5px;
+
+    &:before {
+        @extend .text-secondary;
+
+        font-size: em(27);
+
+        content: 'Q';
+        display: block;
+        position: absolute;
+        left: 10px;
+        top: -3px;
+    }
+}
+
+ol.a {
+    padding-left: 20px;
+}
+
+// == 表單下載
+.downloads {
+    @extend .p-s, .mb-m;
+
+    background: #f7f7f7;
+
+    .date {
+        @extend .text-warning, .mr-s, .font-norm;
+    }
+    .btn {
+        padding-top: 6px;
+        padding-bottom: 6px;
+        margin-left: 5px;
+    }
+}
+
+// == 網站導覽
+.list-map {
+    @extend .mb-m;
+
+    counter-reset: item;
+
+    li {
+        display: block;
+
+        &::before {
+            content: counters(item, ".") " ";
+            counter-increment: item;
+        }
+    }
+}
+.content {
+    p, li {
+        line-height: 1.7;
+    }
+}
+
+// == 編輯器
+.editor {
+    @extend .font-lg;
+
+    word-wrap: normal;
+    word-break: break-all;
+    line-height: 1.6;
+
+    img {
+        max-width: 100% !important;
+    }
+}

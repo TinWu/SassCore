@@ -1,0 +1,271 @@
+@charset "utf-8";
+
+@use "sass:math"; // 新版不能用/當除法，要引用這行用 math.div(n1,n2) 來除
+
+$isAdmin:          true;
+
+$user-state-height: 45px;
+
+// import
+// ------------------------------------------------------------
+@import "core/function"; // (置頂)
+
+@import "_admin/setting"; // 本專案變數要放在 variables上，可以覆蓋掉 variables 的值
+@import "core/variables";
+@import "core/mixins";
+
+// output
+@import "basic/base";
+@import "basic/table";
+@import "basic/form";
+@import "basic/util";
+
+// 本專案 plugin
+@import "_admin/layout";
+@import "_admin/btn";
+@import "_admin/state";
+@import "_admin/forms";
+@import "_admin/dropdown";
+// @import "_admin/modal";
+@import "_admin/modules"; // (置底)
+
+
+// output
+// ------------------------------------------------------------
+
+// == main
+.breadcrumb {
+    @extend %list-inline, .font-sm, .mb-0;
+
+    color: #555;
+
+    li {
+        &:not(:last-child):after {
+            content: "/";
+            margin-left: 5px;
+        }
+    }
+}
+
+.title {
+    @extend .mb-l, .pb-10, .underline, .text-primary;
+
+    h2 {
+        @extend .mb-10;
+        @include rem('font-size', 28);
+    }
+
+    small {
+        @extend .ml-s;
+        color: darken(color(muted), 15);
+    }
+}
+
+// == 申報頁
+// 用戶資料
+.users {
+    @extend .p-10;
+
+    background: dark(color(muted), 3);
+
+    .btn {
+        padding: 4px 10px;
+    }
+}
+.user {
+    display: inline;
+    vertical-align: middle;
+    margin-right: 8px;
+
+    strong {
+        background: dark($border-color, 7);
+        padding: 3px 5px;
+        margin: 0 5px 0 3px;
+    }
+}
+// 申報列表
+.report-list {
+    @extend .table-bordered, .striped-tbody;
+
+    width: 100%;
+    border-width: 3px;
+
+    thead {
+        @extend %text-white, .font-lg;
+
+        background: color(secondary);
+    }
+}
+
+
+
+// == 編輯
+
+.form-edit {
+    .label {
+        @extend .text-right;
+    }
+}
+.textarea-set {
+    border: 3px solid $border-color;
+    overflow: hidden;
+
+    legend {
+        background: $border-color;
+        float: left;
+        margin-bottom: 0;
+        padding: 5px 10px;
+    }
+
+    textarea {
+        width: 100%;
+    }
+}
+
+
+// 欄位說明
+// .form-msg-inline {
+//     @extend .font-sm;
+
+//     color: dark(color(muted), 10);
+//     margin-top: pdy($input-height, get('font.sm'));
+// }
+
+// .item-add {
+//     background: light(color(info), 62);
+// }
+
+// == 檔案上傳
+
+// 已上傳檔案
+.uploaded {
+    @extend .pull-left, .font-sm;
+
+    background-color: #fff;
+    border: 1px solid $border-color;
+    position: relative;
+    padding: 4px;
+
+    &:not(:only-child) {
+        $mg: get(s) * .5;
+        margin: $mg $mg*2 $mg 0;
+    }
+
+    // 圖片
+    img {
+        width: auto;
+        height: 38px;
+    }
+
+    // 刪除按鈕
+    .btn-del {
+        text-shadow: 1px 1px 0 #fff;
+        border: none;
+        outline: none;
+
+        color: light(color(danger), 20);
+        font-size: inherit;
+
+        &:hover, &:active {
+            opacity: 1;
+            color: color(danger);
+        }
+    }
+}
+
+// // == 操作影片列表
+// .list-link {
+//     counter-reset: num; //計算基準
+
+//     > li {
+//         @extend .mb-5;
+//     }
+
+//     a {
+//         @extend .p-s;
+
+//         display: block;
+//         padding-left: 45px;
+//         background: color(muted);
+//         border: 1px solid lighten(color(), 40);
+//         position: relative;
+
+//         @include el(before, $content: counter(num)) {
+//             @extend .py-s, .text-center;
+
+//             counter-increment: num;
+
+//             width: 35px;
+//             height: 100%;
+//             background: darken(color(muted), 5);
+//             border-right: 1px solid lighten(color(), 40);
+//             transition: background .15s;
+//             position: absolute;
+//             left: 0;
+//             top: 0;
+//         }
+
+//         &:hover {
+//             color: #fff;
+//             background: lighten(color(), 10);
+
+//             &:before {
+//                 background: color();
+//                 border-right-color: color(muted);
+//             }
+//         }
+//     }
+// }
+
+
+// == this proj
+// <figure>
+.photo {
+    position: relative;
+
+    float: left;
+    width: grid(1, 4, 1.4);
+    margin: 0 .52% 30px;
+
+    .crop {
+        @extend .p-5, .mt-5, .text-center;
+        display: block;
+        position: relative;
+        border: 1px solid $border-color;
+    }
+    img {
+        max-width: 100%;
+    }
+
+    &-del {
+        @extend %text-white;
+
+        position: absolute;
+        right: -5px;
+        top: -5px;
+
+        background: dark(color(danger), 15);
+        border-radius: 50%;
+        width: 30px;
+        line-height: 30px;
+
+        font-size: em(17);
+        text-align: center;
+
+        transition: 300ms;
+
+        &:before {
+            top: 0 !important;
+        }
+
+        &:hover {
+            background: color(danger);
+        }
+    }
+
+    // 排序
+    &-set {
+        @extend .p-5;
+        background: dark($body-bg, 5);
+    }
+}

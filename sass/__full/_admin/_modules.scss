@@ -1,0 +1,311 @@
+@charset "UTF-8";
+
+
+// == 常用
+// ------------------------------------------------------------
+// width plugin, 100% in basic/util
+.eighty  { width: 80%; }
+.seventy { width: 70%; }
+.sixty   { width: 60%; }
+.half    { width: 50%; }
+.third   { width: 33.3%; }
+.fourth  { width: 25%; }
+.fifth   { width: 20%; }
+
+.arrow {
+    display: inline-block;
+    border: solid color(success);
+    border-width: 0 2px 2px 0;
+    padding: 4px;
+    transition: .35s ease;
+
+    &.right { transform: rotate(-45deg); }
+    &.left  { transform: rotate(135deg); }
+    &.up    { transform: rotate(-135deg); }
+    &.down  { transform: rotate(45deg); }
+}
+
+
+// 日期元件
+.react-datepicker-popper {
+    z-index: z(datepicker);
+}
+
+
+// == custom (this proj add)
+// ------------------------------------------------------------
+.list {
+    @extend .mt-5;
+
+    li {
+        @extend .my-5;
+    }
+}
+.list-line {
+    @extend %list-unstyled, .my-0;
+
+    li {
+        @extend .py-s;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid $border-color;
+        }
+    }
+}
+
+// submit bar > 編輯頁 存檔bar
+.submit-bar {
+    border-top: 2px solid rgba(#000, .03);
+    padding: $gutter;
+    margin: 30px 0 (-(get('10')));
+
+    &.fixed-bottom {
+        @extend .text-center;
+
+        background: dark($body-bg, 2);
+
+        position: sticky;
+        left: $sidebar-width;
+        right: 0;
+        bottom: 0;
+    }
+
+    .btn {
+        @extend .font-lg;
+    }
+    > .btn {
+        &:not(:last-child) {
+            margin-right: get(s);
+        }
+    }
+}
+
+// ## table plug
+
+%table-border-no {
+    th, td {
+        border: 0;
+    }
+}
+
+%thead {
+    background: light(color(info), 60);
+    color: dark(color(secondary), 3);
+}
+
+// == 列表
+
+// 列表上的搜尋
+.table-head {
+    @extend .font-md;
+
+    color: #4D4D4D;
+
+    .label {
+        vertical-align: middle;
+
+        &[class*=col] {
+            text-align: right;
+        }
+    }
+    > .form-element {
+        margin-right: 5px;
+    }
+    .form-element, .btn {
+        font-size: inherit;
+    }
+}
+
+.list-btns {
+    @extend .p-s;
+
+    background: dark($body-bg, 3.5);
+}
+
+%list-thead {
+    @extend .bg-secondary, %text-white;
+    // background: color(secondary);
+}
+caption {
+    vertical-align: middle;
+}
+.caption {
+    @extend .p-s, .font-lg;
+    background: #F0F6F7;
+}
+.table-list {
+    @extend %full, .table-bordered, %bg-white;
+
+    caption {
+        @extend .caption;
+    }
+
+    // 加強
+    thead {
+        @extend %list-thead;
+    }
+}
+.thead th {
+    @extend %list-thead;
+
+    &:not([colspan]) {
+        border-bottom-width: 2px;
+    }
+}
+.item-edit {
+    width: 5%;
+    min-width: 54px;
+}
+
+// 點選排序
+.th-sort-toggle {
+    @extend .p-0, .pr-10;
+
+    $arrow-size: 4px;
+    $arrow-color: dark(color(info), 15);
+    $arrow-active-color: rgba($arrow-color, .8);
+    $arrow-active-color2: rgba($arrow-color, .1);
+
+    // display: block;
+    position: relative;
+    width: 100%;
+
+    color: inherit;
+    text-align: inherit;
+    transition: color .3s;
+
+    &:hover {
+        color: color(warning);
+    }
+
+    @include el(all) {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        border: $arrow-size solid transparent;
+    }
+    // 上
+    &:before {
+        margin-top: -($arrow-size * 2 + 1);
+        border-top-width: $arrow-size*.5;
+        border-bottom: ($arrow-size + 2) solid $arrow-color;
+    }
+    // 下
+    &:after {
+        border-bottom-width: $arrow-size*.5;
+        border-top: ($arrow-size + 2) solid $arrow-color;
+    }
+    // 倒序
+    &.asc {
+        &:before { border-bottom-color: $arrow-active-color; }
+        &:after { border-top-color: $arrow-active-color2; }
+    }
+    // 順序
+    &.desc {
+        &:after { border-top-color: $arrow-active-color; }
+        &:before { border-bottom-color: $arrow-active-color2; }
+    }
+}
+
+// 列表頁腳 pager
+.table-foot {
+    @extend .p-5;
+
+    background: light($table-border-color, 50);
+}
+.pager {
+    @extend .font-sm, .text-center;
+
+    @include clearfix;
+
+    @include mq-max(break($phone, -1)) { clear: both; }
+
+    input, button { height: 26px; }
+    button {
+        margin: 0 1px;
+        transition: .35s;
+
+        &[disabled] {
+            color: darken($input-border-color, 6);
+        }
+        &:not([disabled]) {
+            @extend .hover-info;
+        }
+    }
+    span { @extend .mx-s; }
+    input {
+        @extend .mx-5, .text-center;
+        padding: 0;
+        width: 80px;
+    }
+}
+
+// == 編輯
+.table-edit {
+    @extend %full, .table-hover, .tbody-hover, .mb-l;
+
+    border: 2px solid $table-border-color;
+
+    thead, .item {
+        color: dark(color(info), 25);
+        background: $table-striped-color;
+    }
+
+    caption {
+        @extend %text-white, .text-left, .p-s;
+        background: light(color(info), 15);
+    }
+}
+
+// 分段小標
+legend {
+
+    &.bg {
+        @extend .p-s;
+        background: light(color(info), 65);
+        border-radius: $input-radius;
+    }
+}
+
+.form-edit {
+
+    .label {
+        text-align: right;
+    }
+}
+
+.textarea-set {
+    border: 3px solid $table-striped-color;
+    overflow: hidden;
+
+    legend {
+        background: $table-striped-color;
+        float: left;
+        margin-bottom: 0;
+        padding: 5px 10px;
+    }
+
+    textarea {
+        width: 100%;
+    }
+}
+
+.field {
+    // 讓field 有條紋
+    &-striped {
+        .field:nth-child(#{$table-striped-list}) {
+            @extend .py-s;
+            background-color: $table-striped-color;
+        }
+    }
+
+    // 欄位說明
+    &-msg {
+        @extend .font-sm, .text-danger;
+    }
+}
+
+
+// .item-add {
+//     background: light(color(info), 62);
+// }
