@@ -225,7 +225,7 @@ main {
         display: block;
     }
 
-    $con-pd: get('30');
+    $con-pd: get('spacing.30');
 
     // The modal box
     &-content {
@@ -252,7 +252,7 @@ main {
 
         position: absolute;
         top: -5px;
-        right: get(s);
+        right: get('spacing.s');
         transition: .35s ease-in;
 
         &:hover, &:focus {
@@ -270,7 +270,7 @@ main {
     &-header {
         @extend %text-white, .bg-secondary, .font-xl, .mb-30, %resize;
 
-        padding: get('10') 40px get('10') get('20');
+        padding: get('spacing.10') 40px get('spacing.10') get('spacing.20');
         position: relative;
     }
 

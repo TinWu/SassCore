@@ -4,7 +4,7 @@
 // == base
 // -----------------------------------------------------------------
 // ## 去單位
-@function strip-unit($number) {
+@function stripunit($number) {
     @if type-of($number) == "number" and not unitless($number) {
         @return math.div($number, ($number * 0 + 1));
     }
@@ -132,7 +132,7 @@
 
 // 算比例
 @function ratio($molecule, $Denominator) {
-    $percentage: percentage( math.div(strip-unit($molecule), strip-unit($Denominator)) );
+    $percentage: percentage( math.div(stripunit($molecule), stripunit($Denominator)) );
     @return decimal( $percentage, 2);
 }
 
@@ -142,16 +142,16 @@
 // px to em
 @function em($number, $base: $font-size-base) {
     @if unit($number) == px or unitless($number) {
-        $math: math.div( strip-unit($number), strip-unit($base) ) * 1em;
+        $math: math.div( stripunit($number), stripunit($base) ) * 1em;
         $number: decimal($math, 2);
     }
     @return $number;
 }
 
 // to rem
-@function rem($number, $base: $font-size-base) {
+@function torem($number, $base: $font-size-base) {
     @if unit($number) == px or unitless($number) {
-        $math: math.div( strip-unit($number), strip-unit($base) ) * 1rem;
+        $math: math.div( stripunit($number), stripunit($base) ) * 1rem;
         $number: if($number > 0, decimal($math, 2), 0);
     }
     @return $number;
@@ -160,7 +160,7 @@
 // to px
 @function px($number, $base: $font-size-base) {
     @if unit($number) != px {
-        $val: strip-unit($number);
+        $val: stripunit($number);
         $number: if(unitless($number), $number * 1px, $val * $base);
     }
     @return $number;
@@ -197,7 +197,7 @@
 }
 
 //  反轉色
-// @function contrast-color($color, $brightness: auto, $deg: 50) {
+// @function contrast-ratio($color, $brightness: auto, $deg: 50) {
     // 亮度
     // $luma: .55;
     // $deg: $deg * 1%;

@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-@import url('//fonts.googleapis.com/css?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 // == 這裡放自定義變數 + 覆寫 variables 裡的變數
 // import 順序最好在 variables 前面。但如果要放後面的話，下面要覆寫的變數不能加 !default
@@ -13,49 +13,55 @@ $enable-RWD:                false;
 // == color
 // ----------------------------------------------------------------------
 $colors: (
-    primary:       #EBD16C,
-    secondary:     #529DCB,
-    success:       #5BBA9C,
-    info:          #85b8cb,
-    warning:       #f2ab39,
-    danger:        #fe7773,
-    muted:         #f9f8f6
+    primary:                #013740,  // 深藍綠
+    secondary:              #016370,  // 淺藍綠 更淺#297f80
+    info:                   #0090d5,  // logo藍
+    success:                #036E0F,  // logo綠
+    warning:                #fac328,  // logo黃 字色#eaa639
+    danger:                 #DE4A8D,
+    muted:                  #f8f9fa   // 更深灰 #f2f3f4
 );
 
-$border-color:              dark(color(muted), 5);
+$border-color:              dark(color(muted), 8);
 $component-active:          color(success);
 
 
 // == ref: base> custom
 // ----------------------------------------------------------------------
 // <font>
-$font-family-sp:            'Montserrat'; // https://fonts.google.com/
+$font-family-sp:            'Roboto'; // https://fonts.google.com/
 
 // <body>
 $body-bg:                   color(muted);
+
+// <hr>
+$hr-border-color:           dark(color(muted), 6) !default;
 
 // <a>
 $link-color:                color(secondary);
 $link-hover-color:          color(success);
 
 // <table>
+$cell-padding:              .52em .42em;
 $table-striped-color:       light(color(muted), 25);
 $table-hover-color:         dark(color(muted), 3); //light(#FAF0BB, 13)
-$table-cell-padding:        .52em .42em;
+$table-border-color:        light(color(secondary), 91);
 
 // <form>
 $input-height:              if($index, 40px, 32px);
-$input-radius:              5px;
+$input-radius:              false;
 $input-border-color:        dark(color(muted), 12);
 $input-disabled-bg:         light(color(muted), 80);
 $input-placeholder-color:   light(#000, 70);
+$input-inner-shadow:        inset 0 1px 2px rgba(#000,.075);
+
 
 // == util
 // -----------------------------------------------------------------
-$spacers: (
-    '5':   5px,
-    '15':  15px,
-    '30':  30px
+$config: (
+    'font': (
+        '3xl':  30px,
+    )
 );
 
 // == layout
@@ -66,16 +72,15 @@ $min-width:             1200px !default;
 
 // header
 $header-height:         52px !default;
-$header-bg:             color(secondary) !default;
 
 // sidebar
-$sidebar-width:         220px;
+$sidebar-width:         if($index, 300px, 220px);
 $sidebar-bg:            #fff;
 
-$nav-color:             #3C4B54;
-$nav-icon-color:        desaturate(dark($sidebar-bg, 20), 40);
-$nav-pdx:               12px;
-$nav-item-size:         18px;
+$sidenav-color:         #3C4B54;
+$sidenav-icon-color:    desaturate(dark($sidebar-bg, 20), 40);
+$sidenav-pdx:           12px;
+$sidenav-icon:          17px;
 
 // breadcrumb
 $breadcrumb-height:     40px;

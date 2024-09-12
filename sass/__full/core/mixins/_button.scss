@@ -11,9 +11,9 @@
        $focus:      $btn-focus-shadow,
        $active:     $btn-active-shadow,
        $disabled:   $cursor-disabled,
-       $ext:        true
+       $ex:        true
    ) {
-    @include static(btn, $ext) {
+    @include static(btn, $ex) {
         // common
         display: inline-block;
         text-align: center;

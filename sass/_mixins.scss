@@ -1,7 +1,6 @@
 @charset "UTF-8";
 
 @import "mixins/mq";
-@import "mixins/flex";
 @import "mixins/grid";
 
 
@@ -12,10 +11,10 @@
 
 $placeholders-selectors: () !default;
 
-@mixin static($name, $extend: true) {
+@mixin static($name, $ex: true) {
     $selector: map-get($placeholders-selectors, $name);
 
-    @if $extend == true {
+    @if $ex == true {
         @if $selector == null {
             $selector: unique-id();
             $placeholders-selectors: map-merge($placeholders-selectors, ($name: $selector)) !global;
@@ -29,8 +28,7 @@ $placeholders-selectors: () !default;
         @at-root (without: media) {
             @extend %#{$selector};
         }
-    }
-    @else {
+    } @else {
         @content;
     }
 }
@@ -40,21 +38,20 @@ $placeholders-selectors: () !default;
 // 用法:
 // 1 @include el => div:before, div:after { content:""; display:block; }
 // 2 @include el(before, '111', false) => div:before { content:"111"; }
-// $ext: false 時，不會將程式壓縮起來 (@include static)
+// $ex: false 時，不會將程式壓縮起來 (@include static)
 //
-@mixin el($pseudo: all, $display: block, $content: '', $ext: true) {
-    $selector: if($pseudo == 'all', '&::before,&::after', '&::#{$pseudo}');
+@mixin el($insert: all, $display: block, $content: '', $ex: true) {
+    $selector: if($insert == 'all', '&::before,&::after', '&::#{$insert}');
 
     #{$selector} {
         @if $display == block and $content == '' {
             // 相同的壓縮起來
-            @include static(pseudo, $ext) {
+            @include static(insert, $ex) {
                 content: '';
                 display: block;
             }
-        }
-        @else {
-            @if $content { content: quote($content); }
+        } @else {
+            @if $content { content: $content; }
             @if $display { display: $display; }
         }
 
@@ -64,8 +61,8 @@ $placeholders-selectors: () !default;
 
 // == 清除浮動
 // -----------------------------------------------------------------
-@mixin clearfix($ext:true) {
-    @include static(clearfix, $ext) {
+@mixin clearfix($ex: true) {
+    @include static(clearfix, $ex) {
         &::after {
             display: table;
             content: '';
@@ -76,18 +73,16 @@ $placeholders-selectors: () !default;
 
 // == container(set width)
 // -----------------------------------------------------------------
-@mixin container($max-width: $max-width, $gap: $gutter, $ext: true) {
+@mixin container($max-width: $max-width, $gap: $gutter, $ex: true) {
+    @include clearfix($ex);
+
     max-width: $max-width;
-
-    @include clearfix($ext);
-
-    @include static(mx-a, $ext);
+    margin-inline: auto;
 
     @if $gap {
-        @include static(gap, $ext) {
+        @include static(gap, $ex) {
             @include mq-max($max-width + ($gap*2)) {
-                padding-right: $gap;
-                padding-left: $gap;
+                padding-inline: $gap;
             }
         }
     }
@@ -97,8 +92,8 @@ $placeholders-selectors: () !default;
 // -----------------------------------------------------------------
 
 // 隱藏文字
-@mixin text-hide($padding:0, $ext:true) {
-    @include static(texthide, $ext) {
+@mixin text-hide($padding:0, $ex:true) {
+    @include static(texthide, $ex) {
         text-indent: 101%;
         overflow: hidden;
         white-space: nowrap;
@@ -107,8 +102,8 @@ $placeholders-selectors: () !default;
 }
 
 // 文字溢位出現省略號,要設寬度
-@mixin text-overflow($width:100%, $ext:true) {
-    @include static('text-overflow', $ext) {
+@mixin text-ellipsis($width:100%, $ex:true) {
+    @include static('text-ellipsis', $ex) {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -118,8 +113,8 @@ $placeholders-selectors: () !default;
 
 // 底色太淺就自動設文字色(符合對比度)
 @mixin a11y($fg, $bg, $radio: 4.5) {
-    @if contrast($fg, $bg) < $radio {
-        color: a11ycolor($fg, $bg);
+    @if contrast-ratio($fg, $bg) < $radio {
+        color: a11y($fg, $bg);
     }
 }
 
@@ -135,50 +130,47 @@ $placeholders-selectors: () !default;
 @mixin center($main: null, $cross: null) {
     position: absolute;
 
-    // 2者置中
-    @if not $main and not $cross {
+    // 預設置中
+    @if $main == null and $cross == null {
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
     }
-    @else if $main {
-        // 垂直置中
-        @if $main == y {
-            top: 50%;
-            transform: translateY(-50%);
-        }
-        // 水平置中
-        @else {
-            left: 50%;
 
-            @if type-of($main) == number {
-                width: $main;
-                margin-left: -(round($main * .5));
-            }
-            @else {
-                transform: translateX(-50%);
-            }
-        }
-    }
+    // 垂直置中
+   @if $main == y {
+       top: 50%;
+       transform: translateY(-50%);
+   }
+
+   // 水平置中
+   @else if $main != null {
+       left: 50%;
+       @if type-of($main) == number {
+           width: $main;
+           margin-left: -(round($main * 0.5));
+       } @else {
+           transform: translateX(-50%);
+       }
+   }
+
     // 垂直置中(數字)
     @if type-of($cross) == number {
         top: 50%;
         height: $cross;
-        margin-top: -(round($cross * .5));
+        margin-top: -(round($cross * 0.5));
     }
 }
 
 // == 按鈕
 // -----------------------------------------------------------------
-@mixin btn($effect: $transition-duration, $ext: false) {
-    @include static(btn, $ext) {
+@mixin btn($ex: true) {
+    @include static(btn, $ex) {
         // common
         display: inline-block;
         text-align: center;
         vertical-align: middle;
         user-select: none;
-        white-space: nowrap;
-        transition: if(type-of($effect) == string, unquote($effect), $effect);
         -webkit-appearance: none;
 
         &:focus {
@@ -188,7 +180,7 @@ $placeholders-selectors: () !default;
 
     // &:disabled <a> 不可用 => 改 &[disabled]
     &[disabled] {
-        cursor: $cursor-disabled;
+        cursor: default;
 
         @content;
     }
@@ -234,3 +226,67 @@ $placeholders-selectors: () !default;
         #{$prop}: #{$value};
     }
 }
+
+// == 三角形
+// -----------------------------------------------------------------
+@mixin triangle($direction, $width, $height, $color: currentcolor) {
+    border: solid transparent;
+    width: 0;
+    height: 0;
+
+    @if $direction == top {
+        border-width: 0 ($width*0.5) $height ($width*0.5);
+        border-bottom-color: $color;
+    }
+    @if $direction == bottom{
+        border-width: $height ($width*0.5) 0 ($width*0.5);
+        border-top-color: $color;
+    }
+    @if $direction == left{
+        border-width: ($height*0.5) $width ($height*0.5) 0;
+        border-right-color: $color;
+    }
+    @if $direction == right{
+        border-width: ($height*0.5) 0 ($height*0.5) $width;
+        border-left-color: $color;
+    }
+}
+
+// == 用map產生cass https://gist.github.com/mattfelten/5c6ad6edb70c6ab10f5c377c21eda2f2
+// -----------------------------------------------------------------
+//
+// $spacing-map: (
+//   '0': (0),
+//   'half': (4px),
+//   '1': (8px),
+//   '2': (16px),
+// );
+// .p-x {
+//     @include modifiers(
+//         $map: $spacing-map,
+//         $attribute: ('padding-left', 'padding-right'),
+//         $prefix: '--'
+//     );
+// }
+//
+@mixin modifiers($map, $attribute, $prefix: '-', $separator: '-', $base: 'base', $remove: null) {
+    @each $key, $value in $map {
+        @if($remove){
+            $key: str-replace($key, $remove, '');
+        }
+        &#{if($key != $base, #{$prefix}#{$key}, '')} {
+            @if type-of($value) == 'map' {
+                @include modifiers($value, $attribute, $prefix, $separator, $base, $remove);
+            }
+            @else if type-of($attribute) == 'list' {
+                @each $a in $attribute {
+                    #{$a}: $value;
+                }
+            }
+            @else {
+                #{$attribute}: if($value, $value, $key);
+            }
+        }
+    }
+}
+

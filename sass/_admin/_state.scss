@@ -4,23 +4,59 @@
 // == 情境 Contextual colors
 // ------------------------------------------------------------
 
-// reset default value
-button[class*="hover-"] {
-    padding: 0;
-    text-align: inherit;
-}
-// $colors in variables.scss
-@each $theme, $color in $colors {
-    .text-#{$theme}, .hover-#{$theme} {
-        color: dark($color, 13);
-    }
-    .hover-#{$theme} {
-        &:hover, &:focus {
-            color: dark($color, 30);
+.text {
+    @each $state, $value in (
+        primary:        color(),
+        secondary:      color(secondary),
+        info:           color(info),
+        success:        color(success),
+        warning:        a11y(color(warning), $body-bg),
+        danger:         color(danger),
+        muted:          color(muted),
+    ) {
+        &-#{$state} {
+            color: var(--color, #{$value});
         }
     }
-    .bg-#{$theme} {
-        background: $color;
+}
+
+.hover\:text {
+    @include modifiers(
+        (
+            'primary:hover':        dark(color(), 15),
+            'info:hover':           dark(color(info), 15),
+            'warning:hover':        a11y(dark(color(warning), 15), #fff),
+            'danger:hover':         dark(color(danger), 15),
+        ),
+        '--color'
+    );
+}
+
+.bg {
+    @each $state, $value in (
+        primary:        color(),
+        secondary:      color(secondary),
+        info:           color(info),
+        success:        color(success),
+        warning:        color(warning),
+        muted:          color(muted),
+    ) {
+        &-#{$state} {
+            background-color: var(--bg, #{$value});
+        }
+    }
+}
+
+
+.border {
+    @each $key, $value in (
+        'muted':       dark(color(muted), 4),
+    ) {
+        &-#{$key} {
+            // --border-color: #{ $value };
+            // border-color: var(--border-color);
+            border-color: $value;
+        }
     }
 }
 
@@ -29,33 +65,39 @@ button[class*="hover-"] {
 // == label, panel
 // ------------------------------------------------------------
 // label
-[class*=label-] {
-    @extend .font-tiny;
-
-    display: inline-block;
-    border-radius: 2px;
-    padding: .1em .3em;
-
-    &:not(:only-of-type) { margin: .2em; }
+em[class*='label'] {
+    font-style: normal;
 }
-[class*=panel-] {
-    @extend .p-5;
-    line-height: 1.5;
+
+[class*='label-'] {
+    //font-size: get('font.sm');
+
+    border-radius: 3px;
+    display: inline-block;
+    padding: .1em .3em;
+    vertical-align: middle; // text-bottom;
+
+    &:not(:only-of-type) {
+        margin: .2em;
+    }
 }
 
 // label + panel theme
-@each $theme, $color in (
-    success:  desaturate(light(scale-color(color(success), $blue:-80%), 70), 35%),
-    info:     light(color(info), 16),
-    warning:  light(color(warning), 74),
-    danger:   light(color(danger), 68),
-) {
-    .label-#{$theme}, .panel-#{$theme} {
-        background: $color;
-        color: dark($color, 52);
-        border: 1px solid dark($color, 7.5);
+.label, .panel {
+    @each $theme, $color in (
+        success:  light(color(success), 50),
+        info:     light(color(info), 16),
+        warning:  light(color(warning), 74),
+        danger:   light(color(danger), 68),
+    ) {
+        &-#{$theme} {
+            background: $color;
+            border: 1px solid dark($color, 7.5);
+            color: a11y($color, $color);
+        }
     }
 }
+
 .label-muted {
     $color: light(color(muted), 45);
 

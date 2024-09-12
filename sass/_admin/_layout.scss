@@ -3,91 +3,101 @@
 //       layout
 // -----------------------------------------------------------------------
 body {
-    padding-top: $header-height;
+    padding: $header-height 16px 32px ($sidebar-width+16px);
+
+    @media only screen and (min-device-width: $min-width) {
+        min-width: $min-width;
+    }
+}
+
+.container {
+    @include clearfix;
+
+    margin-inline: auto;
+
+    &.smaller {
+        max-width: 640px;
+    }
 }
 
 // header
 // ----------------------------------------------------------------------
 #header {
-    @if $header-bg     { background: $header-bg; }
-    @if $header-height { height: $header-height; }
+    height: $header-height;
+    width: 100%;
     z-index: z(header);
-
-    @if not $enable-RWD {
-        @include static(norwd) {
-            @media only screen and (min-device-width: $min-width) {
-                min-width: $min-width;
-            }
-        }
-    }
-
-    // this proj only
-    padding-right: $gutter;
-    padding-left: $gutter;
 
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
 }
 
-.site-title {
-    @extend .my-0, %text-white;
-
+.heading {
+    color: #fff;
+    font-size: em(27);
     letter-spacing: .08em;
-
-    // this proj only
-    line-height: $header-height;
-
-    font-size: rem($header-height - (10*2));
 }
 
 // 右上方資訊選單(回首頁,登出等)
 .navbar {
-    margin-top: ($header-height - (15*1.2))*.5;
-
-    .nav-link {
-        @extend .text-white;
-
-        display: inline-block;
-        vertical-align: top;
-
-        &:hover {
-            color: rgba(#fff, .75);
-        }
-    }
-
-    button.nav-link {
-        cursor: pointer;
-    }
-
-    // 下拉式選單> 修改密碼 + 登出
-    // .dropdown {
-    //     &-content {
-    //         @extend .font-md;
-
-    //         min-width: 160px;
-    //         right: 0;
-    //         top: 100%;
-
-    //         &.in {
-    //             top: 170%;
-    //         }
-    //     }
-    // }
+    // display: flex;
+    // height: inherit;
 }
 
+.dropdown {
+}
 
-// main
-// ----------------------------------------------------------------------
-#main {
-    @extend .text-left;
+.dropdown-toggle.active {
+    i::before {
+        content: '\e931';
+    }
+}
 
-    padding: 0 $gutter 76px;
-    margin-left: $sidebar-width;
+.dropdown-content {
+    text-align: left;
 
-    @if not $enable-RWD {
-        @include static(norwd);
+    background: #fff;
+    box-shadow: 1px 3px 10px rgba(#000, .2);
+    top: 100%;
+    min-width: 180px;
+    z-index: 1;
+
+    // effect
+    // display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: .2s, opacity .2s ease-in-out;
+
+    &.in {
+        // display: block;
+        visibility: visible;
+        opacity: 1;
+        transition: opacity .2s ease;
+
+        .navbar & {
+            top: 37px;
+        }
+    }
+}
+
+.navbar-link {
+    color: #fff;
+    font-size: em(15);
+    // padding: pdy($header-height, 15) 16px;
+    transition: .2s;
+
+    &:hover, &.active {
+        color: dark(#fff, 10);
+    }
+}
+
+.subnav-link {
+    --color: #3C4B54;
+    display: block;
+    padding: 12px 15px;
+
+    &:hover, &.active {
+        background-color: color(warning);
     }
 }
 
@@ -109,86 +119,107 @@ body {
 }
 
 // 第一層
-.navitm {
-    display: block; // for a or button
-    padding: 10px $nav-pdx 10px ($nav-pdx + $nav-item-size - 3);
+.menu-link {
+    display: block;
+    position: relative;
+    padding: 10px $sidenav-pdx 10px ($sidenav-pdx + $sidenav-icon + 8);
     transition: .3s ease;
 
-    color: $nav-color;
-
-    font-size: rem($nav-item-size);
+    color: $sidenav-color;
+    font-size: torem(17);
     line-height: 1.36;
-    text-indent: -($nav-pdx + $nav-item-size - 3);
 
-    &:before {
-        margin-left: 12px;
-        width: 22px;
+    &::before {
+        color: $sidenav-icon-color;
 
-        color: $nav-icon-color;
-        text-indent: 0;
-        text-align: center;
-    }
-    &:hover, &:active, &.current {
-        color: dark(color(), 25);
-    }
-    &.current {
-        background: $body-bg;
+        position: absolute;
+        left: 12px;
+        top: 12px;
+        width: $sidenav-icon;
     }
 
-    @at-root button#{&} {
-        width: 100%;
-        text-align: inherit;
+    &:hover {
+        background-color: light(color(warning), 80);
+    }
+    &.active {
+        background-color: light(color(info), 50);
+        color: #000;
+
+        &::before {
+            color: #fff;
+        }
     }
 }
 
 // # 選單摺疊效果
-.collapse {
-    // 展開鈕
-    &-toggle {
-        cursor: pointer;
-        position: relative;
+// 展開鈕
+.collapse-toggle {
+    cursor: pointer;
+    margin: 0;
+    position: relative;
 
-        // 箭頭
+    font-weight: normal;
+
+    // 箭頭
+    .arrow {
+        display: inline-block;
+        border: solid rgba(#000, 0.1);
+        border-width: 0 2px 2px 0;
+        padding: 4px;
+        transform: rotate(45deg);
+        transition: .35s ease;
+
+        position: absolute;
+        top: 15px;
+        right: 8px;
+        // border-color: $sidenav-icon-color;
+    }
+
+    &.active {
         .arrow {
-            position: absolute;
-            top: 15px;
-            right: 12px;
-            border-color: $nav-icon-color;
+            transform: rotate(-135deg);
+            top: 18px;
         }
+    }
+}
 
-        &.active {
-            .arrow {
-                transform: rotate(-135deg);
-                top: 19px;
+.collapse {
+    display: none;
+
+    &.in {
+        display: block;
+
+        @include animate(collapse 0.5s forwards) {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 100%;
             }
         }
     }
+}
 
-    // 子選單
-    &-content {
-        margin-right: $gutter;
-        max-height: 0;
-        opacity: 0;
-        overflow: hidden;      // 隱藏容器內部的內容（否則高度 0 也沒用）
-        transition: .35s cubic-bezier(0, 1, 0.5, 1);
+// 子選單
+.submenu {
+    margin-right: 10px;
+}
 
-        &.in {
-            max-height: 500px;
-            opacity: 1;
-        }
+.submenu_link {
+    border-radius: 0 28px 28px 0;
+    color: $sidenav-color;
 
-        a {
-            border-radius: 0 28px 28px 0;
-            color: $nav-color;
+    display: block;
+    margin-top: 1px;
+    padding: 8px $sidenav-pdx 8px ($sidenav-icon + $sidenav-pdx + 8);
 
-            display: block;
-            margin-bottom: 1px;
-            padding: 8px $nav-pdx 8px ($nav-item-size + $nav-pdx + 10);
-
-            &:hover, &:active, &.active {
-                background: light(color(), 50);
-            }
-        }
+    &:hover, &:active {
+        background: light(color(warning), 40);
+    }
+    &.active {
+        background: dark(color(muted), 5);
     }
 }
 

@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
-$controls-color:         #fff;
-$controls-color-checked: $component-active;
-$controls-size:          24px; // $input-height * .6;
+$controls-color:           #fff;
+$controls-color-checked:   $component-active;
+$controls-size:            24px; // $input-height * .6;
 
 //
 // == form control plug (radio,checkbox)
@@ -40,7 +40,7 @@ $controls-size:          24px; // $input-height * .6;
         top: -3px;
         transition: 350ms;
         background-color: $controls-color;
-        border: 1px solid #B3E9F5;
+        border: 1px solid $input-border-color;
     }
     &:disabled {
         ~ .icon {
@@ -71,6 +71,7 @@ $controls-size:          24px; // $input-height * .6;
         }
         &:checked ~ .icon{
             background: $controls-color-checked;
+            border-color: transparent;
 
             &:after {
                 display: block;
@@ -100,9 +101,29 @@ $controls-size:          24px; // $input-height * .6;
 .input-underline {
     border: none;
     border-bottom: 1px solid $input-border-color;
+    padding-bottom: 5px;
 
     &:focus {
         outline: 0;
-        border-color: #2316db;
+        border-color: $component-active;
     }
+
+    &::placeholder {
+        color: transparent;
+    }
+
+    &:focus, &:not(:placeholder-shown) {
+        + .label-inner {
+            font-weight: bold;
+            top: -18px;
+        }
+    }
+}
+
+.label-inner {
+    pointer-events: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: 0.2s;
 }

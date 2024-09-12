@@ -1,4 +1,10 @@
 
+// preview: https://feathericons.com/
+// 上傳json到 icomoon app 更新icon
+// 其他的icon https://icomoon.io/app/#/select/library
+
+$icomoon-font-path: "../fonts";
+
 @import "icon/variables";
 
 @font-face {
@@ -12,7 +18,7 @@
   font-display: block;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class*="icon-"] {
   &:before {
     // use !important to prevent issues with browser extensions that change fonts
     font-family: '#{$icomoon-font-family}' !important;

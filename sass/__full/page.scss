@@ -119,8 +119,8 @@
         padding: 2px 5px;
 
         position: absolute;
-        left: get(m);
-        top: get(m);
+        left: get('spacing.m');
+        top: get('spacing.m');
     }
 
     a {

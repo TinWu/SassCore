@@ -52,7 +52,7 @@ $user-state-height: 45px;
 
     h2 {
         @extend .mb-10;
-        @include rem('font-size', 28);
+        @include torem('font-size', 28);
     }
 
     small {
@@ -147,7 +147,7 @@ $user-state-height: 45px;
     padding: 4px;
 
     &:not(:only-child) {
-        $mg: get(s) * .5;
+        $mg: get('spacing.s') * .5;
         margin: $mg $mg*2 $mg 0;
     }
 

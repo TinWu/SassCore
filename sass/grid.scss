@@ -1,7 +1,55 @@
 @charset "UTF-8";
 @use 'sass:math';
 
-$gutter: 30px;
+$flexs: (
+    // 母元素
+    'flex': (
+        'wrap':     wrap,    // 子元素換行
+        'nowrap':   nowrap,  // 子元素不換行
+    ),
+
+    // 主軸(水平)
+    // justify-content: flex-start|flex-end|center|space-between|space-around|initial|inherit
+    'justify': (
+        'start':    flex-start,
+        'end':      flex-end,
+        'center':   center,
+        'between':  space-between,
+        'evenly':   space-evenly,
+    ),
+
+    // 副軸(垂直)
+    // align-items: stretch|center|flex-start|flex-end|baseline|initial|inherit
+    'items': (
+        'start':    flex-start,
+        'end':      flex-end,
+        'center':   center,
+        'stretch':  stretch,
+    ),
+
+    // 子元素對齊
+    'self': (
+        'start':    flex-start,
+        'center':   center,
+    ),
+
+    // 子元素尺寸
+    'size': (
+        '1':        1 1 0%,  // 占滿剩餘空間
+        'auto':     1 1 auto,
+        'none':     none,
+    ),
+);
+
+$config: (
+    'spacing': (
+        '0\\.5':            2px,    // $spacer * 0.125,
+        '2\\.5':            10px,   // $spacer * 0.625,
+        '16':               64px,   // $spacer * 4,
+        '24':               96px,   // $spacer * 6,
+        '32':               128px,  // $spacer * 8,
+    ),
+);
 
 @import "function";  // 常用函數
 @import "variables"; // 預設變數
@@ -11,37 +59,132 @@ $gutter: 30px;
 // == output
 // ------------------------------------------------------------
 
-//
-// 2021 upt flex
-.row {
-    // for flex
-    @include flex(wrap);
-    margin: 0 ($gutter * -.5);
 
-    @each $breakpoint, $value in $breakpoints {
-        @include mq($value) {
-            &-#{$breakpoint} {
-                @include flex(wrap);
-                margin: 0 ($gutter * -.5);
+// ## flex
+// 彈性元素: 寬度預設100%
+
+.flex {
+    display: flex;
+}
+
+.flex-inline {
+    display: inline-flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex {
+    @include modifiers(get(flex, $flexs), 'flex-wrap');
+    @include modifiers(get(size, $flexs), 'flex');
+}
+
+// 垂直
+.items {
+    @include modifiers(get(items, $flexs), 'align-items');
+}
+
+// 水平
+.justify {
+    @include modifiers(get(justify, $flexs), 'justify-content');
+}
+
+// 子元素對齊
+.self {
+    @include modifiers(get(self, $flexs), 'align-self');
+}
+
+// 子元素尺寸
+// flex: flex-grow flex-shrink flex-basis     => flex: 0 1 auto;[預設值]
+// # flex-grow   依照設定比例分配剩餘空間        => 0:不縮放[預設]，1:剩下空間為1份
+// # flex-shrink 表示空間不夠時的壓縮比例        => 0:不壓縮，1:比例一樣[預設]
+// # flex-basis  分配到的空間 可使用不同的單位值  => auto:預設空間[預設], 0要設0%
+//
+.grow         { flex-grow: 1; }     // 占其他空間
+.grow-0       { flex-grow: 0; }     // 不占其他空間
+.shrink       { flex-shrink: 1; }   // 壓縮比例一樣
+.shrink-0     { flex-shrink: 0; }   // 不縮小
+.basis-0      { flex-basis: 0%; }   // 用內容尺寸
+.basis-full   { flex-basis: 100%; } // 全空間
+
+
+// # spacers in variables.scss
+// src: https://gist.github.com/MatthewRDodds/8f171914ee6b826db29393f33229d509
+// ex. mt-0, p-5
+@each $abbrev, $prop in (m: margin, p: padding) {
+    @each $size, $length in get('spacing') {
+        .#{$abbrev}-#{$size} {
+            #{$prop}: $length;
+        }
+
+        @each $infix, $property in get('utils.spacers') {
+            .#{$abbrev}#{$infix}-#{$size} {
+                #{$prop}-#{$property}: $length;
+
+                @if $infix == x { #{$prop}-right: $length; }
+                @if $infix == y { #{$prop}-bottom: $length; }
+            }
+        }
+    }
+
+    @if $abbrev == m {
+        .#{$abbrev}-auto {
+            #{$prop}: auto;
+        }
+
+        @each $infix, $property in get('utils.spacers') {
+            .#{$abbrev}#{$infix}-auto {
+                #{$prop}-#{$property}: auto;
+
+                @if $infix == x { #{$prop}-right: auto; }
+                @if $infix == y { #{$prop}-bottom: auto; }
             }
         }
     }
 }
 
+// # row-col (2024 upt flex-basis)
+@include make-row-columns;
 
-// 產出 col-1 ~ 12
-@include make-grid-columns(12, $gutter);
 
+// # grid(5欄, space) *index要6
+// => grid grid-cols-3 gap-4
+@include grid(
+    6,
+    (
+        '1':  0.25rem,      // 4px
+        '2':  0.5rem,       // 8px
+        // '3':  0.75rem,   // 12px
+        '4':  1rem,         // 16px
+        '5':  1.25rem,      // 20px
+        // '6':  1.5rem,    // 24px
+        '8':  2rem,         // 32px
+        '12': 3rem,      // 48px
+        '16': 4rem,         // 64px
+    )
+);
 
-// 清除內距
-.pd0 {
-    [class*='col-'] {
-        padding-left: 0;
-        padding-right: 0;
+@each $i in (1, 2, 3, 5) {
+    .col-span-#{$i} {
+        grid-column: span 1 / span $i;
     }
-    &[class*='row'] {
-        // if 最外層沒有設 overflow: hidden; => 會出現橫向卷軸
-        margin-left: 0;
-        margin-right: 0;
+}
+
+.xl\:grid-cols-5 {
+    @include mq($wide) {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
     }
+}
+
+.auto-cols {
+    @include modifiers(
+        (
+            auto: auto,
+            min:  min-content,
+            max:  max-content,
+            fr:   minmax(0, 1fr),
+        ),
+        'grid-auto-columns'
+    );
 }

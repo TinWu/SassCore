@@ -18,9 +18,9 @@
 //
 // == extend 原本放在util.scss裡，改成 mixin @include 方法
 // -----------------------------------------------------------------
-@mixin clearfix($ext:true) {
-    @include static(clearfix, $ext) {
-        @include el(after, table, $ext: $ext) {
+@mixin clearfix($ex:true) {
+    @include static(clearfix, $ex) {
+        @include el(after, table, $ex: $ex) {
             clear: both;
         }
     }
@@ -32,7 +32,7 @@
     $padding-y: pdy($height, $font-size, $line-height);
 
     @if $font-size != $font-size-base {
-        @include rem('font-size', $font-size);
+        @include torem('font-size', $font-size);
     }
     @if $line-height != $line-height-base {
         line-height: $line-height;
@@ -88,9 +88,9 @@
 
 // 不用 rwd 的容器設定
 @mixin no-rwd($min-dw: $min-width, $min-w: $min-width) {
-    $ext: if($min-dw == $min-w, true, false);
+    $ex: if($min-dw == $min-w, true, false);
 
-    @include static(norwd, $ext) {
+    @include static(norwd, $ex) {
         @media only screen and (min-device-width: $min-dw) {
             min-width: $min-width;
         }
@@ -98,20 +98,20 @@
 }
 
 // container(set width)
-@mixin container($max-width: $max-width, $gap: $gutter, $ext: true) {
+@mixin container($max-width: $max-width, $gap: $gutter, $ex: true) {
 
     max-width: $max-width;
 
-    @include clearfix($ext);
+    @include clearfix($ex);
 
-    @include static(mx-a, $ext) {
+    @include static(mx-a, $ex) {
         margin-left: auto;
         margin-right: auto;
     }
 
     @if $gap {
         @include mq-max($max-width + ($gap*2)) {
-            @include static(gap, $ext) {
+            @include static(gap, $ex) {
                 padding-right: $gap;
                 padding-left: $gap;
             }

@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+$modal-gap: 20px;
+
 // == modal
 // <div id="uploadFile" class="modal">
 //   <form class="modal-container animate-top">
@@ -15,21 +17,19 @@
 // == modal
 .modal {
     z-index: z(overlay);
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;  // for safari bug
 
-    padding-top: 12%;
     background-color: rgb(0, 0, 0);
     background-color: rgba(0, 0, 0, 0.4);
 
+    padding-block: 5%;
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
 
-    @include mq-max(xs) {
-        padding-top: 5%;
+    @include mq(xs) {
+        padding-block: 62px;
     }
 
     // fade effect
@@ -41,61 +41,78 @@
         visibility: visible;
         opacity: 1;
         transition: opacity .2s ease-in-out;
-    }
 
-    $conpap: 20px;
-
-    &-container {
-        background-color: #fff;
-
-        margin: auto;
-        max-width: 800px;
-        padding: 0 $conpap;
-        position: relative;
-        width: 80%;
-
-        @include animate(slide-down .4s) {
-            from { top: -300px; opacity: 0; }
-            to { top: 0; opacity: 1; }
-        }
-
-        @include mq-max(md) {
-            width: 96%;
-        }
-    }
-    &-header {
-        @extend %text-white, .bg-secondary, .font-xl;
-
-        margin: 0 (-$conpap) get('l');
-        padding: 10px 40px 10px 20px;
-        position: relative;
-    }
-    &-footer {
-        @extend .text-center;
-
-        border-top: 1px solid $border-color;
-        background: light(color(muted), 20);
-        margin: get('l') (-$conpap) 0;
-        padding: 15px;
-
-        .btn {
-            @extend .mx-5;
+        .modal-container {
+            @include animate(slide-down .4s) {
+                from {
+                    top: -300px;
+                    opacity: 0;
+                }
+                to {
+                    top: 0;
+                    opacity: 1;
+                }
+            }
         }
     }
 
-    &-close {
-        color: #fff;
-        font-size: em(31);
-        line-height: 1;
+}
 
-        position: absolute;
-        top: 0;
-        right: get('s');
-        transition: 350ms;
+.modal-container {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(#000, .1);
 
-        &:hover, &:focus {
-            color: color(warning);
-            cursor: pointer;
-        }
+    margin: auto;
+    padding: 0 $modal-gap $modal-gap;
+    position: relative;
+
+    height: 100%;
+    width: 80%;
+    max-width: 1000px;
+
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;  // for safari bug
+
+    @include mq-max(md) {
+        width: 96%;
+    }
+}
+
+.modal-header {
+    background: color();
+    color: #fff;
+    font-size: get('font.2xl');
+
+    margin: 0 (-$modal-gap) get('spacing.5');
+    padding: 13px 40px 13px 20px;
+    position: relative;
+}
+
+.modal-footer {
+    border-top: 1px solid $border-color;
+    background: light(color(muted), 20);
+    text-align: center;
+    margin: get('spacing.5') (-$modal-gap) (-$modal-gap);
+    padding: 15px;
+
+    .btn {
+        margin-left: get('spacing.1');
+        margin-right: get('spacing.1');
+    }
+}
+
+.modal-close {
+    color: currentColor;
+    font-size: em(31);
+    line-height: 1;
+
+    position: absolute;
+    top: 0;
+    right: get('spacing.2');
+    transition: 350ms;
+
+    &:hover, &:focus {
+        color: color(info);
+        cursor: pointer;
     }
 }

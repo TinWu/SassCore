@@ -57,7 +57,7 @@
 .submit-bar {
     border-top: 2px solid rgba(#000, .03);
     padding: $gutter;
-    margin: 30px 0 (-(get('10')));
+    margin: 30px 0 (-(get('spacing.10')));
 
     &.fixed-bottom {
         @extend .text-center;
@@ -75,7 +75,7 @@
     }
     > .btn {
         &:not(:last-child) {
-            margin-right: get(s);
+            margin-right: get('spacing.s');
         }
     }
 }

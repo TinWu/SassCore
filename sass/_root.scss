@@ -1,0 +1,12 @@
+:root {
+    // --color: #{$body-color};
+    // --bg: #{$body-bg};
+    // --select-caret: #{escape-svg($select-caret)};
+    // --select-seat-size: #{$select-seat-size};
+    // --border-width: #{$border-width};
+    // --border-color: #{$border-color};
+
+    @each $name, $value in $root {
+        --#{$name}: #{$value};
+    }
+}

@@ -1,352 +1,346 @@
-@charset "utf-8";
+@charset "UTF-8";
 
 //       layout
 // -----------------------------------------------------------------------
+
+html {
+    scroll-behavior: smooth;
+}
+
 html, body {
     height: 100%;
 }
 
+body {
+}
+
 #wrapper {
     min-height: 100%;
-    margin-bottom: -$footer-height;
-    padding-bottom: $footer-height + 30;
+    margin-bottom: if($index, -115px, -160px);
+
+    @include mq(xs) {
+        margin-bottom: -$footer-height;
+    }
+
+    @if not $index {
+        background: url('#{$img-path}/mainbg.jpg') no-repeat center bottom -50px;
+        padding-bottom: 160px;
+
+        @include mq(xs) {
+            background-position: center bottom;
+            padding-bottom: $footer-height;
+        }
+    }
 }
 
 .container {
-    @include container;
-}
+    margin-inline: auto; // 橫式文字是左右
 
-@include mq(md) {
-    #sidebar {
-        float: right;
-        width: $sidebar-width;
-    }
+    @each $bk, $max-width in (
+        640px: 600px,
+        sm:    680px,
+        md:    920px,
+        lg:    1180px,
+        $wide: 1400px
+    ) {
+        @include mq($bk) {
+            max-width: $max-width;
 
-    #content {
-        &.pull-left {
-            float: left;
-            width: calc(100% - #{$sidebar-width+30});
+            @if $bk ==  'lg' {
+                &.is-small {
+                    max-width: 996px;
+                }
+            }
         }
     }
+    @include mq-max(639) {
+        padding-inline: $gutter;
+    }
 }
+
 
 //       header
 // -----------------------------------------------------------------------
+
 #header {
-    margin: 0 auto 50px;
-    padding: 30px 30px 0;
-    z-index: 1;
+    z-index: z(header);
 
-    border-bottom: 9px solid #292929;
+    @if $index {
+        position: absolute;
+        width: 100%;
+    } @else {
+        &:not(.js-fixed) {
+            border-bottom: 1px solid #eee;
+            margin-bottom: get('spacing.3');
+        }
+    }
 
-    @include clearfix;
-
-    @include mq(sm) {
-        position: relative;
-
-        @include el(before, $ext:false) {
-            position: absolute;
-            left: 0;
-            bottom: 3px;
-            border-bottom: 1px solid #dadada;
+    &.js-fixed {
+        @if not $index {
             width: 100%;
         }
-    }
-}
 
-// logo
-.logo {
-    background: url(#{$img-path}/logo.png) 0 0 no-repeat;
-    cursor: pointer;
-    color: #888;
-    font-size: em(12);
-    font-weight: normal;
+        background-color: rgba(#fff, 0.7);
+        box-shadow: 0 3px 6px rgba(#000, 0.02);
+        backdrop-filter: blur(8px);
 
-    float: left;
-    min-height: 60px;
-    padding: 42px 0 0 108px;
-    margin: 0 0 25px;
-
-    span {
-        @include text-hide;
-    }
-}
-
-// 主選單
-#menu {
-    @include mq($mobile-bk + 1) {
-        float: right;
-        margin-top: 15px;
-    }
-
-    // 手機選單樣式
-    @include mq-max($mobile-bk) {
-        // comm
-        // position: fixed;
-        // left: 0;
-        // top: 0;
-        // bottom: 0;
-        // width: 100%;
-        // overflow-y: auto;
-        // z-index: $mobile-zindex;
-
-        // theme
-        clear: both;
-
-        // effect
-        height: 0;
+        position: fixed;
         opacity: 0;
-        visibility: hidden;
-        transition: 350ms ease, opacity 200ms;
+        top: -50px;
 
-        &.open {
-            padding-bottom: 30px;
-            height: auto;
-            opacity: 1;
-            visibility: visible;
-        }
-    }
-}
-
-.nav-item {
-    min-width: 90px;
-    position: relative;
-
-    @include mq(lg) {
-        min-width: 110px;
-    }
-
-    // icon arrow
-    @include el(after) {
-        width: 6px;
-        height: 6px;
-        border: solid #999;
-        border-width: 0 1px 1px 0;
-        transform: rotate(45deg);
-        transition: 400ms 50ms;
-
-        opacity: 0;
-
-        @include center(6px);
-        top: 5px;
-    }
-
-    @include mq($mobile-bk + 1) {
-        display: inline-block;
-        vertical-align: middle;
-        text-align: center;
-        margin: 0 10px;
-
-        &:hover, &:active, &.current {
-            .en { opacity: 0; }
-            .ch { opacity: 1; }
-            &::after {
-                top: 22px;
+        @include animate(sliedown 0.5s ease-in-out forwards) {
+            to {
+                top: 0;
                 opacity: 1;
             }
         }
     }
-    @include mq-max($mobile-bk) {
-        display: block;
-        margin: 0;
-        padding: 10px;
-        border-bottom: 1px solid #dadada;
 
-        &:hover, &:active, &.current {
-            .en { color: #000; }
-            .ch { color: color(); }
+    @include mq-max(xs) {
+        .container {
+            padding-right: 0;
         }
     }
 }
-.nav-circle {
-    display: inline-block;
-    vertical-align: middle;
-    text-align: center;
-    width: 28px;
-    height: 28px;
-    margin-right: 5px;
+
+// # logo
+.logo {
+    margin-top: 8px;
+
+    .js-fixed & {
+        margin-top: 4px;
+    }
+}
+
+.logo-brand {
+    background: url(#{$img-path}/logo2.png) no-repeat 0 0 / contain;
+    display: block;
+    aspect-ratio: 1.24 / 1;
+    height: 41px;
+
+    @include mq(xs) {
+        aspect-ratio: 3.5 / 1;
+        background-image: url(#{$img-path}/logo.png);
+    }
+
+    @include mq(retina2x) {
+        background-image: url(#{$img-path}/logo@2x.png);
+    }
+
+    .js-fixed & {
+        height: 36px;
+    }
+}
+
+// # 主選單
+.navbar {
+    @if not $index {
+        #header:not(.js-fixed) & {
+            margin-bottom: -1px;
+        }
+    }
+
+    @include mq(440) {
+        float: right;
+    }
+
+    @include mq-max(xs) {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        overflow-scrolling: touch;
+        padding-right: 16px;
+        white-space: nowrap;
+
+        $shadow: $brand-color;
+
+        // 陰影滾動effect - 透明背景不能用
+        // --shadow-cover: 219, 234, 238; //light(color(info), 52)
+        // background:
+        //     // 1滾到底蓋掉
+        //     linear-gradient(to right, rgb(var(--shadow-cover)), rgba(var(--shadow-cover), 0.2)) left center,
+        //     linear-gradient(to right, rgba(var(--shadow-cover), 0.2), rgb(var(--shadow-cover))) right center,
+
+        //     // 2影子
+        //     radial-gradient(farthest-side at 0 50%, rgba($shadow, .25), rgba($shadow, 0)) left center,
+        //     radial-gradient(farthest-side at 100% 50%, rgba($shadow, .25), rgba($shadow, 0)) right center;
+
+        // background-repeat: no-repeat;
+        // background-size: 40px 100%, 40px 100%, 10px 100%, 10px 100%;
+        // background-attachment: local, local, scroll, scroll;
+
+        // .js-fixed & {
+        //     --shadow-cover: 255, 255, 255;
+        // }
+
+        // 在最右邊放影子
+        background: radial-gradient(farthest-side at 100% 50%, rgba($shadow, .25), rgba($shadow, 0)) no-repeat right center/12px 100% scroll;
+
+        &::-webkit-scrollbar {
+            width: 8px;
+            height: 5px;
+
+            &-thumb {
+                background: rgba(#000, 0.2);
+                border-radius: 5px;
+            }
+
+            &-track {
+                background-color: transparent;
+            }
+        }
+    }
+}
+
+// 第1階選單
+.nav-link {
+    --color: #{$brand-color};
+    letter-spacing: 0.1em;
+
+    display: block;
+    margin: 0 2px;
+    padding: var(--nav-link-py, 20px) var(--nav-link-px, 14px) var(--nav-link-py, 10px);
     position: relative;
-    transition: .4s;
 
-    background-color: #777;
-    border-radius: 50%;
-
-    @include mq-max($mobile-bk) {
-        margin-top: 15px;
+    .js-fixed & {
+        --nav-link-py: 12px;
     }
 
-    &:hover, &.current {
-        background-color: color();
+    #header:not(.js-fixed) & {
+        @if $index {
+            border-radius: 0 0 6px 6px;
+        } @else {
+            padding-bottom: 12px;
+        }
     }
 
-    &::before {
-        color: #fff;
-        font-size: em(13);
-        line-height: 28px !important;
-        margin: 0 !important;
-        top: 0 !important;
+    @if $index {
+        &:hover, &:active,
+        &.active {
+            background: linear-gradient(light(color(info), 70), #fff 20% );
+
+            .js-fixed & {
+                background: light(color(warning), 70);
+            }
+        }
+    } @else {
+        &.active {
+            border-bottom: 2px solid color(danger);
+        }
+    }
+
+    @include mq(lg) {
+        --nav-link-px: 17px;
+    }
+    @include mq($max-width) {
+        --nav-link-px: 20px;
     }
 }
 
-// 手機選單展開收合鈕
-.menu-toggle {
-    display: none;
+.fb-link {
+    color: $brand-color;
+    margin-top: 14px;
 
-    cursor: pointer;
-    transition: 600ms;
-    z-index: $mobile-zindex + 1;
-
-    // theme
-    $toggle-pd: 10px;
-    $i-space:   4px;
-
-    float: right;
-
-    background: #333;
-    margin-top: 10px;
-    padding: $toggle-pd $toggle-pd ($toggle-pd - $i-space);
-
-    i {
-        display: block;
-        width: 22px;
-        height: 3px;
-        margin-bottom: $i-space;
-        border-radius: 3px;
-        background: #fff;
-        transition: 400ms;
-
-        &:first-child {
-            transform-origin: 0% 0%;
-        }
-        &:last-child {
-            transform-origin: 0% 100%;
-        }
+    .svg-fb {
+        width: 24px;
     }
 
-    &:hover,
-    &.active {
-        background: color();
+    .js-fixed & {
+        margin-top: 10px;
     }
 
-    &.active {
-        i {
-            transform: rotate(45deg) translate(3px, -3px); //translate(-2px, -1px)
-
-            &:nth-last-child(2) {
-                opacity: 0;
-                transform: rotate(0deg) scale(0.2, 0.2);
-            }
-            &:last-child {
-                transform: rotate(-45deg) translate(3px, 4px); //translate(0, -1px)
-            }
-        }
-    }
-
-    @include mq-max($mobile-bk) {
-        display: block;
+    &:hover {
+        color: color(danger);
     }
 }
+
+
+// 子選單bar
+.subnav {
+}
+
+// 第2階選單(子選單)
+.subnav-link {
+    font-size: em(19);
+
+    border-bottom: 1px solid dark(color(muted), 5);
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+
+    transition: 0.2s ease-in;
+
+    &:hover {
+        text-indent: 0.5em;
+    }
+
+    &.active {
+        --color: #{ color(info) };
+    }
+
+    // @include mq-max($mobile-bk) {
+    //     margin: 0 auto;
+    //     width: intrinsic;           // Safari/WebKit uses a non-standard name
+    //     width: -moz-max-content;    // Firefox/Gecko
+    //     width: -webkit-max-content;
+    // }
+}
+
+.subnav_icon {
+    height: 35px;
+}
+
+.subnav_columns {
+    @include mq(xs) {
+        columns: 2;
+    }
+    @include mq(sm) {
+        columns: 3;
+    }
+}
+
 
 //       footer
 // -----------------------------------------------------------------------
 #footer {
     min-height: $footer-height;
-    padding-top: 24px;
-    padding-bottom: 24px;
-    border-top: 7px solid color(muted);
 
-    font-size: em(14);
+    @if not $index {
+        padding-top: 20px;
+    }
 
-    @include container;
+    @include mq-max(xs) {
+        text-align: center;
+    }
 }
 
 .copyright {
-    margin-top: 12px;
+}
 
-    em {
-        font-style: normal;
-        font-size: em(20, 14);
-        font-weight: bold;
-        text-transform: uppercase;
+.foot-logo {
+    --bgseat: center 0 / auto 50px;
+
+    background: url('#{$img-path}/foot-logo@2x.png') no-repeat var(--bgseat);
+    color: #91917d;
+    padding: 56px 0 9px;
+
+    @include mq(xs) {
+        --bgseat: 0 center / 36px auto;
+        padding-top: 22px;
+        padding-left: (36px + 10);
+    }
+
+    @include mq-max(xs) {
+        display: inline-block;
     }
 }
 
-.foot-info {
-    list-style: none;
-    line-height: 1.6;
-
-    @include mq-max(sm) {
-        padding-left: 0;
-    }
-
-    @include mq(sm, md) {
-        border-left: 1px solid color(muted);
-    }
-
-    li {
-        padding-left: 30px;
-        position: relative;
-
-        @include mq(md) {
-            float: left;
-            width: 50%;
-
-            &:last-child {
-                border-left: 1px solid color(muted);
-            }
-        }
-
-        &::before {
-            font-size: em(22, 14);
-            position: absolute !important;
-            left: 0;
-        }
-
-        &.addr {
-            padding-bottom: 12px;
-
-            @include mq(md) {
-                margin-right: 15px;
-                width: 200px;
-            }
-        }
-        &.contact {
-            @include mq(md) {
-                padding-left: 52px;
-
-                &::before {
-                    left: 16px;
-                }
-            }
-        }
-    }
+.footnav {
 }
+.footnav-link {
+    letter-spacing: 1px;
 
-.gotop {
-    background: #e4e4e4;
-    border-radius: 50%;
-    color: $body-color;
-    text-align: center;
-
-    display: block;
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 40px;
-    height: 40px;
-
-    transition: 300ms;
-    opacity: .5;
-    z-index: 100;
-
-    &::before {
-        font-size: em(9);
-        margin: -2px 0 0 -4px !important;
-        line-height: 40px !important;
-    }
-
-    &:hover {
-        color: #000;
-        opacity: 1;
+    &:not(:last-child) {
+        margin-right: 6px;
+        padding-right: 12px;
+        border-right: 1px solid #fff;
     }
 }

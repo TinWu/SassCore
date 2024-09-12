@@ -1,228 +1,246 @@
 @charset "UTF-8";
 
-// == 每頁共用的樣式
+// 補充utils樣式 + index&page共用
+
+// == util rwd
 // ------------------------------------------------------------
-.mobile-hide {
-    @include mq-max(break(md, -1)) {
-        display: none;
-    }
-}
-
-.img-rwd {
-    @include mq-max(sm) {
-        overflow: scroll;
-        img { max-width: none; }
-    }
-}
-
-.margin { margin: 16px; }
-.margin-top { margin-top: 32px; }
-.margin-bottom { margin-bottom: 32px; }
-
-.hover-underline {
-    position: relative;
-
-    @include el(before) {
-        height: 1px;
-        width: 100%;
-        background: rgba(#8BE5E3,.6);
-
-        position: absolute;
-        top: 100%;
-        right: 0;
-        transform: scaleX(1);
-        transform-origin: 50%;
-        transition: 350ms, background 400ms;
-    }
-
-    &:hover, &:active {
-        &::before {
-            transform: scaleX(0);
-        }
-    }
-}
-
-%underline-style {
-    // background: url(#{$img-path}/line.gif) 0 bottom repeat-x;
-
-    border-bottom: 1px solid $border-color;
-}
-.underline {
-    @extend %underline-style;
-
-    padding-bottom: 32px;
-}
-.list-underline li {
-    @extend %underline-style;
-
-    padding: 8px 0;
-}
-
-// 最新消息列表
-.news-list {
-    @extend %list-unstyled, .list-underline;
-
-    li {
-        @include clearfix;
-    }
-
-    small {
-        display: block;
-        color: #B2B2B2;
-
-        @include mq-max(break(xs,-1)) {
-            margin-left: 90px;
-            margin-top: -5px;
-        }
-    }
-
-    .label {
-        @extend .pull-left, .text-center;
-
-        margin-right: 2%;
-        width: 14%;
-        min-width: 75px;
-
-        @if not $index {
-            max-width: 75px;
-        }
-    }
-    a {
-        @extend .pull-left;
-
-        color: #3d3d3d;
-        width: 83%;
-
-        &:hover, &:active { color: light(color(secondary), 10) }
-
-        small {
-            margin-bottom: 3px;
+@each $breakpoint, $value in $breakpoints {
+    @include mq($breakpoint) {
+        // float => md:pull-left
+        @each $align in (left, right) {
+            .#{$breakpoint}\:pull-#{$align} {
+                float: $align;
+            }
         }
 
-        @include mq-max(sm) {
-            width: 78%;
-        }
-        @include mq-max(break(xs,-1)) {
-            width: 100%;
-            margin-top: -16px;
-
-            small { margin-bottom: 10px; }
-        }
-    }
-}
-
-// 日曆
-.list-calendar {
-    @extend %list-unstyled;
-
-    line-height: 1.5;
-
-    li {
-        margin-bottom: $gutter - 5;
-        position: relative;
-        padding-left: 80px;
-    }
-    small {
-        display: block;
-    }
-    .date {
-        @extend .text-center, %bg-white;;
-
-        font-size: em(22);
-        color: #A0BBC8;
-        border: 1px solid #B2E8F1;
-        border-radius: 3px;
-
-        display: block;
-        margin-right: 10px;
-        position: absolute;
-        left: 0;
-        width: 64px;
-
-        small {
-            padding: 0 7px;
-            font-size: em(12,22);
-            color: #fff;
-            background: #A0BBC8;
-        }
-    }
-
-    a {
-        color: #1D6EBB;
-
-        small { color: #91B1D0; }
-
-        &:hover, &:active {
-            color: color();
-
-            small { color: #87CEEB; }
+        @each $property, $size in get('font') {
+            .#{$breakpoint}\:font-#{$property} {
+                font-size: torem($size);
+            }
         }
 
-        @include mq-max(break(xs,-1)) {
+        // alignment => md:text-left
+        @each $align in get('utils.align') {
+            .#{$breakpoint}\:text-#{$align} {
+                text-align: $align;
+            }
+        }
+
+        // 隱藏元件 => sm:hide
+        .#{$breakpoint}\:hide {
+            display: none;
+        }
+
+        // 顯示元件 => sm:show
+        .#{$breakpoint}\:show {
             display: block;
-            margin-top: -55px;
-            margin-left: 65px;
+        }
+    }
+
+    @include mq-max($breakpoint) {
+        // 隱藏元件 => sm-max:hide
+        .#{$breakpoint}-max\:hide {
+            display: none;
+        }
+
+        // 顯示元件 => sm-max:show
+        .#{$breakpoint}-max\:show {
+            display: block;
         }
     }
 }
+
+
+// == setting utils
+// ------------------------------------------------------------
+// # component
+
+// 隱藏文字-但閱讀器可以看 (for 無障礙)
+// See: https://www.a11yproject.com/posts/2013-01-11-how-to-hide-content/
+// See: https://kittygiraudel.com/2016/10/13/css-hide-and-seek/
+// Useful for "Skip to main content" links; see https://www.w3.org/TR/2013/NOTE-WCAG20-TECHS-20130905/G1
+.sr-only {
+    &, &-focusable:not(:focus):not(:focus-within) {   // 焦點在時可以看
+        border-width: 0;
+        clip: rect(0, 0, 0, 0);
+        clip-path: inset(50%);
+        height: 1px;
+        width: 1px;
+        white-space: nowrap;
+
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+    }
+}
+
+// 隱藏文字
+.text-hide {
+    @include text-hide;
+}
+
+// 圖片尺寸顯示方式 => .object-contain
+.object {
+    @include modifiers((contain, cover), 'object-fit');
+
+    @if not $index {
+        @include modifiers((top, bottom), 'object-position');
+    }
+}
+
+.tracking {
+    @include modifiers(get('utils.tracking'), 'letter-spacing');
+}
+
+
+// == position
+// ------------------------------------------------------------
+// .static    { position: static; }
+.fixed     { position: fixed; }
+.absolute  { position: absolute; }
+.relative  { position: relative; }
+.sticky    { position: sticky; }
+
+.top-0     { top: 0; }
+.right-0   { right: 0; }
+.bottom-0  { bottom: 0; }
+.left-0    { left: 0; }
+// .inset-0   { inset: 0; } //fill
+// .inset-x-0 { left: 0; right: 0; }
+// .inset-y-0 { top: 0; bottom: 0; }
+// .start-0   { inset-inline-start: 0; }
+// .end-0     { inset-inline-end: 0; }
+
+// .visible   { visibility: visible; }
+// .invisible { visibility: hidden; }
+// .collapse  { visibility: collapse; } //用在表格上，無資料會藏起來
+
 
 // == modal
+// ------------------------------------------------------------
 .modal {
-    z-index: z(overlay);
-    display: none;
-    overflow: auto;
-    padding-top: 12%;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
-
+    background: linear-gradient(#f5feff, rgba(#eafdff, 0.9) 16%, rgba(#def0ff, 0.6) 60%, rgba(#fff, 0)); //rgba(light(color(info), 30), 0.15);
+    backdrop-filter: blur(8px) grayscale(0.3); //霧面
+    padding-top: 5%;
+    padding-bottom: 5%;
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
+    z-index: 999;
 
-    @include mq-max(break(xs,-1)) {
-        padding-top: 5%;
-    }
+    // fade effect
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s .2s, opacity .2s ease-in-out;
 
-    &-content {
-        margin: auto;
-        background-color: #fff;
-        position: relative;
-        width: 80%;
-        max-width: 800px;
+    &.in {
+        overflow: auto;
+        overscroll-behavior: contain; // 不影響到母層(body)滾動
 
-        @include diy-animate(slide-down, .4s) {
-            from { top: -300px; opacity: 0; }
-            to { top: 0; opacity: 1; }
-        }
+        visibility: visible;
+        opacity: 1;
+        transition: 0.1s, opacity .2s ease-in-out;
 
-        @include mq-max(break(md,-1)) {
-            width: 96%;
+        .modal-container {
+            @include animate(slide-down .4s) {
+                from {
+                    top: -300px;
+                    opacity: 0;
+                }
+                to {
+                    top: 0;
+                    opacity: 1;
+                }
+            }
         }
     }
 }
 
-.btn-close {
-    font-size: em(31);
-    color: #fff;
+.modal-container {
+    margin: auto;
+    position: relative;
+    width: 96%;
 
+    @include mq(md) {
+        max-width: 1100px;
+        width: 80%;
+    }
+}
+
+.modal-close {
     position: absolute;
-    top: 1%;
-    right: 1%;
+    top: 10px;
+    right: 10px;
+
+    svg {
+        width: 42px;
+    }
 
     &:hover, &:focus {
-        color: $light-warning;
         cursor: pointer;
     }
 }
 
-// == login
-.login {
-    label {
-        text-align: center;
-        flex-basis: 120px;
-        background: light(color(info), 80);
-        padding-top: 10px;
+
+// == custom
+// ------------------------------------------------------------
+
+// 圓體
+.zen-maru-gothic {
+    font-family: "Zen Maru Gothic", serif;
+}
+
+// 英文手寫
+.shadows-into {
+    font-family: "Shadows Into Light", cursive;
+}
+
+.font-sp {
+    font-family: "Shadows Into Light", cursive, "Zen Maru Gothic", serif;
+}
+
+// 多行隱藏 for news grid
+.line-clamp {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; //2行
+}
+
+.shadow {
+    box-shadow: 0 0 8px rgba(#0b434c, 0.05);
+}
+
+// 色彩增值效果
+.mix-blend-multiply {
+    mix-blend-mode: multiply;
+}
+
+// link穿透
+.pointer-events-none {
+    pointer-events: none;
+}
+
+.hover\:tracking-wider {
+    &:hover {
+        letter-spacing: get('utils.tracking.wider');
     }
 }
+
+// .pointer-events-auto {
+//     pointer-events: auto;
+// }
+
+// 直行
+// .sm\:vertical-rl {
+//     @include mq(sm) {
+//         -ms-writing-mode: tb-rl;
+//         @include prefix((writing-mode: vertical-rl), ms webkit o);
+//         text-orientation: upright;
+//     }
+// }
+
+

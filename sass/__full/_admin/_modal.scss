@@ -55,7 +55,7 @@
         transition: opacity .2s ease-in-out;
     }
 
-    $con-pd: get('l');
+    $con-pd: get('spacing.l');
 
     // The modal box
     &-container {
@@ -100,7 +100,7 @@
     &-header {
         @extend %text-white, .bg-primary, .font-xl, .mb-30, %resize;
 
-        padding: get('10') 40px get('10') get('20');
+        padding: get('spacing.10') 40px get('spacing.10') get('spacing.20');
         position: relative;
     }
 

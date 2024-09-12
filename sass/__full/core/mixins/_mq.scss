@@ -35,15 +35,15 @@
     // Defaults to all media
     $query: "all" !default;
     // Set both min and max
-    @if strip-unit($min) != 0 and strip-unit($max) != 0 {
+    @if stripunit($min) != 0 and stripunit($max) != 0 {
         $query: "(min-width: #{$min}) and (max-width: #{$max})";
     }
     // Set just min
-    @else if strip-unit($min) != 0 and strip-unit($max) == 0 {
+    @else if stripunit($min) != 0 and stripunit($max) == 0 {
         $query: "(min-width: #{$min})";
     }
     // Set just max
-    @else if strip-unit($min) == 0 and strip-unit($max) != 0 {
+    @else if stripunit($min) == 0 and stripunit($max) != 0 {
         $query: "(max-width: #{$max})";
     }
 

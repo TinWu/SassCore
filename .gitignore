@@ -1,0 +1,11 @@
+# OS or Editor folders
+*.sublime-project
+*.sublime-workspace
+Thumbs.db
+
+# Folders to ignore
+/refer/
+/css/
+/node_modules/
+
+*.css

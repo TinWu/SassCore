@@ -1,13 +1,14 @@
 @charset "UTF-8";
+@use 'sass:math';
+@use 'sass:map';
+@use 'sass:string';
+
 
 // == base
 // -----------------------------------------------------------------
 // ## 去單位
-@function strip-unit($number) {
-    @if type-of($number) == "number" and not unitless($number) {
-        @return math.div($number, ($number * 0 + 1));
-    }
-    @return $number;
+@function stripunit($value) {
+    @return math.div($value, ($value * 0 + 1));
 }
 
 // ## 四捨五入幾位數
@@ -42,31 +43,40 @@
     @else                   { @return $number; }
 }
 
+
 // == px to other
 // -----------------------------------------------------------------
-@function em($number, $base: $font-size-base, $decimal: 2) {
-    @if unit($number) == px or unitless($number) {
-        $number: math.div(strip-unit($number), strip-unit($base)) * 1em;
+@function em($value, $fontbase: $font-size-base, $decimal: 2) {
+    @if type-of($value) != 'number' {
+        @error $value;
     }
-    @if $decimal {
-        $number: decimal($number, $decimal);
+    @else if unit($value) == px or unitless($value) {
+        $value: math.div(stripunit($value), stripunit($fontbase)) * 1em;
     }
-    @return $number;
+    @return if($decimal, decimal($value, $decimal), $value);
 }
 
 // to rem
-@function rem($number, $base: $font-size-base) {
-    @if unit($number) == px or unitless($number) {
-        $math: math.div( strip-unit($number), strip-unit($base) ) * 1rem;
-        $number: if($number > 0, decimal($math, 2), 0);
+@function torem($value, $decimal: 2) {
+    @if unit($value) == px or unitless($value) {
+        @if $value < 7 and $value > -7 {
+            @return if(unitless($value), $value * 1px, $value);
+        }
+
+        $size: math.div( stripunit($value), stripunit($font-size-base) );
+        $value: if($decimal, decimal($size, $decimal), $size) * 1rem;
     }
-    @return $number;
+
+    @return if($value == 0rem, 0, $value);
 }
+
 
 // == string 相關
 // -----------------------------------------------------------------
 // ## 取代變數 @author Hugo Giraudel src: https://css-tricks.com/snippets/sass/str-replace-function/
-// => 改用這線上 https://yoksel.github.io/url-encoder/
+// 使用方法:
+//   $string: '#{$input-placeholder-color}';
+//   content: str-replace($string, "#", "%23");
 @function str-replace($string, $search, $replace: "") {
     $index: str-index($string, $search);
 
@@ -82,171 +92,134 @@
         ("<", "%3C"),
         (">", "%3E"),
         ("#", "%23"),
-        ("(", "%28"),
-        (")", "%29"),
+        // ("(", "%28"),
+        // (")", "%29"),
     ) {
         $string: str-replace($string, $char, $encoded);
     }
+
     @return 'url("data:image/svg+xml,' + $string + '")';
 }
 
-// == 取得多層次map的值
-// href https://itnext.io/advanced-use-of-sass-maps-bd5a47ca0d1a
+
+// == map
 // -----------------------------------------------------------------
-// map-deep-get($config, "heading", "font", "weight")
-@function map-deep-get($map, $keys...) {
-    @if type-of($map) != 'map' {
-        @error 'The argument $map: `#{$map}` is of incorrect type: `#{type-of($map)}`. Type of `Map` is required!';
-    }
-    @each $key in $keys {
-        $map: map-get($map, $key);
-    }
-    @return $map;
-}
-
-// @src https://itnext.io/advanced-use-of-sass-maps-bd5a47ca0d1a
-// ## 字串 =>　list
-// str-explode('some-things-will-never-change', '-') => @return some, things, will, never, change
-@function str-explode($string, $delimiter: '') {
-    @if type-of($string) != 'string'         { @error 'not `#{$string}`'; }
-    @else if type-of($delimiter) != 'string' { @error 'not `#{$string}`'; }
-
-    $result: ();
-    $running: true;
-
-    @if str-length($delimiter) == 0 {
-        @for $i from 1 through str-length($string) {
-            $result: append($result, str-slice($string, $i, $i));
-        }
-        @return $result;
-    }
-
-    @while $running {
-        $index: str-index($string, $delimiter);
-
-        @if $index != null {
-            $item: str-slice($string, 1, ($index - 1));
-            $result: append($result, $item);
-            $string: str-slice($string, ($index + str-length($delimiter)));
-        }
-        @else {
-            $running: false;
-        }
-    }
-
-    @return append($result, $string);
-}
 // get('heading.font.weight', $config)
 @function get($key, $map: $config) {
-    $keys: str-explode($key, '.');
-
-    @return map-deep-get($map, $keys...);
+    $keys: string.split($key, '.');
+    @return map.get($map, $keys...);
 }
 
-// == color
+
+// == 顏色
 // -----------------------------------------------------------------
-// 取顏色的亮度
+// A list of pre-calculated numbers of pow(divide((divide($value, 255) + .055), 1.055), 2.4). (from 0 to 255)
+// stylelint-disable-next-line scss/dollar-variable-default, scss/dollar-variable-pattern
+$_luminance-list: .0008 .001 .0011 .0013 .0015 .0017 .002 .0022 .0025 .0027 .003 .0033 .0037 .004 .0044 .0048 .0052 .0056 .006 .0065 .007 .0075 .008 .0086 .0091 .0097 .0103 .011 .0116 .0123 .013 .0137 .0144 .0152 .016 .0168 .0176 .0185 .0194 .0203 .0212 .0222 .0232 .0242 .0252 .0262 .0273 .0284 .0296 .0307 .0319 .0331 .0343 .0356 .0369 .0382 .0395 .0409 .0423 .0437 .0452 .0467 .0482 .0497 .0513 .0529 .0545 .0561 .0578 .0595 .0612 .063 .0648 .0666 .0685 .0704 .0723 .0742 .0762 .0782 .0802 .0823 .0844 .0865 .0887 .0908 .0931 .0953 .0976 .0999 .1022 .1046 .107 .1095 .1119 .1144 .117 .1195 .1221 .1248 .1274 .1301 .1329 .1356 .1384 .1413 .1441 .147 .15 .1529 .1559 .159 .162 .1651 .1683 .1714 .1746 .1779 .1812 .1845 .1878 .1912 .1946 .1981 .2016 .2051 .2086 .2122 .2159 .2195 .2232 .227 .2307 .2346 .2384 .2423 .2462 .2502 .2542 .2582 .2623 .2664 .2705 .2747 .2789 .2831 .2874 .2918 .2961 .3005 .305 .3095 .314 .3185 .3231 .3278 .3325 .3372 .3419 .3467 .3515 .3564 .3613 .3663 .3712 .3763 .3813 .3864 .3916 .3968 .402 .4072 .4125 .4179 .4233 .4287 .4342 .4397 .4452 .4508 .4564 .4621 .4678 .4735 .4793 .4851 .491 .4969 .5029 .5089 .5149 .521 .5271 .5333 .5395 .5457 .552 .5583 .5647 .5711 .5776 .5841 .5906 .5972 .6038 .6105 .6172 .624 .6308 .6376 .6445 .6514 .6584 .6654 .6724 .6795 .6867 .6939 .7011 .7084 .7157 .7231 .7305 .7379 .7454 .7529 .7605 .7682 .7758 .7835 .7913 .7991 .807 .8148 .8228 .8308 .8388 .8469 .855 .8632 .8714 .8796 .8879 .8963 .9047 .9131 .9216 .9301 .9387 .9473 .956 .9647 .9734 .9823 .9911 1;
+
+// # 取顏色的亮度
+// Return WCAG2.1 relative luminance
+// See https://www.w3.org/TR/WCAG/#dfn-relative-luminance
+// See https://www.w3.org/TR/WCAG/#dfn-contrast-ratio
 // luminance(#fff) => 1
 // luminance(#000) => 0
 @function luminance($color) {
-    $linear-channel-values: 0 .0003035269835488375 .000607053967097675 .0009105809506465125 .00121410793419535 .0015176349177441874 .001821161901293025 .0021246888848418626 .0024282158683907 .0027317428519395373 .003035269835488375 .003346535763899161 .003676507324047436 .004024717018496307 .004391442037410293 .004776953480693729 .005181516702338386 .005605391624202723 .006048833022857054 .006512090792594475 .006995410187265387 .007499032043226175 .008023192985384994 .008568125618069307 .009134058702220787 .00972121732023785 .010329823029626936 .010960094006488246 .011612245179743885 .012286488356915872 .012983032342173012 .013702083047289686 .014443843596092545 .01520851442291271 .01599629336550963 .016807375752887384 .017641954488384078 .018500220128379697 .019382360956935723 .0202885630566524 .021219010376003555 .022173884793387385 .02315336617811041 .024157632448504756 .02518685962736163 .026241221894849898 .027320891639074894 .028426039504420793 .0295568344378088 .030713443732993635 .03189603307301153 .033104766570885055 .03433980680868217 .03560131487502034 .03688945040110004 .0382043715953465 .03954623527673284 .04091519690685319 .042311410620809675 .043735029256973465 .04518620438567554 .046665086336880095 .04817182422688942 .04970656598412723 .05126945837404324 .052860647023180246 .05448027644244237 .05612849004960009 .05780543019106723 .0595112381629812 .06124605423161761 .06301001765316767 .06480326669290577 .06662593864377289 .06847816984440017 .07036009569659588 .07227185068231748 .07421356838014963 .07618538148130785 .07818742180518633 .08021982031446832 .0822827071298148 .08437621154414882 .08650046203654976 .08865558628577294 .09084171118340768 .09305896284668745 .0953074666309647 .09758734714186246 .09989872824711389 .10224173308810132 .10461648409110419 .10702310297826761 .10946171077829933 .1119324278369056 .11443537382697373 .11697066775851084 .11953842798834562 .12213877222960187 .12477181756095049 .12743768043564743 .1301364766903643 .13286832155381798 .13563332965520566 .13843161503245183 .14126329114027164 .14412847085805777 .14702726649759498 .14995978981060856 .15292615199615017 .1559264637078274 .1589608350608804 .162029375639111 .1651321945016676 .16826940018969075 .1714411007328226 .17464740365558504 .17788841598362912 .18116424424986022 .184474994500441 .18782077230067787 .19120168274079138 .1946178304415758 .19806931955994886 .20155625379439707 .20507873639031693 .20863687014525575 .21223075741405523 .21586050011389926 .2195261997292692 .2232279573168085 .22696587351009836 .23074004852434915 .23455058216100522 .238397573812271 .24228112246555486 .24620132670783548 .25015828472995344 .25415209433082675 .2581828529215958 .26225065752969623 .26635560480286247 .2704977910130658 .27467731206038465 .2788942634768104 .2831487404299921 .2874408377269175 .29177064981753587 .2961382707983211 .3005437944157765 .3049873140698863 .30946892281750854 .31398871337571754 .31854677812509186 .32314320911295075 .3277780980565422 .33245153634617935 .33716361504833037 .3419144249086609 .3467040563550296 .35153259950043936 .3564001441459435 .3613067797835095 .3662525955988395 .3712376804741491 .3762621229909065 .38132601143253014 .386429433787049 .39157247774972326 .39675523072562685 .4019777798321958 .4072402119017367 .41254261348390375 .4178850708481375 .4232676699860717 .4286904966139066 .43415363617474895 .4396571738409188 .44520119451622786 .45078578283822346 .45641102318040466 .4620769996544071 .467783796112159 .47353149614800955 .4793201831008268 .4851499400560704 .4910208498478356 .4969329950608704 .5028864580325687 .5088813208549338 .5149176653765214 .5209955732043543 .5271151257058131 .5332764040105052 .5394794890121072 .5457244613701866 .5520114015120001 .5583403896342679 .5647115057049292 .5711248294648731 .5775804404296506 .5840784178911641 .5906188409193369 .5972017883637634 .6038273388553378 .6104955708078648 .6172065624196511 .6239603916750761 .6307571363461468 .6375968739940326 .6444796819705821 .6514056374198242 .6583748172794485 .665387298282272 .6724431569576875 .6795424696330938 .6866853124353135 .6938717612919899 .7011018919329731 .7083757798916868 .7156935005064807 .7230551289219693 .7304607400903537 .7379104087727308 .7454042095403874 .7529422167760779 .7605245046752924 .768151147247507 .7758222183174236 .7835377915261935 .7912979403326302 .799102738014409 .8069522576692516 .8148465722161012 .8227857543962835 .8307698767746546 .83879901174074 .846873231509858 .8549926081242338 .8631572134541023 .8713671191987972 .8796223968878317 .8879231178819663 .8962693533742664 .9046611743911496 .9130986517934192 .9215818562772946 .9301108583754237 .938685728457888 .9473065367331999 .9559733532492861 .9646862478944651 .9734452903984125 .9822505503331171 .9911020971138298 1;
-    // $linear-channel-values are our Lookup Table of constants
-    $red: nth($linear-channel-values, red($color) + 1);
-    $green: nth($linear-channel-values, green($color) + 1);
-    $blue: nth($linear-channel-values, blue($color) + 1);
-    $calculation: .2126 * $red + .7152 * $green + .0722 * $blue;
-    @return $calculation;
+    $rgb: (
+        "r": red($color),
+        "g": green($color),
+        "b": blue($color)
+    );
+
+    @each $name, $value in $rgb {
+        $value: if(math.div($value, 255) < .04045, math.div(math.div($value, 255), 12.92), nth($_luminance-list, $value + 1));
+        $rgb: map-merge($rgb, ($name: $value));
+    }
+
+    @return (map-get($rgb, "r") * 0.2126) + (map-get($rgb, "g") * 0.7152) + (map-get($rgb, "b") * 0.0722);
 }
 
 // 算顏色對比值, w3c建議對比為 4.5 以上
-@function contrast($fg, $bg:#fff) {
-    // Adapted from: https://github.com/LeaVerou/contrast-ratio/blob/gh-pages/color.js
-    // Formula: http://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
-    $l1: luminance($fg) + 0.05;
-    $l2: luminance($bg) + 0.05;
-    $r: math.div($l1, $l2);
+// contrast-ratio(#fff, #879B41) => 3.09
+@function contrast-ratio($color1, $color2: #fff) {
+    $l1: luminance($color1) + 0.05;
+    $l2: luminance($color2) + 0.05;
+    $ratio: math.div($l2, $l1);
 
-    $ratio: if( $l2 > $l1, math.div(1, $r), math.div(round($r * 100), 100) );
-
-    @return $ratio;
+    @return if( $l1 > $l2, math.div(1, $ratio), math.div(round($ratio * 100), 100) );
 }
 
 // 反轉色
-// [ref] https://alex-page.github.io/sass-a11ycolor/#main-function-AU-a11ycolor
+// [ref] https://github.com/alex-page/sass-a11ycolor/blob/main/src/020-a11ycolor.scss
 // or https://css-tricks.com/programming-sass-to-create-accessible-color-combinations/
-@function a11ycolor($fg, $bg, $ratioKey:'small') {
+@function a11y($primary, $secondary, $ratioKey:'small') {
     $ratios: (
         'large': 3,
         'small': 4.5
     );
+
     $ratio: map-get($ratios, $ratioKey);
+    $primary-lightness: lightness($primary);
 
     // 對比度夠就直接回傳原色
-    @if contrast($fg, $bg) >= $ratio {
-        @return $fg;
+    @if contrast-ratio($primary, $secondary) >= $ratio {
+        @return $primary;
     }
 
     // 對比度不夠則找出相近色
-    $a11yLightness: lightness($fg);
+    // 背景色的明暗判斷
+    $bg-is-dark: contrast-ratio($secondary, #000) >= $ratio;  // true or flase
+    $bg-is-light: contrast-ratio($secondary, #fff) >= $ratio; // true or flase
 
-    $isBgDark: contrast(#000, $bg) >= $ratio; // true or flase
-    $isBgLight: contrast(#fff, $bg) >= $ratio; // true or flase
-    $midHsl: math.div(100,255); // 255 color / 100% HSL
-    $minLightness: 0;
-    $maxLightness: 100;
-    $isDarkColor: false;
+    // 初始亮度邊界
+    $mid-hex: math.div(100, 255); // 255 color / 100% HSL
+    $min-lightness: 0;
+    $max-lightness: 100;
+    $is-dark: false;
 
-    // 判斷背景是黑底還白底
-    @if $isBgDark and $isBgLight {
-        @if ($a11yLightness >= 50) {
-            $minLightness: $a11yLightness;
+    @if $bg-is-dark and $bg-is-light {
+        // 背景對比度足夠時，依據 $primary-lightness 決定調整方向
+        @if ($primary-lightness >= 50) {
+            $min-lightness: $primary-lightness;
+        } @else {
+            $max-lightness: $primary-lightness;
+            $is-dark: true;
         }
-        @else {
-            $maxLightness: $a11yLightness;
-            $isDarkColor: true;
-        }
+    } @else if $bg-is-dark {
+        // 黑底背景時，降低亮度
+        $max-lightness: $primary-lightness;
+        $is-dark: true;
+    } @else {
+        // 非黑底（白底）時，提升亮度
+        $min-lightness: $primary-lightness;
     }
-    @else if $isBgDark {
-        $maxLightness: $a11yLightness;
-        $isDarkColor: true;
-    }
-    // 非黑底時
-    @else {
-        $minLightness: $a11yLightness;
-    }
-
-    // 回傳色
-    $foundColor: '';
 
     // 找出對比度足夠的顏色
-    @while ($foundColor == '') {
-        $midLightness: ($minLightness + $maxLightness) * .5;
-        $midColor: hsl(
-            hue($fg),
-            saturation($fg),
-            $midLightness
-        );
-        $resetColor: mix($midColor, $midColor);
+    $return-color: null;
 
-        @if contrast($resetColor, $bg) >= $ratio {
-            @if $maxLightness - $minLightness < $midHsl { // 255 color / 100% HSL
-                $foundColor: $resetColor;
+    @while ($return-color == null) {
+        $mid-lightness: ($min-lightness + $max-lightness) * 0.5;
+        $mid-color: hsl(hue($primary), saturation($primary), $mid-lightness);
+        $new-color: mix($mid-color, $mid-color);
+
+        @if contrast-ratio($new-color, $secondary) >= $ratio {
+            @if $max-lightness - $min-lightness < $mid-hex { // 255 color / 100% HSL
+                $return-color: $new-color;
             }
-            @if $isDarkColor {
-                $minLightness: $midLightness;
-            }
-            @else {
-                $maxLightness: $midLightness;
+            @if $is-dark {
+                $min-lightness: $mid-lightness;
+            } @else {
+                $max-lightness: $mid-lightness;
             }
         }
-        @else if $isDarkColor {
-            $maxLightness: $midLightness;
+        @else if $is-dark {
+            $max-lightness: $mid-lightness;
         }
         @else {
-            $minLightness: $midLightness;
+            $min-lightness: $mid-lightness;
         }
     }
-    @return $foundColor;
+
+    @return $return-color;
 }
 
 // 取得組合色
@@ -257,21 +230,23 @@
 // 漸淡色 => color: light(#BADA55, 42%);
 @function light($color, $percentage) {
     $percentage: if(unitless($percentage), $percentage * 1%, $percentage);
-    @return scale-color($color, $lightness: $percentage);
+    @return mix(white, $color, $percentage);
 }
 
 // 漸濃色 => background-color: dark(#663399, 42%);
 @function dark($color, $percentage) {
     $percentage: if(unitless($percentage), $percentage * 1%, $percentage);
-    @return scale-color($color, $saturation: (-$percentage), $lightness: (-$percentage));
+    @return mix(black, $color, $percentage);
 }
+
 
 // == misc
 // -----------------------------------------------------------------
+
 // height => padding-y
-@function pdy($height, $font-size: $font-size-base, $line-height: $line-height-base) {
-    $val: ($height - ($font-size * $line-height)) * .5;
-    @return em($val, $font-size);
+@function pdy($height, $fontsize: $font-size-base, $lineheight: $line-height-base) {
+    $val: ($height - ($fontsize * $lineheight));
+    @return em($val, $fontsize) * 0.5;
 }
 
 // z-index

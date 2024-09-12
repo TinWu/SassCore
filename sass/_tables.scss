@@ -2,54 +2,60 @@
 
 // common
 table {
-    border-collapse: collapse;
     border-spacing: 0;
     width: 100%;
 
     @if $table-bg    { background-color: $table-bg; }
     @if $table-color { color: $table-color; }
-
-    // 固定欄寬度
-    &.fixed {
-        table-layout: fixed;
-        word-wrap: break-word;
-        word-break: break-all;
-    }
 }
 
-th, td {
-    text-align: $table-cell-text-align;
-    vertical-align: $table-cell-vertical-align;
+// 固定欄寬度
+.table-fixed {
+    table-layout: fixed;
+    word-wrap: break-word;
+    word-break: break-all;
+}
 
-    border: $table-bordered;
-    border-width: $table-cell-border-width;
-    padding: $table-cell-padding;
+th,
+td,
+thead, tbody:not(:last-child) {
+    border: $table-border-style var(--border-color, $table-border-color);
+    border-width: var(--cell-bordered);
+}
+
+th,
+td {
+    --cell-bordered: #{$cell-bordered};
+
+    text-align: if($cell-text-align, $cell-text-align, null);
+    vertical-align: if($cell-vertical-align, $cell-vertical-align, null);
+    padding: $cell-padding;
 
     thead & {
-        border-width: 0;
+        // --cell-bordered: 0;
     }
 }
 
-thead,
-tbody:nth-last-child(n+2) {
-    border-bottom: $table-border-width*2 $table-border-style $table-border-color;
+thead, tbody:not(:last-child) {
+    --cell-bordered: 0 0 2px;
 }
 
 
 // plugin
 // 四邊框線
 .table-bordered {
-    border: $table-bordered;
+    border: var(--border-width, $border-width) $table-border-style var(--border-color, $table-border-color);
 
     th, td {
-        border-width: $table-border-width;
+        --cell-bordered: #{$border-width};
+        // border-width: var(--border-width, $border-width);
     }
 }
 
 // 斑馬紋條 (必須在變色上面)
 @if $table-striped-color {
-    .striped {
-        tr, &-tbody tbody {
+    .table-striped {
+        :not(thead) > tr, &-tbody tbody {
             &:nth-child(#{$table-striped-list}) {
                 background-color: $table-striped-color;
             }
@@ -65,10 +71,10 @@ tbody:nth-last-child(n+2) {
         }
         tbody {
             &:hover > tr > [rowspan],
-            > tr:hover {
+            > tr:not(.nohover):hover {
                 background-color: $table-hover-color;
             }
-            > tr:hover {
+            > tr:not(.nohover):hover {
                 th, td {
                     background-color: transparent !important;
                 }

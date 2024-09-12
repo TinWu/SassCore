@@ -1,59 +1,24 @@
 @charset "UTF-8";
 
-// == 每頁共用的樣式
+// == position
+// ------------------------------------------------------------
+// .static    { position: static; }
+.fixed     { position: fixed; }
+.absolute  { position: absolute; }
+.relative  { position: relative; }
+.sticky    { position: sticky; }
+
+.top-0     { top: 0; }
+.right-0   { right: 0; }
+.bottom-0  { bottom: 0; }
+.left-0    { left: 0; }
+
+
+// == custom utils
 // ------------------------------------------------------------
 
-
-
-// == modal
-.modal {
-    z-index: z(overlay);
-    display: none;
-    overflow: auto;
-    padding-top: 12%;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
-
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-
-    @include mq-max(xs) {
-        padding-top: 5%;
-    }
-
-    &-content {
-        margin: auto;
-        background-color: #fff;
-        position: relative;
-        width: 80%;
-        max-width: 800px;
-
-        @include diy-animate(slide-down, .4s) {
-            from { top: -300px; opacity: 0; }
-            to { top: 0; opacity: 1; }
-        }
-
-        @include mq-max(md) {
-            width: 96%;
-        }
-    }
-}
-
-.btn-close {
-    font-size: em(31);
-    color: #fff;
-
-    position: absolute;
-    top: 1%;
-    right: 1%;
-
-    &:hover, &:focus {
-        color: $light-warning;
-        cursor: pointer;
-    }
+.list-inside {
+    list-style-position: inside;
 }
 
 
@@ -76,3 +41,4 @@
         height: 22px;
     }
 }
+

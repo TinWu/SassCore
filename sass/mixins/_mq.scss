@@ -1,26 +1,40 @@
 @charset "UTF-8";
+@use 'sass:map';
 
 // $breakpoints in variables
 
-// == media
+// == media 2022
 // -----------------------------------------------------------------
 //
-// $orientation: landscape,portrait
 // @include mq(sm) => 768px
-// @include mq($orientation: landscape) => all and (orientation: landscape) 限橫向方向
-// @include mq(sm, $and: 'and (max-height: 58.75em)') => (min-width: 48em) and (max-height: 58.75em)
-// $xs-low: em(map-deep-get($breakpoints, xs)) - .01;
-// @include mq(md, lg, ', (max-width: #{$xs-low})') => @media (min-width: 61.25em) and (max-width: 74.99em), (max-width: 29.99em)
-// 2022 - new
+// $orientation: landscape,portrait
+// $xs-low: em(map.get($breakpoints, xs)) - .01;
+// $orientation: landscape => all and (orientation: landscape) 限橫向方向
+// $and: 'and (min-height: #{em(600)})' => and (min-height: 37.5em)
+// $and: ', (max-width: #{em(get(md, $breakpoints) - 1)})' => , (max-width: 29.99em)
+
+// 針對放大比例設定 min-resolution
+// 預設 100%   => 96 dpi
+// 放大到 125% => 96*1.25 = 120dpi
+// 放大到 200% => 96*2 = 192 dpi
+// 'retina2x': '(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx)',
+// 'retina3x': '(-webkit-min-device-pixel-ratio: 3), (min-resolution: 350dpi), (min-resolution: 3dppx)',
+
 @mixin mq($min: 0, $max: 0, $and: false, $orientation: false) {
     $query: '';
-    $min: if( type-of($min) == number, em($min), em(map-deep-get($breakpoints, $min)) );
-    $max: if( type-of($max) == number, em($max), em(map-deep-get($breakpoints, $max)) - .01 );
 
-    @if $min > 0     { $query: '#{$query} and (min-width: #{$min})'; }
-    @if $max > 0     { $query: '#{$query} and (max-width: #{$max})'; }
-    @if $orientation { $query: '#{$query} and (orientation: #{$orientation})'; }
-    @if $and         { $query: '#{$query + $and}'; }
+    // 處理特殊媒體查詢條件
+    @if $min == retina2x {
+        $query: '#{$query} and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx)';
+    } @else {
+        $min: if( type-of($min) == number, em($min), em(map.get($breakpoints, $min)) );
+        $max: if( type-of($max) == number, em($max), em(map.get($breakpoints, $max)) - .01 );
+
+        @if $min > 0     { $query: '#{$query} and (min-width: #{$min})'; }
+        @if $max > 0     { $query: '#{$query} and (max-width: #{$max})'; }
+        @if $orientation { $query: '#{$query} and (orientation: #{$orientation})'; }
+        @if $and         { $query: '#{$query} and #{$and}'; }
+    }
 
     // Remove unnecessary media query prefix 'all and '
     @if ($query != '') {

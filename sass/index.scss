@@ -3,27 +3,403 @@
 
 $index: true;
 
+$config: (
+    'font': ('7xl': 72px),
+);
+
 // == import
 // ------------------------------------------------------------
 @import "function";          // 常用函數
 
-// @import "setting";           // 自定義+覆寫變數
+@import "_client/setting";   // 自定義+覆寫變數
 @import "variables";         // 預設變數
 @import "mixins";            // 預寫css
 
 // output code
+@import "root";
 @import "base";              // 基本Element form normalize.css v8.0.1
-@import "forms";             // 表單
+// @import "forms";
 @import "utils";             // 常用小工具
 
-@import "_client/form-plug";
+@import "_client/layout";     // 整體排版
 @import "_client/btn";
 @import "_client/state";
-
-@import "_client/layout";     // 整體排版
-@import "_client/nav";
 @import "_client/classes";
 
 
 // == main
 // ------------------------------------------------------------
+
+.xs {
+    @include mq(xs) {
+        &\:w-22 {
+            width: torem(88);
+        }
+    }
+}
+
+.md {
+    @include mq(md) {
+        &\:border-l {
+            border-left: 1px solid dark(color(muted), 4);
+        }
+    }
+}
+
+.xl {
+    @include mq($wide) {
+        &\:mb-16 {
+            margin-bottom: get('spacing.16');
+        }
+    }
+}
+
+// .md-max {
+//     @include mq-max(md) {
+//         &\:center {
+//             margin-inline-start: 50%;
+//             transform: translateX(-50%);
+//         }
+//         &\:text-center {
+//             text-align: center;
+//         }
+//     }
+// }
+.xs-max {
+    @include mq-max(xs) {
+        &\:max-w-35 {
+            max-width: torem(140);
+        }
+    }
+}
+
+// # banner
+.banner {
+    position: relative;
+    width: 100%;
+    // aspect-ratio: 2.5 / 1;
+    height: 100vh;
+
+    @include el(before) {
+        background: url('#{$img-path}/taiwan.png') no-repeat 0 0/contain;
+        aspect-ratio: 1 / 1.69;
+        position: absolute;
+        left: 60%;
+        bottom: 32%;
+    }
+
+    @include mq(md) {
+        height: 776px;
+
+        &::before {
+            bottom: 8%;
+            left: 53%;
+            width: 346px;
+        }
+    }
+    @include mq-max(md) {
+        &::before {
+            height: 40%;
+            max-width: 90%;
+            transform: translateX(-50%);
+        }
+    }
+
+    @include mq-max($wide) {
+        padding-left: $gutter;
+        padding-right: $gutter;
+    }
+}
+
+.bg-video {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right 0;
+    z-index: -1;
+    filter: contrast(0.4) brightness(1.5);
+
+    // @include animate(fadeout 10s ease-in 8s infinite alternate-reverse) {
+    //     to {
+    //         opacity: 0;
+    //     }
+    // }
+}
+
+$slogan-top: (776px - 220) * 0.48; //260px;
+.slogan,
+.slogan-sub {
+    letter-spacing: 0.03em;
+    position: relative;
+
+    @include mq(md) {
+        position: absolute;
+        left: 30%;
+    }
+    @include mq(lg) {
+        left: 40%;
+    }
+}
+.slogan {
+    top: 20%;
+    font-size: 2.8rem;
+
+    @include mq(xs) {
+        font-size: torem(72);
+    }
+    @include mq(sm) {
+        top: 24%;
+    }
+    @include mq(md) {
+        top: $slogan-top;
+    }
+}
+
+.slogan-sub {
+    top: 18%;
+
+    @include mq(xs) {
+        top: 15%;
+    }
+    @include mq(sm) {
+        top: 20%;
+    }
+    @include mq(md) {
+        top: $slogan-top + 170;
+    }
+}
+
+.brand-jci {
+    background: url(#{$img-path}/jci.svg#jci) no-repeat 0 0/auto 140%;
+    filter: brightness(0) invert(0.2) sepia(0.1) saturate(30) hue-rotate(141deg);
+    // logo藍 invert(40%) sepia(94%) saturate(1100%) hue-rotate(170deg) brightness(88%) contrast(101%);
+    aspect-ratio: 1 / 0.34;
+    height: 48px;
+
+    display: inline-block;
+    vertical-align: baseline;
+    position: relative;
+    top: 5px;
+
+    @include mq(xs) {
+        height: 60px;
+    }
+}
+
+// 停右邊的media
+.stay {
+    background-color: var(--bg, #{rgba(color(), 0.9)});
+    border-radius: 20px 0 0 20px;
+    padding: 8px 8px 8px 14px;
+    top: 20%;
+    z-index: 2;
+
+    svg {
+        width: 20px;
+        height: auto;
+    }
+}
+
+// # main
+.intro {
+}
+
+// _倒計時
+.countdown {
+    @include mq(md) {
+        margin-top: 32px;
+        position: relative;
+    }
+}
+
+.justify-items-center {
+    justify-items: center; //for grid center
+}
+
+.countdown-title {
+    @include mq(md) {
+        position: absolute;
+        right: 0;
+        margin-right: 25px;
+    }
+
+    @include mq($wide) {
+        margin-right: 38px;
+    }
+
+    // position: absolute;
+    // @include mq(md) {
+    //     position: relative;
+    //     left: 50%;
+    //     margin-left: 252px;
+    // }
+    // @include mq($wide) {
+    //     margin-left: 252px;
+    // }
+}
+
+.timer {
+    // display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    max-width: 120px;
+
+    font-size: var(--font-size, 36px);
+
+    @include mq(350, xs) {
+        --font-size: 42px;
+    }
+
+    // $wide+,  640 ~ md 6xl
+    @include mq(640, md, $and:', (min-width: #{em(1330)})') {
+        --font-size: #{get('font.6xl')};
+        max-width: 160px;
+    }
+
+}
+
+.minus {
+    width: 30px;
+}
+
+// _when where who
+
+
+.calendar {
+    margin-top: -4px;
+}
+
+
+
+// # news
+.news {
+    margin-top: 80px;
+
+    @include mq($wide) {
+        margin-top: 100px;
+        margin-bottom: -154px;
+
+        .card {
+            &:nth-child(even) {
+                margin-top: 120px;
+            }
+            &:nth-child(3n) {
+                margin-top: 60px;
+            }
+        }
+    }
+
+    @include mq-max($wide) {
+        padding: 0 get('spacing.5') 24px !important;
+    }
+}
+
+// title的bg
+.bg-circle {
+    @include static(bg-circle);
+
+    &::before {
+        --circle-size: 62px;
+        left: 50.3%;
+        top: -20px;
+    }
+}
+
+
+// # 關於大會
+
+// icon
+// .icon-bauble-tea {
+//     background: url(#{$img-path}/icon-bauble-tea@2x.png) no-repeat 155px 0/28px auto;
+//     padding-top: 24px;
+// }
+.icon-dumpling {
+    background: url(#{$img-path}/icon-dumpling@2x.png) no-repeat 230px center/36px auto;
+}
+
+.text-shadow {
+    --shadow:  0 0 8px #{rgba(#000, 0.5)}, 0 0 3px #{rgba(#000, 0.8)};
+    text-shadow: var(--shadow);
+}
+
+.bg-star {
+    background: #000 url(#{$img-path}/index/bg-star.jpg) no-repeat center bottom fixed;
+    padding: 60px 0;
+
+    @supports (-webkit-overflow-scrolling: touch) {
+        background-attachment: scroll;
+    }
+
+    @include mq($wide) {
+        padding-top: 320px;
+        padding-bottom: 180px;
+    }
+}
+
+.about {
+    margin-bottom: 90px;
+
+    @include mq($wide) {
+        margin-bottom: 180px;
+    }
+}
+
+.player {
+    @include mq(md, $wide - 1) {
+        margin-top: 50px;
+    }
+}
+
+.map {
+    @include mq-max(lg) {
+        width: 100%;
+        height: 360px;
+    }
+}
+
+
+
+// 讚助單位
+.supports {
+    margin-top: -4px;
+}
+
+
+.plansit {
+}
+.plans {
+}
+
+.plan {
+}
+
+.plan_title {
+}
+
+.plan_navbar {
+}
+
+// .plan-prev,
+// .plan-next {
+//     --planbtn-svg: #{escape-svg("<svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' clip-rule='evenodd' d='M14.7071 6.29289C15.0976 6.68342 15.0976 7.31658 14.7071 7.70711L10.4142 12L14.7071 16.2929C15.0976 16.6834 15.0976 17.3166 14.7071 17.7071C14.3166 18.0976 13.6834 18.0976 13.2929 17.7071L8.29289 12.7071C7.90237 12.3166 7.90237 11.6834 8.29289 11.2929L13.2929 6.29289C13.6834 5.90237 14.3166 5.90237 14.7071 6.29289Z' fill='#5D992A'></path></svg>")};
+//     background: var(--planbtn-svg) no-repeat center/contain;
+
+//     cursor: pointer;
+//     width: 50px;
+//     height: 50px;
+//     transition: 300ms;
+
+//     &:not(.swiper-button-disabled):hover {
+//         filter: brightness(1.3) contrast(.8);
+//     }
+// }
+
+// .plan-next {
+//     --planbtn-svg: #{escape-svg("<svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' clip-rule='evenodd' d='M9.29289 6.29289C9.68342 5.90237 10.3166 5.90237 10.7071 6.29289L15.7071 11.2929C16.0976 11.6834 16.0976 12.3166 15.7071 12.7071L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071C8.90237 17.3166 8.90237 16.6834 9.29289 16.2929L13.5858 12L9.29289 7.70711C8.90237 7.31658 8.90237 6.68342 9.29289 6.29289Z' fill='#5D992A'></path></svg>")};
+// }

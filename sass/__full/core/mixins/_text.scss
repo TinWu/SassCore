@@ -4,16 +4,16 @@
 // == text
 // -----------------------------------------------------------------
 // 隱藏文字
-@mixin text-hide($ext:true) {
-    @include static(texthide, $ext) {
+@mixin text-hide($ex:true) {
+    @include static(texthide, $ex) {
         text-indent: 101%;
         overflow: hidden;
         white-space: nowrap;
         padding: 0;
     }
 }
-@mixin sr-only($ext:true) {
-    @include static(sronly, $ext) {
+@mixin sr-only($ex:true) {
+    @include static(sronly, $ex) {
         position: absolute;
         width: 1px;
         height: 1px;
@@ -36,8 +36,8 @@
 }
 
 // 文字溢位出現省略號,要設寬度
-@mixin text-overflow($width:100%, $ext:true) {
-    @include static('text-overflow', $ext) {
+@mixin text-overflow($width:100%, $ex:true) {
+    @include static('text-overflow', $ex) {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -93,8 +93,8 @@
     );
 
     @each $ext in $exts {
-        $extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
-        $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+        $extmod: if(map-has-key($extmods, $ex), $ext + map-get($extmods, $ex), $ex);
+        $format: if(map-has-key($formats, $ex), map-get($formats, $ex), $ex);
         $src: append($src, url(quote($path + "." + $extmod)) format(quote($format)), comma);
     }
 

@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
-$controls-color:         #fff;
-$controls-color-checked: color(success);
-$controls-size:          $input-height * .8;
+$controls-color:           #fff;
+$controls-color-checked:   color(info);
+$controls-size:            $input-height - 8;
 
 //
 // == form control plug (radio,checkbox)
@@ -14,12 +14,17 @@ $controls-size:          $input-height * .8;
 
 // comm
 .form-check {
-    display: inline-block;
     cursor: pointer;
-    padding-left: $controls-size + 5;
-    margin: 3px 10px 3px 0;
-    min-height: $controls-size;
+    display: inline-block;
+    vertical-align: middle;
+
+    // min-height: $controls-size;
+    padding-left: $controls-size + 2;
     position: relative;
+
+    .field & {
+        margin: 5px 10px 5px 0;
+    }
 
     // 換行
     &.stacked {
@@ -51,7 +56,7 @@ $controls-size:          $input-height * .8;
             background: $controls-color;
 
             // check icon
-            &:after {
+            &::after {
                 content: '';
                 display: none;
 
@@ -60,17 +65,20 @@ $controls-size:          $input-height * .8;
                 top: 50%;
                 width: 7px;
                 height: 10px;
-                border: solid white;
+                border: solid dark($controls-color, 5);
                 border-width: 0 3px 3px 0;
                 transform: translate(-50%, -65%) rotate(45deg);
             }
         }
-        &:checked ~ .icon{
-            background: $controls-color-checked;
 
-            &:after {
+        &:hover ~ .icon,
+        &:checked ~ .icon {
+            &::after {
                 display: block;
             }
+        }
+        &:checked ~ .icon {
+            background: $controls-color-checked;
         }
     }
 
@@ -84,7 +92,7 @@ $controls-size:          $input-height * .8;
         }
         &:checked {
             ~ .icon {
-                box-shadow: 0 0 0 3px rgba($controls-color-checked, .5);
+                box-shadow: 0 0 0 4px rgba($controls-color-checked, .3);
                 border: 3px solid #fff;
                 background: $controls-color-checked;
             }

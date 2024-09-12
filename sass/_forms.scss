@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+$input-name: '.form-element';
+
 // == Forms
 // -----------------------------------------------------------------
 
@@ -13,38 +15,12 @@ legend {
     color: inherit;
     display: block;
     width: 100%;
-    margin-bottom: .3em;
-    padding: .3em 0;
 }
 
-.form-element {
-    vertical-align: middle;
-    height: $input-height;
-
-    @if $input-bg {
-        background-color: $input-bg;
-        background-clip: padding-box;
-    }
-    border-radius: if($input-radius, $input-radius, 0);
-    border: if($input-border-width, $input-border, null);
-    box-shadow: if($input-inner-shadow, $input-inner-shadow, null);
-    color: if($input-color, $input-color, null);
-    font-size: if($input-font-size != $font-size-base, rem($input-font-size), null);
-    line-height: if($input-line-height != $line-height-base, $input-line-height, null);
-    transition: if($input-transition, $input-transition, null);
-
-    $pdy: pdy($input-height, $input-font-size, $input-line-height);
-    @if $input-space {
-        padding: $pdy em($input-space, $input-font-size);
-    }
-    @else {
-        padding-top: $pdy;
-        padding-bottom: $pdy;
-    }
-
-    @if $form-appearance {
+.appearance-none {
+    @include static(appearance) {
         // 元素外觀屬性: 移除預設樣式
-        @include prefix((appearance: $form-appearance), webkit moz);
+        appearance: none;
 
         // Unstyle the caret on `<select>`s in IE10+.
         &::-ms-expand {
@@ -53,25 +29,61 @@ legend {
             display: none; // for IE11
         }
     }
+}
+
+#{$input-name} {
+    --shadow: #{$shadow}; //0 0 #0000;
+    // box-shadow: if($shadow, var(--shadow), null);
+
+    @if $input-bg {
+        background-color: $input-bg;
+        background-clip: padding-box;
+    }
+    border-radius: if($input-radius, $input-radius, 0);
+    border: if($input-border-width, $input-border, null);
+    transition: if($input-transition, $input-transition, null);
+    vertical-align: middle;
+
+    // height: $input-height;
+
+    color: if($input-color, $input-color, null);
+    font-size: if($input-font-size != $font-size-base, torem($input-font-size), null);
+    line-height: if($input-line-height != $line-height-base, $input-line-height, null);
+
+    $pdy: pdy($input-height, $input-font-size, $input-line-height);
+    @if $input-space {
+        padding: $pdy torem($input-space);
+    } @else {
+        padding-block: $pdy;
+    }
+
+    @include static(appearance);
 
     @include static(infocus) {
         &:focus {
-            outline: 0;
-            border-color: $component-active;
-            box-shadow: if($input-inner-shadow, $input-inner-shadow, null), $input-focus-shadow;
+            --ring-offset-width: #{$ring-offset-width};
+            --ring-color: #{$ring-color};
+            --ring-shadow: 0 0 0 var(--ring-offset-width) var(--ring-color);
+
+            border-color: var(--border-color, #{$component-active});
+            box-shadow: var(--ring-shadow), var(--shadow);
+            outline: 2px solid transparent;
+            outline-offset: 2px;
 
             // 錯誤輸入
             &:invalid {
-                border-color: #FF4444;
-                box-shadow: 0 0 0 .2rem rgba(#FF4444, .3);
+                --border-color: #{color(danger)};
+                --ring-color: #{rgba(color(danger), 0.3)};
             }
         }
     }
+
     &::placeholder, // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526.
     &:disabled,     // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
     &[readonly] {
         opacity: 1;
     }
+
     &:disabled,
     &[readonly] {
         background-color: if($input-disabled-bg, $input-disabled-bg, null);
@@ -85,26 +97,6 @@ legend {
         width: 100%;
     }
 
-    @at-root select#{&} {
-        &[size],
-        &[multiple] {
-            height: auto;
-        }
-        // IE, Edge src:https://github.com/twbs/bootstrap/issues/19398.
-        &:focus::-ms-value {
-            color: if($input-color, $input-color, null);
-            background-color: if($input-bg, $input-bg, null);
-        }
-
-        --select-caret: #{escape-svg($select-caret)};
-        background: $input-bg var(--select-caret) no-repeat 94% center/10px 12px;
-        padding: 0 1.4em 0 em($input-space, $input-font-size);
-    }
-
-    @at-root textarea#{&} {
-        height: auto;
-    }
-
     // form-stacked => input width full
     .form-stacked & {
         width: 100%;
@@ -115,32 +107,47 @@ legend {
                 width: auto;
 
                 &:not(:last-child) {
-                    margin-right: em($gutter)*0.3;
+                    margin-right: $gutter*0.3;
                 }
             }
         }
     }
+
     .form-inline & {
         @include static(forminline);
     }
 }
 
-// .label {
-//     margin-top: $label-my;
-//     margin-bottom: $label-my;
+select#{$input-name} {
+    // custom caret
+    --select-caret: #{ escape-svg($select-caret) };
+    --select-seat-size: #{ $select-seat-size };
+    background: $input-bg var(--select-caret) no-repeat var(--select-seat-size);
+    padding-right: 1.2em;
 
-//     @if $input-line-height != $line-height-base {
-//         line-height: $input-line-height;
-//     }
-//     @if $input-font-size != $font-size-base {
-//         font-size: em($input-font-size);
-//     }
-// }
+    &[size],
+    &[multiple] {
+        height: auto;
+    }
+    // IE, Edge src:https://github.com/twbs/bootstrap/issues/19398.
+    &:focus::-ms-value {
+        background-color: if($input-bg, $input-bg, null);
+        color: if($input-color, $input-color, null);
+    }
+}
+
+textarea#{$input-name} {
+    height: auto;
+}
 
 .input-group {
     display: flex;
 
-    .form-element {
+    #{$input-name} {
+        flex: 1 1 auto;
+        // width: 1%;
+        height: auto;
+
         @include static(inputgroup) {
             &:focus {
                 z-index: 1;
@@ -160,37 +167,37 @@ legend {
                 margin-left: -$input-border-width;
             }
         }
-
-        flex: 1 1 auto;
-        width: 1%;
-        height: auto;
     }
-    select.form-element {
+
+    select#{$input-name} {
         width: auto;
     }
+}
 
-    &-addon {
-        @include static(inputgroup);
+.input-group-addon {
+    background-color: if($input-bg, $input-bg, null);
+    color: if($input-color, $input-color, null);
 
-        @include static(inputgroup-addon) {
-            border: if($input-border, $input-border, null);
-            border-radius: if($input-radius, $input-radius, null);
+    @include static(inputgroup);
 
-            @if $input-space {
-                padding: pdy($input-height, $input-font-size, $input-line-height) em($input-space, $input-font-size);
-            }
-            white-space: nowrap;
+    @include static(inputgroup-addon) {
+        border: if($input-border, $input-border, null);
+        border-radius: if($input-radius, $input-radius, null);
+
+        font-size: if($input-font-size != $font-size-base, torem($input-font-size), null);
+        line-height: if($input-line-height != $line-height-base, $input-line-height, null);
+        @if $input-space {
+            // padding: pdy($input-height, $input-font-size, $input-line-height) torem($input-space);
+            padding-inline: torem($input-space);
         }
-
-        background-color: if($input-bg, $input-bg, null);
-        color: if($input-color, $input-color, null);
+        white-space: nowrap;
     }
-    &-btn {
-        @include static(inputgroup);
+}
 
-        @include static(inputgroup-addon);
+.input-group-btn {
+    transition: $transition-duration*2;
 
-        transition: $transition-duration*2;
-    }
+    @include static(inputgroup);
+    @include static(inputgroup-addon);
 }
 

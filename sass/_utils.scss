@@ -1,169 +1,108 @@
 @charset "UTF-8";
 
 // == common classes
-// 如果超過4行css或想改參數時 建議改 @include
-// ------------------------------------------------------------
-
-// 隱藏文字
-.text-hide { @include text-hide; }
-
-// 隱藏文字-但閱讀器可以看
-// See: https://www.a11yproject.com/posts/2013-01-11-how-to-hide-content/
-// See: https://kittygiraudel.com/2016/10/13/css-hide-and-seek/
-// Useful for "Skip to main content" links; see https://www.w3.org/TR/2013/NOTE-WCAG20-TECHS-20130905/G1
-.sr-only {
-    &, &-focusable:not(:focus):not(:focus-within) {   // 焦點在時可以看
-        @include static(sronly) {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
-        }
-    }
-}
+// -------------------------------------------------------------------------------
 
 // 浮動相關(對齊)
-.clearfix      { @include clearfix; }        // 清除浮動: 後面元素不會跟著浮動+母元素會被撐開
-.pull-left     { float: left; }              // 靠左浮動
-.pull-right    { float: right; }             // 靠右浮動
+.clearfix            { @include clearfix; }              // 清除浮動: 後面元素不會跟著浮動+母元素會被撐開
+.pull-left           { float: left; }                    // 靠左浮動
+.pull-right          { float: right; }                   // 靠右浮動
 
-.clear         { clear: both; }              // 清除浮動: 讓後面的元素不會跟著浮動
-.rest          { overflow: hidden; }         // 讓浮動後置的元素可以對齊: col Ref: https://www.w3schools.com/w3css/w3css_grid.asp
+.clear               { clear: both; }                    // 清除浮動: 讓後面的元素不會跟著浮動
 
 // 元素類型
-.inline        { display: inline; }          // 行列元素: 不能設寬度
-.inline-block  { display: inline-block; }    // 區塊元素: 寬度隨內容變
-.block         { display: block; }           // 區塊元素: 寬度預設100%
-.flex          { display: flex; }            // 彈性元素: 寬度預設100%
-.inline-flex   { display: inline-flex; }     // 彈性元素: 寬度隨內容變
-.flex-center   { align-items: center; }      // 彈性元素高度置中
+.inline              { display: inline; }                // 行列元素: 不能設寬度
+.inline-block        { display: inline-block; }          // 區塊元素: 寬度隨內容變
+.block               { display: block; }                 // 區塊元素: 寬度預設100%
 
-.img-center {                                // 圖片置中
+.rounded             { border-radius: $border-radius; }  // 圓角
+.rounded-full        { border-radius: 50%; }             // 圓形
+.hidden              { display: none; }                  // 隱藏元素
+
+// # width
+.w-full              { width: 100%; }
+.max-w-full          { max-width: 100%; }
+.min-w-full          { min-width: 100%; }
+.w-auto              { width: auto; }
+
+// 圖片置中
+.img-center {
     display: block;
-    margin: auto;
+    margin: 0 auto;
     max-width: 100%;
 }
-.center {
-    // 物件置中(擠乾版)
-    @include static(mx-a) {
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
 
-.circle        { border-radius: 50%; }       // 圓形
-.hidden        { display: none; }            // 隱藏元素
-.disabled      { cursor: $cursor-disabled; } // 禁用符號
-
-%full          { width: 100%; }
-%max-full      { max-width: 100%; }
-.full          { @extend %full; }            // 寬度100
-.max-full      { @extend %max-full; }        // 寬度不超過100
-.w-auto        { width: auto; }
-
-
-// == vertical align
-// 可以使用的元素：inline, inline-block, inline-table, and table cell elements.
-// ------------------------------------------------------------
-@each $valign in (top, middle, bottom) {
-    .align-#{$valign} {
-        vertical-align: $valign;
-    }
-}
+.transition          { transition: $transition-duration; }
+.overflow-hidden     { overflow: hidden; }
+.cursor-not-allowed  { cursor: not-allowed; } // 禁用符號
+.cursor-pointer      { cursor: pointer; }
+.cursor-help         { cursor: help; }
 
 
 // == text
-// ------------------------------------------------------------
-// .text-left, .text-right, .text-center
-@each $align in (left, right, center) {
-    .text-#{$align} {
-        text-align: $align;
-    }
-}
-@each $breakpoint, $value in $breakpoints {
-    @include mq($value) {
-        @each $align in (left, right, center) {
-            .text-#{$breakpoint}-#{$align} {
-                text-align: $align;
-            }
-        }
+// -------------------------------------------------------------------------------
+
+@each $property, $size in get('font') {
+    .font-#{$property} {
+        font-size: torem($size);
     }
 }
 
-// .text-nowrap   { white-space: nowrap; }
-// .text-overflow { @include text-overflow(null); }
+// => .font-bold { font-weight: 700; }
+.font {
+    @include modifiers(get('utils.weight'), 'font-weight');
+}
 
-// .font-normal   { font-weight: 400; }
-// .font-bold     { font-weight: 700; }
-// .font-light    { font-weight: 300; }
-// .font-norm     { font-style: normal; }
-// .font-italic   { font-style: italic; }
+// 斜體
+.italic {
+    font-style: italic;
+}
+.not-italic {
+    font-style: normal;
+}
 
-%text-white    { color: #fff; }
-%bg-white      { background: #fff; }
+// => .leading-loose { line-height: 2 }
+.leading {
+    @include modifiers(get('utils.leading'), 'line-height');
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+.lowercase {
+    text-transform: lowercase;
+}
+
+
+// == default color
+// -------------------------------------------------------------------------------
+%text-white {
+    color: var(--color, #fff);
+}
+%bg-white {
+    background-color: var(--bg, #fff);
+}
+
 .text-white {
     @extend %text-white;
 }
-.hover-white {
-    @extend %text-white;
 
-    &:hover, &:focus {
-        color: dark(#fff, 15);
-    }
-}
 .bg-white {
     @extend %bg-white;
 }
 
 
-// == font size
-// ------------------------------------------------------------
-// src: w3.css v4
-@each $property, $size in get(font) {
-    .font-#{$property} { font-size: rem($size); }
+// == alignment
+// -------------------------------------------------------------------------------
+// # 水平 => .text-left, .text-right, .text-center
+.text {
+    @include modifiers(get('utils.align'), 'text-align');
 }
 
-// Headings
-// Correct the font si%ze and margin on `h1` elements within `section` and  `article` contexts in Chrome, Firefox, and Safari.
-@each $heading, $size in get(headings) {
-    #{$heading} {
-        @include static(headings) {
-            color: if($headings-color, $headings-color, null);
-            font-weight: if($headings-font-weight, $headings-font-weight, null);
-            line-height: if($headings-line-height, $headings-line-height, null);
-            margin-bottom: if($headings-margin-bottom, $headings-margin-bottom, null);
-        }
-
-        font-size: em($size);
-    }
-}
-
-// == spacers in variables.scss
-// ------------------------------------------------------------
-// src: https://gist.github.com/MatthewRDodds/8f171914ee6b826db29393f33229d509
-// ex. mt-0, p-5
-@each $size, $length in $spacers {
-    .m-#{$size} { margin: rem($length); }
-    .p-#{$size} { padding: rem($length); }
-
-    @each $prefix, $property in (l: left, t: top, r: right, b: bottom, x: left, y: top) {
-        .m#{$prefix}-#{$size} {
-            margin-#{$property}: rem($length);
-
-            @if $prefix == x { margin-right: rem($length); }
-            @if $prefix == y { margin-bottom: rem($length); }
-        }
-        .p#{$prefix}-#{$size} {
-            padding-#{$property}: rem($length);
-
-            @if $prefix == x { padding-right: rem($length); }
-            @if $prefix == y { padding-bottom: rem($length); }
-        }
-    }
+// # 垂直 vertical align
+// 可以使用的元素：inline, inline-block, inline-table, and table cell elements.
+.align {
+    @include modifiers(get('utils.vertical'), 'vertical-align');
 }
 
 
@@ -176,7 +115,10 @@
 %list-inline {
     > li {
         display: inline-block;
-        &:not(:last-child) { margin-right: 8px; }
+
+        &:not(:last-child) {
+            margin-right: 8px;
+        }
     }
 }
 
@@ -187,17 +129,36 @@
 // == border
 // ------------------------------------------------------------
 .border {
-    border: $border-width solid $border-color;
+    border-width: var(--border-width, 1px);
 
-    &-double {
-        border: $border-width*2 solid $border-color;
-    }
-    &-none {
-        border-width: 0;
-    }
+    // => border-0
+    @include modifiers(
+        (
+            0:  0,
+            2:  2px,
+            4:  4px
+        ),
+        'border-width'
+    );
+
+    // => border-current
+    // @include modifiers(
+    //     (
+    //         inherit:     inherit,
+    //         current:     currentColor,
+    //         transparent: transparent,
+    //     ),
+    //     'border-color'
+    // );
+
+    // => border-solid
+    @include modifiers(
+        (
+            solid:       solid,
+            // hidden:      hidden,
+            // none:        none,
+        ),
+        'border-style'
+    );
 }
-
-
-// == misc 本專案新增
-// ------------------------------------------------------------
 

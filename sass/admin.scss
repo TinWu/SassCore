@@ -1,8 +1,9 @@
 @charset "UTF-8";
 @use 'sass:math';
 
-$index:           false;
+$index:             false;
 $user-state-height: 45px;
+$field-label:       200px;
 
 
 // == import
@@ -23,38 +24,20 @@ $user-state-height: 45px;
 @import "_admin/layout";            // 整體排版
 @import "_admin/btn";
 @import "_admin/form-plug";
-@import "_admin/dropdown";
+// @import "_admin/dropdown";
 @import "_admin/modal";
 @import "_admin/state";             // 狀態樣式 text,bg,label
+@import "_admin/classes";
 
 
 // == main
 // ------------------------------------------------------------
 
-@include mq(md) {
-    .seventy { max-width: 70%; }
-    .sixty   { max-width: 60%; }
-    .half    { max-width: 50%; }
-    .third   { max-width: 33.3%; }
-}
-
-.arrow {
-    display: inline-block;
-    border: solid color(success);
-    border-width: 0 2px 2px 0;
-    padding: 4px;
-    transition: .35s ease;
-
-    &.right { transform: rotate(-45deg); }
-    &.left  { transform: rotate(135deg); }
-    &.up    { transform: rotate(-135deg); }
-    &.down  { transform: rotate(45deg); }
-}
-
 .breadcrumb {
-    @extend %list-inline, .font-sm, .mb-0;
+    @extend %list-inline, .font-sm;
 
     color: #555;
+    margin-bottom: 0;
     padding-left: 0;
 
     li {
@@ -66,27 +49,17 @@ $user-state-height: 45px;
 }
 
 .title {
-    @extend .mb-l, .pb-10, .text-primary;
-
-    border-bottom: 1px solid $border-color;
-
-    h2 {
-        @extend .mb-10;
-        font-size: rem(28);
-    }
-
     small {
-        @extend .ml-s;
         color: darken(color(muted), 15);
+        margin-left: get('spacing.2');
     }
 }
 
 // ## 列表
 // 列表上的按鈕
 .actionbar {
-    @extend .p-s;
-
     background: dark($body-bg, 3.5);
+    padding: get('spacing.2');
 }
 
 // 列表上的搜尋
@@ -97,26 +70,25 @@ $user-state-height: 45px;
         color: #4D4D4D;
         font-size: inherit;
         vertical-align: middle;
+        margin-right: 2px;
 
         &[class*=col] {
             text-align: right;
         }
     }
-    .form-element {
-        margin-right: 5px;
-    }
+
     .btn {
         font-size: inherit;
     }
 }
 
-.table-list {
-    @extend .table-bordered, %bg-white;
-}
+// .table-list {
+//     @extend .table-bordered, %bg-white;
+// }
 
-.table-list thead,
+// .table-list thead,
 .thead {
-    background: light(color(info), 60);
+    // background: color(info);
 
     th:not([colspan]) {
         border-bottom-width: 2px;
@@ -127,43 +99,129 @@ $user-state-height: 45px;
     min-width: 54px;
 }
 
+// 點選排序
+.th-sort-toggle {
+    $arrow-size: 4px;
+
+    --arrow-color: #{dark(color(info), 15)};
+
+    // display: block;
+    padding: 0 10xp 0 0;
+    position: relative;
+    width: 100%;
+
+    color: currentColor;
+    font-weight: bold;
+    text-align: inherit;
+    transition: color .3s;
+
+    &:hover {
+        color: rgba(#fff, 0.5);
+    }
+
+    @include el {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        border: $arrow-size solid transparent;
+    }
+
+    // 上
+    &:before {
+        margin-top: -($arrow-size * 2 + 1);
+        border-top-width: $arrow-size * 0.5;
+        border-bottom: ($arrow-size + 2) solid var(--arrow-color);
+    }
+    // 下
+    &:after {
+        border-bottom-width: $arrow-size*.5;
+        border-top: ($arrow-size + 2) solid var(--arrow-color);
+    }
+    // 倒序
+    &.asc {
+        &:before {
+            --arrow-color: #{rgba(#000, 0.3)};
+        }
+        &:after {
+            --arrow-color: #{dark(color(info), 10)};
+        }
+    }
+    // 順序
+    &.desc {
+        &:before {
+            --arrow-color: #{dark(color(info), 10)};
+        }
+        &:after {
+            --arrow-color: #{rgba(#000, 0.3)};
+        }
+    }
+}
+
 // 列表頁腳 pager
 .table-foot {
-    @extend .p-5;
-
-    background: light($table-border-color, 25);
-}
-.pager {
-    font-size: get('font.sm');
-    text-align: center;
-
     @include clearfix;
 
-    input, button {
-        height: 26px;
-        vertical-align: middle;
-    }
-    button {
-        color: dark(color(), 20);
-        font-size: 19px;
-        margin: 0 1px;
-        transition: .35s;
+    background: desaturate(dark($body-bg, 3), 15); //light($table-border-color, 36);
+    padding: 8px 5px;
+}
 
-        &:hover {
-            color: dark(color(), 45);
-        }
-        &[disabled] {
-            color: darken($input-border-color, 6);
-        }
-    }
-    span {
-        @extend .mx-s;
-    }
+// <footer class="table-foot">
+//     <small class="pull-right">
+//         第1-1 筆，共1筆
+//     </small>
+//     <nav class="pager">
+//         <span class="pageof">
+//             第
+//             <input class="text-center" type="number">
+//             頁，共 1 頁
+//         </span>
+//         <button type="button" class="paging icon-chevron-left" title="上一頁" disabled></button>
+//         <button type="button" class="paging icon-chevron-right" title="下一頁" disabled></button>
+//         <button type="button" class="paging icon-skip-back" title="到最前頁" disabled></button>
+//         <button type="button" class="paging icon-skip-forward" title="到最後頁" disabled></button>
+//     </nav>
+// </footer>
+
+// 跳頁
+.pager {
+    font-size: get('font.sm');
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+// 第_頁 <span><input>
+.pageof {
     input {
-        @extend .mx-5, .text-center;
-        display: inline;
-        padding: 0;
+        border: 1px solid $input-border-color;
+        margin: 0 2px;
+        padding: 2px 0;
         width: 80px;
+
+        @include static(infocus);
+    }
+}
+
+// 上頁 下頁 <a>
+.paging {
+    border: 1px solid $input-border-color;
+    display: flex;
+    margin-right: -1px;
+    padding: 4px 8px;
+    transition: .35s;
+
+    &[disabled] {
+        color: darken($input-border-color, 6);
+    }
+    &:not([disabled]) {
+        background: #fff;
+        color: light(color(), 12);
+
+        &:hover, &:active {
+            background: light(color(), 12);
+            color: #fff;
+        }
     }
 }
 
@@ -171,64 +229,97 @@ $user-state-height: 45px;
 .field {
     margin-bottom: 16px;
 
-    @include mq(md) {
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
+    display: flex;
+    align-items: center;
 
-        .form-element {
-            min-width: 360px;
-        }
-        .form-label {
-            flex-basis: 200px;
-            text-align: right;
-            padding-right: 16px;
-        }
-        .col-grow {
-            flex-grow: 1;
-
-            .form-element {
-                width: 100%;
-            }
-        }
-        .flx-top {
-            align-self: flex-start;
-            padding-top: 8px;
-        }
+    .form-element {
+        min-width: 360px;
     }
 }
+
+.field-label {
+    flex: 0 0 $field-label;
+    text-align: right;
+    padding-right: 16px;
+}
+
+// for textarea
+.editing {
+    // margin-top: 30px;
+}
+
+.editing_head {
+    font-size: em(18);
+    // background-color: dark(color(muted), 15);
+    margin-bottom: 0;
+    padding: 10px;
+}
+
+.editing_body {
+    line-height: 1.6;
+    border: 1px solid $input-border-color;
+    padding: $gutter;
+    transition: if($input-transition, $input-transition, null);
+
+    @include static(infocus);
+}
+
+// .table-edit {
+//     background-color: #fff;
+
+//     caption {
+//         font-size: em(17);
+//         font-weight: bold;
+//         background-color: color();
+//         padding: 10px;
+//     }
+
+//     th, td {
+//         border: 1px solid $table-hover-color;
+//     }
+// }
+
+// .th-bg {
+//     background-color: light(color(secondary), 75);
+// }
 
 .submitbar {
     text-align: center;
 
-    background: dark($body-bg, 2);
-    border-top: 2px solid #f8f8f8;
+    background: dark($body-bg, 7);
+    border-top: 2px solid dark($body-bg, 10);
 
+    margin: 32px -16px 0;
     padding: 16px;
-    margin-top: 32px;
     position: sticky;
     left: $sidebar-width;
     right: 0;
     bottom: 0;
 
     > .btn {
-        @extend .font-lg, .mx-s;
+        @extend .font-lg;
+
+        margin-inline: get('spacing.2');
     }
 }
 
 // ## 檔案上傳
-// <div class="uploaded">
-//   <button type="button" class="btn-del>&times;</button>
-//   <img />
-// </div>
+// <a class="uploaded"><img /></a>
+// <button type="button" class="upload-del>&times;</button>
 .uploads {
     margin: 8px 0 0;
     position: relative;
+
+    .field .btn + & {
+        flex-basis: 100%;
+        margin-left: $field-label;
+    }
 }
+
 .uploaded {
     $del-size: 21px;
 
-    @extend .font-md;
+    font-size: 15px;
 
     background-color: #fff;
     border: 1px solid $border-color;
@@ -238,39 +329,46 @@ $user-state-height: 45px;
     transition: 300ms;
 
     &:not(:only-child) {
-        $mg: get(s) * .5;
+        $mg: get('spacing.2') * .5;
         margin: $mg $mg*2 $mg 0;
     }
     &:hover {
-        background-color: light(color(), 20);
+        background-color: color(warning);
     }
 
     // 圖片
     img {
         width: auto;
         height: 80px;
+        vertical-align: middle;
+    }
+}
+
+// 刪除按鈕
+.upload-del {
+    border: none;
+    outline: none;
+
+    color: #fff;
+    font-size: inherit;
+
+    background: light(color(danger), 5);
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+
+    margin-left: -20px;
+    padding: 0;
+    position: absolute;
+    transition: 0.3s;
+    z-index: 1;
+
+    &::before {
+        line-height: inherit;
     }
 
-    // 刪除按鈕
-    + .upload-del {
-        border: none;
-        outline: none;
-
-        background: color(danger);
-        border-radius: 50%;
-        color: #fff;
-        font-size: inherit;
-        width: 22px;
-        height: 22px;
-
-        padding: 0;
-        position: absolute;
-        right: 0;
-        z-index: 1;
-
-        &:hover {
-            background: dark(color(danger), 15);
-        }
+    &:hover {
+        background: #D60C0C;
     }
 }
 
@@ -287,19 +385,6 @@ $user-state-height: 45px;
         width: 100% !important;
     }
 }
-
-// ## this proj
-.qrcode {
-    border: 2px solid dark(color(muted), 3);
-    background: #fff;
+.react-datepicker__tab-loop {
     display: inline-block;
-
-    img {
-        width: 200px;
-    }
-}
-
-.help {
-    cursor: help;
-    color: color(danger);
 }

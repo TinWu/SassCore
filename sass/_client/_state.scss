@@ -1,71 +1,129 @@
 @charset "UTF-8";
+@use "sass:map";
 
 //
 // == 情境 Contextual colors
 // ------------------------------------------------------------
 
-// reset default value
-button[class*="hover-"] {
-    padding: 0;
-    text-align: inherit;
-    transition: $transition-duration;
-}
-
-@each $theme, $color in $colors {
-    .text-#{$theme}, .hover-#{$theme} {
-        color: $color;
-    }
-    .hover-#{$theme} {
-        &:hover, &:focus {
-            color: dark($color, 20);
+.text {
+    @each $state, $value in (
+        primary:        color(),
+        secondary:      light(color(secondary), 5),
+        info:           color(info),
+        success:        color(success),
+        warning:        dark(color(warning), if($index, 5, 15)),
+        danger:         color(danger),
+        muted:          color(muted),
+        dark:           if($index, #222, #0b434c),
+    ) {
+        &-#{$state} {
+            color: var(--color, #{$value});
         }
     }
-    .bg-#{$theme} {
-        background: $color;
-    }
-}
-.text-light-yellow {
-    color: $light-warning;
-}
-.bg-light-gray {
-    background: #f8f8f8;
-}
-.bg-light-yellow {
-    background: light($light-warning, 60);
 }
 
-// label
-[class^=label],
-.label {
-    display: inline-block;
-    padding: 5px;
-    margin: 5px;
-    border-radius: 3px;
-
-    background: light(color(), 5);
-    color: #fff;
-    font-size: em(14);
-    line-height: 1.1;
-    text-align: center;
+.hover\:text {
+    @include modifiers(
+        (
+            'secondary:hover':      color(secondary),
+            'warning:hover':        dark(color(warning), 11),
+            'white:hover':          #fff,
+        ),
+        '--color'
+    );
 }
 
-em.label {
-    font-style: normal;
-}
+.bg {
+    $state: (
+        info:     color(info),
+        success:  color(success),
+        muted:    $border-color,
+        danger:   light(color(danger), 70)
+    );
 
-@each $theme, $color in (
-    success:   light(color(success), 20),
-    info:      light(color(info), 20),
-    warning:   light(color(warning), 20),
-    danger:    light(color(danger), 10),
-    muted:     dark(color(muted), 10)
-) {
-    .label-#{$theme} {
-        color: #fff;
-        background: $color;
+    $states: if($index, $state,
+        map.merge(
+            $state,
+            (
+                primary:   color(),
+                secondary: color(secondary),
+                warning:   color(warning)
+            )
+        )
+    );
+
+    // 生成背景顏色樣式
+    @each $state, $value in $states {
+        &-#{$state} {
+            background-color: var(--bg, #{$value});
+        }
     }
 }
 
-.label-gray {
-    background: light(#9E9E9E, 8);
+.hover\:bg {
+    @if not $index {
+        @include modifiers(
+            (
+                'primary:hover':        color(),
+                'secondary:hover':      color(secondary),
+                'warning:hover':        color(warning),
+                'white:hover':          #fff,
+                'danger:hover':         color(danger),
+            ),
+            '--bg'
+        );
+    }
 }
+
+.border {
+    @if not $index {
+        @each $key, $value in (
+            'info':     color(info),
+            // 'warning':  color(warning),
+        ) {
+            &-#{$key} {
+                --border-color: #{ $value };
+            }
+        }
+    }
+}
+
+.border-b {
+    border-bottom: 0.1em solid;
+}
+
+.border-b-3 {
+    border-bottom: 3px solid;
+}
+
+.border-gradient {
+    border-image: var(--gradient) 1;
+}
+
+
+// # label
+// ----------------------------------------------
+// .label {
+//     @include static(label) {
+
+//         border-radius: 5px;
+//         display: inline-block;
+//         margin: 4px 3px;
+//         padding: 6px 10px;
+
+//         font-size: torem(15);
+//         text-align: center;
+//     }
+
+//     color: color(secondary);
+//     border: 2px solid var(--border-color, #{dark($border-color, 8)});
+// }
+
+// .label-white {
+//     @include static(label);
+
+//     background-color: #fff;
+//     color: dark(color(success), 15);
+// }
+
+

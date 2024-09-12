@@ -26,10 +26,10 @@
         }
 
         a {
-            @extend .p-10;
+            color: #3C4B54;
 
             display: block;
-            color: #3C4B54;
+            padding: 10px;
 
             &:hover, &.active {
                 background: light(color(secondary), 85);
@@ -38,7 +38,7 @@
 
         // 右上方資訊選單(回首頁,登出等)
         .navbar & {
-            @extend .font-md;
+            font-size: 15px;
 
             min-width: 160px;
             right: 0;

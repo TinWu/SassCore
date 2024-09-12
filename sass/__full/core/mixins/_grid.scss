@@ -9,7 +9,7 @@
     // if $gap 有值
     @if $gap {
         // if 單位是px時轉換為百分比 else 都去單位
-        $gap: if(unit($gap) == px, percentage( math.div($gap, $font-size-base) ), strip-unit($gap));
+        $gap: if(unit($gap) == px, percentage( math.div($gap, $font-size-base) ), stripunit($gap));
         $width: $width - $gap;
     }
 
