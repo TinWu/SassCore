@@ -7,19 +7,21 @@
 // (1 / 12 * 100%) - (1.6 * 12)
 // width: grid(1, 12, 1.6); => width: 6.86%;
 @function grid($size, $columns, $gap: null) {
-    $width: math.div($size, $columns) * 100%;
+    $width: decimal(math.div($size, $columns) * 100%, 2);
 
     // if $gap 有值
     @if $gap {
         // if 單位是px時轉換為百分比 else 都去單位
-        $gap: if(unit($gap) == px, math.div($gap, $font-size-base), stripunit($gap));
-        $width: $width - $gap;
+        // $gap: if(unit($gap) == px, math.div($gap, $max-width), stripunit($gap)) * 0.5;
+
+        // if 無單位直接減
+        $width: if(unit($gap) == 'null',($width - $gap), calc($width - $gap));
     }
 
-    @return decimal($width, 2);
+    @return $width;
 }
 
-@mixin make-col($size: false, $cols: $grid-cols) {
+@mixin row-cols($size: false, $cols: $grid-columns) {
     @if $size {
         flex: 0 0 auto;
         width: if($size == auto, auto, grid($size, $cols));
@@ -32,7 +34,7 @@
     }
 }
 
-@mixin make-row-columns($columns: $grid-cols, $breaks: $breakpoints) {
+@mixin make-grid-columns($columns: $grid-columns, $breaks: $breakpoints) {
 
     // 全螢幕通用
     .flex-col {
@@ -47,40 +49,12 @@
 
     // 占用剩下的所有空間
     .col {
-        @include make-col;
+        @include row-cols;
     }
 
     @for $i from 1 through $columns {
         .col-#{$i} {
-            @include make-col($i);
-        }
-    }
-
-    //
-    // 2024 upt
-    // # basis, width size
-    // @each $cols in (2, 3, 4, 5) { => 2, 3, 4 在12格都有
-    @each $cols in (5) {
-        @for $i from 1 through $cols {
-
-            @if $i < $cols {
-                .basis-#{$i}\/#{$cols} {
-                    flex-basis: grid($i, $cols);
-                }
-
-                .w-#{$i}\/#{$cols} {
-                    width: grid($i, $cols);
-                }
-            }
-        }
-    }
-
-    // # space
-    @each $prefix, $property in (x: left, y: top) {
-        @each $size, $length in get(spacing) {
-            .space-#{$prefix}-#{$size} > :not([hidden]) ~ :not([hidden]) {
-                margin-#{$property}: torem($length);
-            }
+            @include row-cols($i);
         }
     }
 
@@ -97,17 +71,17 @@
             }
 
             .#{$breakpoint}\:col {
-                @include make-col;
+                @include row-cols;
             }
 
             .#{$breakpoint}\:col-auto {
-                @include make-col(auto);
+                @include row-cols(auto);
             }
 
             // .sm:col-1 => width: 1/12
             @for $i from 1 through $columns {
                 .#{$breakpoint}\:col-#{$i} {
-                    @include make-col($i);
+                    @include row-cols($i);
                 }
             }
 
@@ -121,14 +95,6 @@
             .#{$breakpoint}\:shrink-0 {
                 flex-shrink: 0;
             }
-
-            // .#{$breakpoint}\:flex-1 {
-            //     flex: 1 1 0%;
-            // }
-
-            // .#{$breakpoint}\:basis-full {
-            //     flex-basis: 100%;
-            // }
 
             // @each $cols in (2, 3, 4, 5) { => 2, 3, 4 在12格都有
             @each $cols in (5) {
@@ -177,7 +143,7 @@
     }
 }
 
-@mixin grid($columns, $gap, $breaks: $breakpoints) {
+@mixin make-cssgrid($columns, $gap, $breaks: $breakpoints) {
     .grid {
         display: grid;
     }

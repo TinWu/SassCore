@@ -1,0 +1,96 @@
+@charset "utf-8";
+
+$index:             true;
+
+// import
+// ------------------------------------------------------------
+@import "function"; // (置頂)
+
+@import "_client/setting"; // 本專案變數要放在 variables上，可以覆蓋掉 variables 的值
+@import "variables";
+@import "mixins";
+
+// output
+@import "base";
+@import "utils";
+
+@import "_client/layout";
+@import "_client/btn";
+
+
+// main
+// ------------------------------------------------------------
+
+// form section
+$pic-width: 367px;
+$login-width: 520px + $pic-width;
+
+.login {
+    @extend %bg-white;
+
+    border-radius: 10px;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.1);
+
+    max-width: $login-width;
+    padding: 40px;
+
+    @include mq-max($login-width) {
+        margin-left: $gutter;
+        margin-right: $gutter;
+    }
+    @include mq-max(xs) {
+        padding: 20px;
+    }
+}
+
+.login-img {
+    width: 100%;
+    max-width: $pic-width;
+    margin-top: 12px;
+}
+
+form {
+    @include mq(sm) {
+        float: left;
+        margin-right: 40px;
+        width: calc(100% - #{($pic-width+40)});
+    }
+    @include mq-max(sm) {
+        margin-bottom: 30px;
+    }
+}
+
+.title {
+    color: color();
+    font-size: 58px;
+    margin-top: -5px;
+}
+
+.icon {
+    position: relative;
+    display: block;
+
+    &:before {
+        @extend .text-center;
+
+        color: color();
+        width: 42px;
+
+        position: absolute !important;
+        top: 50% !important;
+        left: 0;
+        transform: translateY(-50%);
+    }
+}
+
+input {
+    @extend .mb-l;
+
+    border: 1px solid color();
+    border-radius: 4px;
+    box-sizing: border-box;
+
+    display: block;
+    width: 100%;
+    padding: get('spacing.m') get('spacing.m') get('spacing.m') 36px;
+}

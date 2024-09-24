@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-
 // == Forms
 // -----------------------------------------------------------------
 
@@ -14,6 +13,8 @@ legend {
     color: inherit;
     display: block;
     width: 100%;
+    margin-bottom: .3em;
+    padding: .3em 0;
 }
 
 .appearance-none {
@@ -31,8 +32,10 @@ legend {
 }
 
 #{$input-name} {
-    --shadow: #{$shadow}; //0 0 #0000;
-    // box-shadow: if($shadow, var(--shadow), null);
+    @if $shadow {
+        --shadow: #{$shadow};
+        box-shadow: var(--shadow);
+    }
 
     @if $input-bg {
         background-color: $input-bg;
@@ -42,18 +45,19 @@ legend {
     border: if($input-border-width, $input-border, null);
     transition: if($input-transition, $input-transition, null);
     vertical-align: middle;
-
     // height: $input-height;
 
     color: if($input-color, $input-color, null);
     font-size: if($input-font-size != $font-size-base, torem($input-font-size), null);
     line-height: if($input-line-height != $line-height-base, $input-line-height, null);
 
-    $pdy: pdy($input-height, $input-font-size, $input-line-height);
+    $pdy: pdy($input-height, $input-line-height);
     @if $input-space {
         padding: $pdy torem($input-space);
-    } @else {
-        padding-block: $pdy;
+    }
+    @else {
+        padding-top: $pdy;
+        padding-bottom: $pdy;
     }
 
     @include static(appearance);
@@ -64,10 +68,9 @@ legend {
             --ring-color: #{$ring-color};
             --ring-shadow: 0 0 0 var(--ring-offset-width) var(--ring-color);
 
-            border-color: var(--border-color, #{$component-active});
-            box-shadow: var(--ring-shadow), var(--shadow);
-            outline: 2px solid transparent;
-            outline-offset: 2px;
+            border-color: $component-active;
+            box-shadow: if($shadow, (var(--ring-shadow), var(--shadow)), var(--ring-shadow));
+            outline: 0;
 
             // 錯誤輸入
             &:invalid {
@@ -106,7 +109,7 @@ legend {
                 width: auto;
 
                 &:not(:last-child) {
-                    margin-right: $gutter*0.3;
+                    margin-right: em($gutter)*0.3;
                 }
             }
         }
@@ -119,10 +122,13 @@ legend {
 
 select#{$input-name} {
     // custom caret
-    --select-caret: #{ escape-svg($select-caret) };
-    // --select-seat-size: #{ $select-seat-size };
-    background: $input-bg var(--select-caret) no-repeat $select-seat-size; //var(--select-seat-size);
-    padding-right: 1.2em;
+    --select-caret: #{escape-svg($select-caret)};
+    background: $input-bg var(--select-caret) no-repeat $select-seat-size;
+    // background-image: var(--select-caret);
+    // background-position: right center;
+    // background-size: 16px 10px;
+    // background-repeat: no-repeat;
+    padding-right: 1.1em;
 
     &[size],
     &[multiple] {
@@ -139,12 +145,24 @@ textarea#{$input-name} {
     height: auto;
 }
 
+// .label {
+//     margin-top: $label-my;
+//     margin-bottom: $label-my;
+
+//     @if $input-line-height != $line-height-base {
+//         line-height: $input-line-height;
+//     }
+//     @if $input-font-size != $font-size-base {
+//         font-size: em($input-font-size);
+//     }
+// }
+
 .input-group {
     display: flex;
 
     #{$input-name} {
         flex: 1 1 auto;
-        // width: 1%;
+        width: 1%;
         height: auto;
 
         @include static(inputgroup) {
@@ -186,8 +204,7 @@ textarea#{$input-name} {
         font-size: if($input-font-size != $font-size-base, torem($input-font-size), null);
         line-height: if($input-line-height != $line-height-base, $input-line-height, null);
         @if $input-space {
-            // padding: pdy($input-height, $input-font-size, $input-line-height) torem($input-space);
-            padding-inline: torem($input-space);
+            padding: pdy($input-height, $input-line-height) torem($input-space);
         }
         white-space: nowrap;
     }

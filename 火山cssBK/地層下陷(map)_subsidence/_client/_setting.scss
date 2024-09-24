@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+// == 這裡放自定義變數 + 覆寫 variables 裡的變數
+// import 順序最好在 variables 前面。但如果要放後面的話，下面要覆寫的變數不能加 !default
+
+// == config
+// -----------------------------------------------------------------
+$index:                   false !default; // 判斷是否為首頁/前台
+$img-path:                '../images' !default;
+
+$colors: (
+    primary:              if($index, #1c96d3, #2D63B1),
+    secondary:            if($index, #F0B826, #bfa050),
+    success:              if($index, #43ba7b, #1AA384),
+    info:                 #d6ebf2,
+    warning:              #F0B826,
+    danger:               #DE5F6F,
+    muted:                #F2F2F2,
+) !default;
+
+$component-active:        color();
+$border-color:            #EBEBE9;
+
+
+// == base
+// -----------------------------------------------------------------
+$body-bg:                 if($index, url(#{$img-path}/login_bg.jpg) top center/cover no-repeat, #1a2d2c);
+$body-color:              #fff;
+
+$font-size-h1:            em(24, 16);
+
+$table-hover-color:       light(color(secondary), 85);
+
+$config: (
+    'font': (
+        'xxxl':   48
+    )
+);
+
+
+// == layout
+// ----------------------------------------------------------------------
+// wrapper
+$max-width:             1400px !default;
+
+$footer-height:         55px !default;
+

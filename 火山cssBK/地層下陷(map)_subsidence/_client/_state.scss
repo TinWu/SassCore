@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+//
+// == 情境 Contextual colors
+// ------------------------------------------------------------
+
+// reset default value
+@each $theme, $color in $colors {
+    .text-#{$theme}, .hover-#{$theme} {
+        color: $color;
+    }
+    .hover-#{$theme} {
+        &:hover, &:focus {
+            color: dark($color, 20);
+        }
+    }
+    .bg-#{$theme} {
+        background: $color;
+    }
+}

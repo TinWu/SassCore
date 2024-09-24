@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+//       layout
+// -----------------------------------------------------------------------
+html, body {
+    height: 100%;
+}
+
+#wrapper {
+    min-height: 100%;
+    margin-bottom: -$footer-height;
+    padding-bottom: $footer-height + 42;
+
+    @if $index {
+        padding-top: 6%;
+    }
+}
+
+.container {
+    @include container;
+}
+
+
+// header
+// ----------------------------------------------------------------------
+.logo {
+    background: url(#{$img-path}/logo.png) 0 center no-repeat;
+    padding: 10px 0 10px 48px;
+
+    @if $index {
+        display: inline-block;
+        margin: 0 auto 28px;
+
+        @include mq(xs) {
+            font-size: torem(get('font.xxl'));
+        }
+    }
+}
+
+
+// footer
+// ----------------------------------------------------------------------
+#footer {
+    min-height: $footer-height;
+
+    // this proj only
+    @extend %bg-white;
+
+    @if $index {
+        padding: 10px;
+    }
+}
+

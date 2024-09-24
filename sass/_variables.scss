@@ -74,6 +74,7 @@ $table-striped-list:          'even' !default;   // even, odd
 
 // <form>
 $component-active:            color() !default;
+$input-name:                  '.form-element' !default;
 
 // 尺寸
 $input-color:                 $body-color !default;
@@ -162,8 +163,9 @@ $root: () !default;
 
 // == RWD break
 // -----------------------------------------------------------------
-$gutter:      1.5rem !default;
-$grid-cols:   12 !default;
+$max-width:      1400px !default;
+$gutter:         1.5rem !default;
+$grid-columns:   12 !default;
 
 // # bootstrap https://getbootstrap.com/docs/5.0/layout/grid/#sass
 // # tailwindcss https://tailwindcss.com/docs/container
