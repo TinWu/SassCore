@@ -31,8 +31,10 @@ legend {
 }
 
 #{$input-name} {
-    --shadow: #{$shadow}; //0 0 #0000;
-    // box-shadow: if($shadow, var(--shadow), null);
+    @if $shadow {
+        --shadow: #{$shadow};
+        // box-shadow: var(--shadow);
+    }
 
     @if $input-bg {
         background-color: $input-bg;
@@ -65,7 +67,7 @@ legend {
             --ring-shadow: 0 0 0 var(--ring-offset-width) var(--ring-color);
 
             border-color: var(--border-color, #{$component-active});
-            box-shadow: var(--ring-shadow), var(--shadow);
+            box-shadow: if($shadow, (var(--ring-shadow), var(--shadow)), var(--ring-shadow));
             outline: 2px solid transparent;
             outline-offset: 2px;
 

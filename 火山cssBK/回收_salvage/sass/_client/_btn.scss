@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+//
+// button
+// ----------------------------------------------
+
+input.btn {
+    border: none;
+}
+
+.btn {
+    // default
+    @include btn {
+        opacity: .65;
+        background: #9E9E9E;
+    }
+
+    // theme
+    color: #fff;
+    background: color() url(#{$img-path}/btnBg.gif) repeat-x 0 20px;
+
+    font-size: em(22);
+    line-height: 1.01;
+    letter-spacing: 1px;
+
+    transition: 350ms, color 500ms;
+    padding: em(12, 22) em(40, 22);
+
+    &:hover, &:active {
+        color: #fff;
+        background-position: 0 -5px;
+    }
+
+    // btn theme
+    @each $theme, $color in (
+        success:   color(success),
+        info:      color(info),
+        warning:   color(warning),
+        danger:    color(danger),
+        cancel:    color(muted)
+    ) {
+        &.#{$theme} {
+            background: $color;
+
+            @if contrast(#fff, $color) < 4.5 {
+                color: a11ycolor(#fff, $color);
+            }
+
+            &:hover, &:active {
+                background: dark($color, 12);
+                box-shadow: 2px 2px 10px rgba(#000, .2);
+            }
+        }
+        &.outline {
+            border-color: $color;
+            color: a11ycolor($color, #fff);
+
+            &:hover, &:active {
+                background: a11ycolor($color, #fff);
+            }
+        }
+    }
+    &.cancel {
+        color: dark(color(muted), 40);
+    }
+}

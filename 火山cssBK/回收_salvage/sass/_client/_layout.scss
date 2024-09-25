@@ -1,0 +1,108 @@
+@charset "UTF-8";
+
+//       layout
+// -----------------------------------------------------------------------
+html, body {
+    height: 100%;
+}
+
+#wrapper {
+    min-height: 100%;
+    margin-bottom: -$footer-height;
+    padding-bottom: $footer-height;
+}
+
+.container {
+    @include container;
+}
+
+
+//       header
+// -----------------------------------------------------------------------
+#header {
+    background: color() url(#{$img-path}/banner.jpg) 28% 0 no-repeat;
+    text-align: center;
+
+    width: 100%;
+    min-height: 236px;
+    padding-top: 64px;
+
+    @include clearfix;
+
+    @include mq(lg) {
+        background-position: center 0;
+    }
+}
+
+// logo
+.logo {
+    font-size: em(50);
+    font-weight: normal;
+
+    margin: 0;
+
+    @include mq(xs) {
+        font-size: em(73);
+    }
+    @include mq(lg) {
+        margin-left: -540px;
+    }
+
+    a {
+        color: #fff;
+    }
+}
+.icon {
+    background: url(#{$img-path}/logo.png) center right no-repeat;
+    font-weight: normal;
+
+    margin-right: 10px;
+    padding-right: 70px;
+}
+
+// 主選單
+#menu {
+    background: light(color(), 15);
+    position: sticky;
+    top: 0;
+}
+.navitm {
+    color: #fff;
+    letter-spacing: 2px;
+    font-size: em(21);
+    text-align: center;
+
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0 0 (-4px);
+    min-width: 90px;
+    width: 16.67%;
+    position: relative;
+    padding: 15px 8px;
+
+    @include mq($wider) {
+        // min-width: 230px;
+    }
+
+    &:hover, &:active, &.active {
+        background: dark(color(), 45);
+        color: #fff;
+    }
+    // &.active {
+    //     background: dark(color(warning), 2);
+    // }
+}
+
+//       footer
+// -----------------------------------------------------------------------
+#footer {
+    min-height: $footer-height;
+    padding: 20px 16px;
+
+    background: dark(color(), 30);
+    border-top: 3px solid dark($body-bg, 12);
+    color: dark($body-bg, 10);
+    font-size: em(13);
+    text-align: center;
+}
+

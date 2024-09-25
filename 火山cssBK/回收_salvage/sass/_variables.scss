@@ -1,16 +1,14 @@
 @charset "UTF-8";
-@use 'sass:map';
-
 
 // == config
-// ----------------------------------------------------------------------
+// -----------------------------------------------------------------
 $colors: (
-    primary:   #25BB8D,
-    success:   #7BD160,
-    info:      #007BA1,
-    warning:   #C7EC99,
-    danger:    #FF5F73,
-    muted:     #aaa,
+    primary:                  #C6000B,
+    info:                     #5bc0de,
+    success:                  #5cb85c,
+    warning:                  #FFB752,
+    danger:                   #d9534f,
+    muted:                    #d9ebd6
 ) !default;
 
 $border-width:                1px !default;
@@ -39,8 +37,8 @@ $font-size-h1:                $font-size-base * 2.25 !default;   // 36px
 $h1-margin:                   .67em 0 !default;
 
 // <hr>
-$hr-border-color:             $border-color !default;
 $hr-margin:                   1.25em 0 !default;
+$hr-border:                   $border-width solid $border-color !default;
 
 // <a>
 $link-color:                  color() !default;
@@ -58,11 +56,12 @@ $table-bg:                    false !default;
 $table-border-width:          $border-width !default;
 $table-border-style:          solid !default;
 $table-border-color:          $border-color !default;
+$table-bordered:              $table-border-width $table-border-style $table-border-color !default;
 
-$cell-bordered:               0 0 $table-border-width !default;
-$cell-text-align:             inherit !default;
-$cell-vertical-align:         inherit !default;
-$cell-padding:                .35em .3em !default;
+$table-cell-text-align:       center !default;
+$table-cell-vertical-align:   middle !default;
+$table-cell-border-width:     0 0 $table-border-width !default;
+$table-cell-padding:          .35em .3em !default;
 
 // 滑鼠移過變色
 $table-hover-color:           #fffFD7 !default;
@@ -73,9 +72,8 @@ $table-bg-active:             false !default;
 $table-striped-list:          'even' !default;   // even, odd
 
 // <form>
+$form-appearance:             none !default;
 $component-active:            color() !default;
-$input-name:                  '.form-element' !default;
-
 // 尺寸
 $input-border-width:          $border-width !default;
 $input-height:                28px !default; // if($input-border-width, $input-btn-height - ($input-border-width * 2), $input-btn-height)
@@ -90,50 +88,53 @@ $input-border:                $input-border-width solid $input-border-color !def
 $input-radius:                .25em !default;
 $input-transition:            border-color ease-in-out $transition-duration, box-shadow ease-in-out $transition-duration !default;
 
-$shadow:                      inset 0 1px 1px rgba(#000,.075) !default;
-$ring-offset-width:           .2rem !default; // 0px;
-$ring-color:                  rgba($component-active, .3) !default; // #1c64f2;
+$input-inner-shadow:          inset 0 1px 1px rgba(#000,.075) !default;
+$input-focus-shadow:          0 0 0 .2rem rgba($component-active, .3) !default;
 
 $input-disabled-bg:           color(muted) !default;
 $input-placeholder-color:     lighten($input-color, 40) !default;
 
-// <select>
-$select-caret:                "<svg fill='#{$input-placeholder-color}' viewBox='-96 0 512 512' xmlns='http://www.w3.org/2000/svg'><path d='M160 96L256 208 64 208 160 96ZM64 304L256 304 160 416 64 304Z'/></svg>" !default;
-$select-seat-size:            right center / 16px 10px !default;
+$select-caret:                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$input-placeholder-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>" !default;
+$label-my:                    pdy($input-height, $input-font-size, $input-line-height) !default;
 
-// <label>
-$label-my:                    pdy($input-height, $input-line-height) !default;
-
-
+//
 // == util
 // -----------------------------------------------------------------
 $spacer: $font-size-base !default;  // 16px
 
-$config: () !default;
-$config: map.deep-merge(
+$spacers: () !default;
+$spacers: map-merge(
     (
-        'spacing': (
-            '0':   0,
-            's':   $spacer*.5,     // 8px
-            'm':   $spacer,        // 16px
-            'l':   $spacer*1.5,    // 24px
-            '2':   $spacer*.125,   // 2px
-            '5':   $spacer*.3125,  // 5px
-            '10':  $spacer*.625,   // 10px
-        ),
-        'font': (
-            'tiny':   12px,
-            'sm':     14px,
-            'md':     15px,
-            'lg':     17px,
-            'xl':     24px,
-            'xxl':    32px,
-        )
+        '0':   0,
+        's':   $spacer*.5,     // 8px
+        'm':   $spacer,        // 16px
+        'l':   $spacer*1.5,    // 24px
+        '2':   $spacer*.125,   // 2px
+        '10':  $spacer*.625,   // 10px
     ),
-    $config,
+    $spacers
 );
 
+$font-config: () !default;
+$font-config: map-merge(
+    (
+        font: (
+            tiny:   12px,
+            sm:     14px,
+            md:     15px,
+            lg:     18px,
+            xl:     24px,
+            xxl:    32px,
+            // xxxl:   48px,
+            // jumbo:  64px
+        )
+    ),
+    $font-config
+);
 
+$config: map-merge($spacers, $font-config) !default;
+
+//
 // == RWD break
 // -----------------------------------------------------------------
 $gutter:   16px !default;
@@ -151,4 +152,3 @@ $breakpoints: (
     md:    $desktop,
     lg:    $wide
 ) !default;
-

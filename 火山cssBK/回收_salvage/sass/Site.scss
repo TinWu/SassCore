@@ -1,0 +1,148 @@
+﻿@charset "UTF-8";
+@use 'sass:math';
+
+// import
+// ------------------------------------------------------------
+
+
+@import "function";          // 常用函數
+
+@import "_client/setting";   // 自定義+覆寫變數
+@import "variables";         // 預設變數
+@import "mixins";            // 預寫css
+
+// output code
+@import "base";              // 基本Element form normalize.css v8.0.1
+@import "tables";             // 表單
+@import "forms";             // 表單
+@import "utils";             // 常用小工具
+
+@import "_client/layout";    // 整體排版
+@import "_client/btn";       // 按鈕
+
+
+// == main
+// -----------------------------------------------------------------
+
+.title {
+    color: dark(color(), 17);
+    font-size: em(37);
+    letter-spacing: 3px;
+    margin-top: 0;
+
+    i {
+        background: #fff;
+        font-style: normal;
+        padding: 0 3px;
+    }
+}
+
+.flex-between {
+    @include mq(xs) {
+        @include flex-center(space-between);
+    }
+}
+.guide {
+    @include clearfix;
+
+    margin-bottom: 24px;
+}
+.badge {
+    background-color: #f5f7fa;
+    background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border: 3px solid #fff;
+    box-shadow: 0 0 15px rgba(#000, .15);
+
+    margin: 0 0 8px;
+    padding: 15px;
+
+    @include mq(sm) {
+        float: left;
+        width: math.div(100% - 2, 2);
+
+        &:nth-child(n+2) {
+            margin-left: 2%;
+        }
+    }
+    @include mq(md) {
+        width: math.div(100% - 4, 3);
+
+        &:nth-child(n+3) {
+            margin-left: 2%;
+        }
+    }
+    @include mq-max(xs) {
+        text-align: center;
+
+        &-item {
+            margin-bottom: 5px;
+        }
+    }
+
+    &-item {
+        color: dark(color(), 15);
+    }
+    &-data {
+        font-size: em(31);
+        font-weight: bold;
+        letter-spacing: 2px;
+    }
+
+    &.info {
+        background-color: #fff1eb;
+        background-image: linear-gradient(135deg, #fff1eb, #ace0f9);
+    }
+    &.success {
+        background-color: #fddb92;
+        background-image: linear-gradient(135deg, #fddb92, #d1fdff);
+    }
+}
+
+.card {
+    background: linear-gradient(#fff, dark(#fff, 8)) padding-box,
+                linear-gradient(#D5DEE7, #E8EBF2, #E2E7ED) border-box;
+    border: 6px solid transparent;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(#000, .15);
+    margin-bottom: 20px;
+    padding: 12px;
+
+    transition: 500ms;
+
+    &:hover {
+        box-shadow: 0 0 20px rgba(#000, .35);
+    }
+}
+
+.charts {
+    margin-bottom: 36px;
+
+    @include mq(sm) {
+        @include clearfix(false);
+
+        .card {
+            float: left;
+            width: 49%;
+
+            &:nth-child(n+2) {
+                margin-left: 2%;
+            }
+        }
+    }
+}
+
+.marking {
+    @extend .text-center;
+
+    background: dark($body-bg, 6);
+    margin-top: 30px;
+    padding: 42px 0;
+}
+#map {
+    @include static(mx-a);
+
+    max-width: $max-width;
+    width: 100%;
+    height: 700px;
+    border: 5px solid dark($body-bg, 2);
+}
