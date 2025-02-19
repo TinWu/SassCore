@@ -58,20 +58,20 @@
 // ex. mt-0, p-5
 @each $prop, $abbrev in (margin: m, padding: p) {
     @each $size, $length in $spacers {
-        .#{$abbrev}-#{$size}  { #{$prop}:        torem($length); } // All sides
-        .#{$abbrev}t-#{$size} { #{$prop}-top:    torem($length); }
-        .#{$abbrev}r-#{$size} { #{$prop}-right:  torem($length); }
-        .#{$abbrev}b-#{$size} { #{$prop}-bottom: torem($length); }
-        .#{$abbrev}l-#{$size} { #{$prop}-left:   torem($length); }
+        .#{$abbrev}-#{$size}  { #{$prop}:        rem($length); } // All sides
+        .#{$abbrev}t-#{$size} { #{$prop}-top:    rem($length); }
+        .#{$abbrev}r-#{$size} { #{$prop}-right:  rem($length); }
+        .#{$abbrev}b-#{$size} { #{$prop}-bottom: rem($length); }
+        .#{$abbrev}l-#{$size} { #{$prop}-left:   rem($length); }
 
         // Axes
         .#{$abbrev}x-#{$size} {
-            #{$prop}-right:  torem($length);
-            #{$prop}-left:   torem($length);
+            #{$prop}-right:  rem($length);
+            #{$prop}-left:   rem($length);
         }
         .#{$abbrev}y-#{$size} {
-            #{$prop}-top:    torem($length);
-            #{$prop}-bottom: torem($length);
+            #{$prop}-top:    rem($length);
+            #{$prop}-bottom: rem($length);
         }
     }
 }
@@ -127,7 +127,7 @@
 // ------------------------------------------------------------
 // src: w3.css v4
 @each $property, $value in get(font) {
-    .font-#{$property} { @include torem('font-size', $value); }
+    .font-#{$property} { @include rem('font-size', $value); }
 }
 
 

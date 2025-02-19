@@ -1,5 +1,4 @@
 @charset "UTF-8";
-@use 'sass:math';
 
 $table-cell-text-align:      left;
 
@@ -44,34 +43,34 @@ $table-cell-text-align:      left;
 
 //= 24/4
 .h-3 {
-    height: torem(24);
+    height: rem(24);
 }
 
 .h-7 {
-    height: torem(28);
+    height: rem(28);
 }
 
 .h-#{72*0.25} {
-    height: torem(72);
+    height: rem(72);
 }
 
 .h-#{80*0.25} {
-    height: torem(80);
+    height: rem(80);
 }
 
 .h-30 {
-    height: torem(120);
+    height: rem(120);
 }
 
 //= 320px/4
 .h-80 {
-    height: torem(320);
+    height: rem(320);
 }
 
 .xs {
     @include mq(xs) {
         &\:h-60 {
-            height: torem(240);
+            height: rem(240);
         }
     }
 }
@@ -166,7 +165,7 @@ $table-cell-text-align:      left;
 //         }
 
 //         [data-th] {
-//             font-size: torem(18);
+//             font-size: rem(18);
 //             font-weight: bold;
 //             text-align: left;
 //             line-height: 1.5;
@@ -179,7 +178,7 @@ $table-cell-text-align:      left;
 //                 margin-right: em(5);
 
 //                 // theme
-//                 font-size: torem(16);
+//                 font-size: rem(16);
 //                 font-weight: normal;
 //                 color: #555;
 //             }
@@ -236,7 +235,7 @@ $table-cell-text-align:      left;
 
 
 
-// *** info ***
+// == info
 
 .map {
     iframe {
@@ -247,7 +246,7 @@ $table-cell-text-align:      left;
 
 
 
-// *** registration ***
+// == registration
 
 .price {
     // mask: url('#{$img-path}/price.svg') center 99% / auto 100%;
@@ -359,7 +358,7 @@ $table-cell-text-align:      left;
 }
 
 
-// *** partners ***
+// == partners
 
 .hover\:_bg-gradient-to-r {
     &:hover {
@@ -372,7 +371,7 @@ $table-cell-text-align:      left;
 
 
 
-// *** travel ***
+// == travel
 
 // 2欄
 // @include mq(md) {
@@ -403,44 +402,15 @@ $table-cell-text-align:      left;
 }
 
 
+// == 網站導覽
+.list-counter {
+    counter-reset: count;
 
-// .list-map {
-//     font-size: em(20);
+    li {
+        counter-increment: count;
 
-//     counter-reset: item;
-//     margin-bottom: 1rem;
-
-//     @include mq-max(xs) {
-//         padding-left: 20px;
-//     }
-
-//     &.is-root {
-//         > li {
-//             margin-bottom: 1em;
-//         }
-
-//         @include mq(xs) {
-//             > li {
-//                 display: inline-block;
-//                 vertical-align: top;
-//                 margin-right: 3em;
-//             }
-//         }
-//     }
-
-//     .list-map {
-//         font-size: 90%;
-//         margin-top: .6em;
-//     }
-
-//     li {
-//         display: block;
-//         margin-bottom: .6em;
-
-//         &::before {
-//             text-indent: 0;
-//             content: counters(item, ".") " ";
-//             counter-increment: item;
-//         }
-//     }
-// }
+        &::marker {
+            content: counters(count, ".") " ";
+        }
+    }
+}

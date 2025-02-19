@@ -33,8 +33,12 @@ legend {
 #{$input-name} {
     @if $shadow {
         --shadow: #{$shadow};
-        // box-shadow: var(--shadow);
+        box-shadow: var(--shadow);
     }
+
+    color: if($input-color, $input-color, null);
+    font-size: if($input-font-size != $font-size-base, rem($input-font-size), null);
+    line-height: if($input-line-height != $line-height-base, $input-line-height, null);
 
     @if $input-bg {
         background-color: $input-bg;
@@ -45,15 +49,9 @@ legend {
     transition: if($input-transition, $input-transition, null);
     vertical-align: middle;
 
-    // height: $input-height;
-
-    color: if($input-color, $input-color, null);
-    font-size: if($input-font-size != $font-size-base, torem($input-font-size), null);
-    line-height: if($input-line-height != $line-height-base, $input-line-height, null);
-
     $pdy: pdy($input-height, $input-font-size, $input-line-height);
     @if $input-space {
-        padding: $pdy torem($input-space);
+        padding: $pdy em($input-space, $input-font-size);
     } @else {
         padding-block: $pdy;
     }
@@ -66,8 +64,13 @@ legend {
             --ring-color: #{$ring-color};
             --ring-shadow: 0 0 0 var(--ring-offset-width) var(--ring-color);
 
+            // box-shadow: if($shadow, (var(--ring-shadow), var(--shadow)), var(--ring-shadow));
+            @if $shadow {
+                --shadow: var(--ring-shadow), #{$shadow};
+            } @else {
+                box-shadow: var(--ring-shadow);
+            }
             border-color: var(--border-color, #{$component-active});
-            box-shadow: if($shadow, (var(--ring-shadow), var(--shadow)), var(--ring-shadow));
             outline: 2px solid transparent;
             outline-offset: 2px;
 
@@ -120,16 +123,19 @@ legend {
 }
 
 select#{$input-name} {
-    // custom caret
-    --select-caret: #{ escape-svg($select-caret) };
-    // --select-seat-size: #{ $select-seat-size };
-    background: $input-bg var(--select-caret) no-repeat $select-seat-size; //var(--select-seat-size);
-    padding-right: 1.2em;
+    --select-caret: #{ $select-caret };
+    background: $input-bg var(--select-caret) no-repeat $select-seat-size;
+    padding-right: $select-pr;
+
+    // fix height
+    height: $input-height + 2;
+    padding-block: 0;
 
     &[size],
     &[multiple] {
         height: auto;
     }
+
     // IE, Edge src:https://github.com/twbs/bootstrap/issues/19398.
     &:focus::-ms-value {
         background-color: if($input-bg, $input-bg, null);
@@ -143,6 +149,11 @@ textarea#{$input-name} {
 
 .input-group {
     display: flex;
+    height: $input-height + 2;
+
+    &.is-inline {
+        display: inline-flex;
+    }
 
     #{$input-name} {
         flex: 1 1 auto;
@@ -182,15 +193,16 @@ textarea#{$input-name} {
     @include static(inputgroup);
 
     @include static(inputgroup-addon) {
+        align-content: center; // inline-flex時高度full fix
         border: if($input-border, $input-border, null);
         border-radius: if($input-radius, $input-radius, null);
-
-        font-size: if($input-font-size != $font-size-base, torem($input-font-size), null);
-        line-height: if($input-line-height != $line-height-base, $input-line-height, null);
         @if $input-space {
-            // padding: pdy($input-height, $input-font-size, $input-line-height) torem($input-space);
-            padding-inline: torem($input-space);
+            // padding: pdy($input-height, $input-font-size, $input-line-height) rem($input-space);
+            padding-inline: rem($input-space);
         }
+
+        font-size: if($input-font-size != $font-size-base, rem($input-font-size), null);
+        line-height: if($input-line-height != $line-height-base, $input-line-height, null);
         white-space: nowrap;
     }
 }

@@ -1,9 +1,8 @@
 @charset "UTF-8";
-@use 'sass:math';
 
 $index:             false;
 $user-state-height: 45px;
-$field-label:       200px;
+$field-label:       16.67%; // same col-2
 
 
 // == import
@@ -59,41 +58,35 @@ $field-label:       200px;
 // 列表上的按鈕
 .actionbar {
     background: dark($body-bg, 3.5);
-    padding: get('spacing.2');
+    padding: 10px;
 }
 
 // 列表上的搜尋
 .table-head {
-    font-size: $input-font-size;
+    // font-size: $input-font-size;
 
-    .label {
-        color: #4D4D4D;
-        font-size: inherit;
-        vertical-align: middle;
-        margin-right: 2px;
+    // .label {
+    //     color: #4D4D4D;
+    //     font-size: inherit;
+    //     vertical-align: middle;
+    //     margin-right: 2px;
 
-        &[class*=col] {
-            text-align: right;
-        }
-    }
+    //     &[class*=col] {
+    //         text-align: right;
+    //     }
+    // }
 
-    .btn {
-        font-size: inherit;
-    }
+    // .btn {
+    //     font-size: inherit;
+    // }
 }
 
-// .table-list {
-//     @extend .table-bordered, %bg-white;
-// }
-
-// .table-list thead,
 .thead {
-    // background: color(info);
-
     th:not([colspan]) {
         border-bottom-width: 2px;
     }
 }
+
 .item-edit {
     width: 5%;
     min-width: 54px;
@@ -109,32 +102,32 @@ $field-label:       200px;
     padding: 0 10xp 0 0;
     position: relative;
     width: 100%;
+    transition: color .3s;
 
     color: currentColor;
     font-weight: bold;
     text-align: inherit;
-    transition: color .3s;
 
     &:hover {
         color: rgba(#fff, 0.5);
     }
 
     @include el {
+        border: $arrow-size solid transparent;
         position: absolute;
         right: 0;
         top: 50%;
-        border: $arrow-size solid transparent;
     }
 
     // 上
     &:before {
-        margin-top: -($arrow-size * 2 + 1);
         border-top-width: $arrow-size * 0.5;
         border-bottom: ($arrow-size + 2) solid var(--arrow-color);
+        margin-top: -($arrow-size * 2 + 1);
     }
     // 下
     &:after {
-        border-bottom-width: $arrow-size*.5;
+        border-bottom-width: $arrow-size * 0.5;
         border-top: ($arrow-size + 2) solid var(--arrow-color);
     }
     // 倒序
@@ -157,14 +150,8 @@ $field-label:       200px;
     }
 }
 
-// 列表頁腳 pager
-.table-foot {
-    @include clearfix;
 
-    background: desaturate(dark($body-bg, 3), 15); //light($table-border-color, 36);
-    padding: 8px 5px;
-}
-
+// ##　分頁列表頁腳 pager
 // <footer class="table-foot">
 //     <small class="pull-right">
 //         第1-1 筆，共1筆
@@ -182,6 +169,15 @@ $field-label:       200px;
 //     </nav>
 // </footer>
 
+.table-foot {
+    @include clearfix;
+
+    // desaturate(dark($body-bg, 3), 15);
+    background: dark($body-bg, 3);
+    border-top: 2px solid dark($body-bg, 8);
+    padding: 10px 5px;
+}
+
 // 跳頁
 .pager {
     font-size: get('font.sm');
@@ -193,35 +189,38 @@ $field-label:       200px;
 
 // 第_頁 <span><input>
 .pageof {
+    line-height: 26px;
+    margin-right: 1rem;
+
     input {
+        @include static(infocus);
+
+        background-color: #fff;
         border: 1px solid $input-border-color;
         margin: 0 2px;
-        padding: 2px 0;
+        padding: 3px 0;
         width: 80px;
-
-        @include static(infocus);
     }
 }
 
 // 上頁 下頁 <a>
 .paging {
+    background: #fff;
     border: 1px solid $input-border-color;
     display: flex;
     margin-right: -1px;
     padding: 4px 8px;
     transition: .35s;
 
-    &[disabled] {
-        color: darken($input-border-color, 6);
-    }
-    &:not([disabled]) {
-        background: #fff;
-        color: light(color(), 12);
+    color: light(color(), 12);
 
-        &:hover, &:active {
-            background: light(color(), 12);
-            color: #fff;
-        }
+    &:hover, &:active {
+        background: light(color(), 12);
+        color: #fff;
+    }
+
+    &[disabled] {
+        display: none;
     }
 }
 
@@ -264,32 +263,13 @@ $field-label:       200px;
     @include static(infocus);
 }
 
-// .table-edit {
-//     background-color: #fff;
-
-//     caption {
-//         font-size: em(17);
-//         font-weight: bold;
-//         background-color: color();
-//         padding: 10px;
-//     }
-
-//     th, td {
-//         border: 1px solid $table-hover-color;
-//     }
-// }
-
-// .th-bg {
-//     background-color: light(color(secondary), 75);
-// }
-
 .submitbar {
     text-align: center;
 
     background: dark($body-bg, 7);
     border-top: 2px solid dark($body-bg, 10);
 
-    margin: 32px -16px 0;
+    margin: 32px 0 0;
     padding: 16px;
     position: sticky;
     left: $sidebar-width;
@@ -377,6 +357,7 @@ $field-label:       200px;
 .react-datepicker-popper {
     z-index: 10 !important;
 }
+
 .datepick {
     display: inline-block;
     width: 9em;
@@ -385,6 +366,97 @@ $field-label:       200px;
         width: 100% !important;
     }
 }
+
 .react-datepicker__tab-loop {
     display: inline-block;
+}
+
+
+// ## 資料表格2欄
+
+.subkind-nav {
+    // max-height: calc(100vh - 295px);
+    // max-height: 200px;
+}
+
+.subkind-list {
+    margin-top: 5px;
+
+    .subkind-link {
+        margin-left: 12px;
+    }
+}
+
+.subkind-item {
+
+}
+
+.subkind-link {
+    display: block;
+    margin-bottom: 10px;
+    transition: .5s;
+
+    &:hover {
+        color: darken(color(info), 40);
+        transform: translateX(8px);
+    }
+
+    &.active {
+        color: lighten(color(), 25);
+
+        &:after {
+            content: '\e912';
+            font-family: 'icon';
+            margin-left: 5px;
+        }
+    }
+}
+
+
+// ## 地圖
+
+#map {
+}
+
+.tab.active {
+    --bg: #{color(danger)};
+}
+
+// for map full
+.h-100v {
+    height: calc(100vh - 101px);
+}
+
+.mapin {
+    padding-right: 0;
+    padding-bottom: 0;
+}
+
+.map-content {
+    padding-right: 2px;
+    width: 30%;
+    max-width: 800px;
+
+    .tab-pane {
+        height: calc(100% - 90px);
+    }
+}
+
+
+// # multi select
+.mutli-selector {
+    --select-caret: #{ $select-caret };
+    background: $input-bg var(--select-caret) no-repeat $select-seat-size;
+    border: $input-border;
+    $pdy: pdy($input-height, $input-font-size, $input-line-height);
+    padding: $pdy $select-pr $pdy 8px;
+    min-width: 200px;
+
+    a {
+        color: $body-color;
+    }
+}
+
+.mutli-select {
+    top: 104%;
 }

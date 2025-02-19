@@ -1,9 +1,8 @@
 @charset "UTF-8";
 
-$btn-radius: 5px;
-$btn-color: #fff;
-$btn-font-size: if($index, 24px, 16px);
-$btn-pdy: pdy(if($index, 48px, 34px), $btn-font-size, $input-line-height);
+$btn-radius:      5px;
+$btn-font-size:   if($index, 24px, 16px);
+$btn-py:          pdy(if($index, 48px, 34px), $btn-font-size, $input-line-height);
 
 //
 // button, hover
@@ -17,27 +16,21 @@ input.btn {
 
 .btn {
     // default
-    @include btn {
-        --bg: dark(color(muted), 26);
-        --color: rgba(#fff, .7);
+    @include mixins.btn {
+        --bg:    #{dark(color(muted), 26)};
+        --color: #{rgba(#fff, .7)};
     }
 
     // theme
     background-color: var(--bg, #{ if($index, dark(color(success), 20), color(secondary)) });
     border-radius: if($btn-radius, $btn-radius, null);
-    padding: $btn-pdy $btn-pdy*1.3;
+    padding: $btn-py $btn-py*1.3;
     transition: $transition-duration;
 
-    color: var(--color, #{$btn-color});
+    color: var(--color, #fff);
     font-size: $btn-font-size;
     line-height: $line-height-base;
     letter-spacing: .06em;
-
-    &:hover, &:active, &:focus {
-        --bg: #{light(color(), 10)};
-        --color: #{$btn-color};
-        box-shadow: 0 0 0 4px rgba(#000, .1);
-    }
 
     @if not $index {
         // btn theme
@@ -48,15 +41,15 @@ input.btn {
             danger:    color(danger),
         ) {
             &.#{$theme} {
-                --bg: #{a11y($color, $btn-color)};
-                // --color: #{a11y($btn-color, $color)};
+                --bg: #{a11y($color, #fff)};
+                // --color: #{a11y(#fff, $color)};
 
                 &:hover {
-                    --bg: #{a11y(light($color, 12), $btn-color)};
+                    --bg: #{a11y(light($color, 12), #fff)};
                 }
 
                 &.outline {
-                    --color: #{a11y($color, $btn-color)};
+                    --color: #{a11y($color, #fff)};
                     border-color: $color;
 
                     &:hover, &:active {
@@ -65,26 +58,42 @@ input.btn {
                 }
             }
         }
+
         &.cancel {
             --bg: #{dark(color(muted), 20)};
             --color: #{a11y(#fff, dark(color(muted), 20))};
 
             &:hover {
                 --bg: #{dark(color(muted), 30)};
+                --color: #{a11y(#fff, dark(color(muted), 20))};
             }
         }
+
         &.outline {
-            --bg: #{$btn-color};
+            --bg: #fff;
             --color: #{color()};
+
             border: 1px solid light(color(), 15);
+        }
+    }
+
+    &:hover, &:focus {
+        --bg: #{light(color(), 10)};
+        --color: #fff;
+
+        box-shadow: 0 0 0 4px rgba(#000, .1);
+
+        &.outline {
+            --color: #fff;
         }
     }
 }
 
-//
+
 // button group
 // ----------------------------------------------
 // src: pure css => flex
+
 @if not $index {
     .btn-group {
         position: relative;
@@ -112,29 +121,3 @@ input.btn {
         }
     }
 }
-
-
-// # hover effect
-
-// reset default value
-// button[class*="hover:"] {
-//     padding: 0;
-//     text-align: inherit;
-// }
-
-// [class*="hover:"] {
-//     transition: 0.2s;
-// }
-
-// .hover\:text {
-//     @each $state, $value in (
-//         'primary':   color(),
-//         'info':      color(info),
-//         'danger':    color(danger),
-//         'warning':   a11y(color(warning), #fff)
-//     ) {
-//         &-#{$state}:hover {
-//             --color: #{ dark($value, 15) };
-//         }
-//     }
-// }

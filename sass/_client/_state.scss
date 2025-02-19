@@ -41,7 +41,8 @@
         danger:   light(color(danger), 70)
     );
 
-    $states: if($index, $state,
+    $states: if($index,
+        $state,
         map.merge(
             $state,
             (
@@ -111,7 +112,7 @@
 //         margin: 4px 3px;
 //         padding: 6px 10px;
 
-//         font-size: torem(15);
+//         font-size: rem(15);
 //         text-align: center;
 //     }
 

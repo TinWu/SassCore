@@ -34,28 +34,46 @@ body {
 }
 
 .container {
-    margin-inline: auto; // 橫式文字是左右
+    // #type1
+    @include static(container) {
+        margin-inline: auto; // 橫式文字是左右
 
-    @each $bk, $max-width in (
-        640px: 600px,
-        sm:    680px,
-        md:    920px,
-        lg:    1180px,
-        $wide: 1400px
-    ) {
-        @include mq($bk) {
-            max-width: $max-width;
+        @each $bk, $max-width in (
+            640px:  600px,
+            sm:     ($tablet - 88), // 680px,
+            md:     ($laptop - 104), // 920px,
+            lg:     ($desktop - 100), // 1180px,
+            1536px: ($wide - 16), //1536-16
+        ) {
+            @include mq($bk) {
+                max-width: $max-width;
 
-            @if $bk ==  'lg' {
-                &.is-small {
-                    max-width: 996px;
+                @if $bk ==  'lg' {
+                    &.is-small {
+                        max-width: 996px;
+                    }
                 }
             }
         }
+
+        @include mq-max(639) {
+            padding-inline: $gutter;
+        }
     }
-    @include mq-max(639) {
-        padding-inline: $gutter;
-    }
+
+    // #type2
+    // @include clearfix($ex);
+
+    // max-width: $max-width;
+    // margin-inline: auto;
+
+    // @if $gap {
+    //     @include static(gap, $ex) {
+    //         @include mq-max($max-width + ($gap*2)) {
+    //             padding-inline: $gap;
+    //         }
+    //     }
+    // }
 }
 
 

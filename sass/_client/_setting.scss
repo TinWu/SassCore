@@ -53,13 +53,13 @@ $input-placeholder-color:   #2d8d8f;
 // == util
 // -----------------------------------------------------------------
 $config:(
-    'spacing': (
-        '0\\.5':            2px,    // $spacer * 0.125,
-        '2\\.5':            10px,   // $spacer * 0.625,
-        '16':               64px,   // $spacer * 4,
-        '24':               96px,   // $spacer * 6,
-        '32':               128px,  // $spacer * 8,
-    ),
+    // 'spacing': (
+    //     '0\\.5':            2px,    // $spacer * 0.125,
+    //     '2\\.5':            10px,   // $spacer * 0.625,
+    //     '16':               64px,   // $spacer * 4,
+    //     '24':               96px,   // $spacer * 6,
+    //     '32':               128px,  // $spacer * 8,
+    // ),
     'font': (
         '3xl':              if($index, 28px, 30px),
         '4xl':              if($index, 32px, 36px),

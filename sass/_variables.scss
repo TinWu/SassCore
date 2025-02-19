@@ -1,4 +1,3 @@
-@charset "UTF-8";
 @use 'sass:map';
 
 // 參考 https://tailwindcss.com/docs/hover-focus-and-other-states
@@ -40,7 +39,8 @@ $font-size-h1:                $font-size-base * 2.25 !default;   // 36px
 $h1-margin:                   .67em 0 !default;
 
 // <hr>
-$hr-border-color:             color(muted) !default;
+$hr-border-color:             solid $border-color !default;
+$hr-border-width:             $border-width !default;
 $hr-margin:                   1.25em 0 !default;
 
 // <a>
@@ -51,7 +51,7 @@ $link-hover-decoration:       false !default;
 $link-transition:             0.2s, background 0.5s ease !default;
 
 // <button>
-$button-focus:                0 !default; // button:focus { outline: 0; }
+$button-focus:                0 !default; // => button:focus { outline: 0; }
 
 // <table>
 $table-color:                 false !default;
@@ -69,7 +69,6 @@ $table-hover-color:           #fffFD7 !default;
 
 // 斑馬紋條列式表格
 $table-striped-color:         #f8f9fa !default; // #f9f9f9
-$table-bg-active:             false !default;
 $table-striped-list:          'even' !default;   // even, odd
 
 // <form>
@@ -90,16 +89,17 @@ $input-border:                $input-border-width solid $input-border-color !def
 $input-radius:                $border-radius !default;
 $input-transition:            border-color ease-in-out $transition-duration, box-shadow ease-in-out $transition-duration !default;
 
-$shadow:                      0 0 #000 !default;
-$ring-offset-width:           .2rem !default; // 0px;
+$shadow:                      null !default; // 0 0 #000 !default;
+$ring-offset-width:           .2rem !default;
 $ring-color:                  rgba($component-active, .3) !default; // #1c64f2;
 
 $input-disabled-bg:           color(muted) !default;
 $input-placeholder-color:     lighten($input-color, 40) !default;
 
 // <select>
-$select-caret:                "<svg fill='#{$input-placeholder-color}' viewBox='-96 0 512 512' xmlns='http://www.w3.org/2000/svg'><path d='M160 96L256 208 64 208 160 96ZM64 304L256 304 160 416 64 304Z'/></svg>" !default;
+$select-caret:                escape-svg("<svg fill='#{$input-placeholder-color}' viewBox='-96 0 512 512' xmlns='http://www.w3.org/2000/svg'><path d='M160 96L256 208 64 208 160 96ZM64 304L256 304 160 416 64 304Z'/></svg>") !default;
 $select-seat-size:            right center/auto 18px !default;
+$select-pr:                   1.2em !default;
 
 // <label>
 $label-my:                    pdy($input-height, $input-font-size, $input-line-height) !default;
@@ -133,12 +133,12 @@ $config: map.deep-merge(
             '2xl':            $font-size-base * 1.5,    // 24px,
         ),
         'utils': (
-            'weight': (                         // => font-bold
+            'weight': (       // => font-bold
                 // 'thin':       100,
                 'normal':     400,
                 'bold':       700,
             ),
-            'leading': (        // => .leading-loose
+            'leading': (      // => .leading-loose
                 'none':       1,
                 'normal':     1.5,
                 'tight':      1.25,
@@ -165,22 +165,21 @@ $root: () !default;
 // -----------------------------------------------------------------
 $max-width:      1400px !default;
 $gutter:         1.5rem !default;
-$grid-columns:   12 !default;
 
 // # bootstrap https://getbootstrap.com/docs/5.0/layout/grid/#sass
 // # tailwindcss https://tailwindcss.com/docs/container
 
 // 參考其他framework: bootstrap | tailwindcss
-$mobile:      375px !default;
-$phone:       568px !default;
-$tablet:      768px !default;
-$laptop:      1024px !default;
-$desktop:     1280px !default;
-$wide:        1536px !default; // xl: xxl 1400_1320 | 2xl 1536
+$mobile:         375px !default;
+$phone:          568px !default;
+$tablet:         768px !default;
+$laptop:         1024px !default;
+$desktop:        1280px !default;
+$wide:           1536px !default; // xl: xxl 1400_1320 | 2xl 1536
 
 $breakpoints: (
-    xs:       $phone,   // xs: sm 576_540 | sm 640
-    sm:       $tablet,  // sm: md 768_720 | md 768
-    md:       $laptop,  // md: lg 992_960 | lg 1024
-    lg:       $desktop, // lg: xl 1200_1140 | xl 1280
+    xs:          $phone,   // xs: sm 576_540 | sm 640
+    sm:          $tablet,  // sm: md 768_720 | md 768
+    md:          $laptop,  // md: lg 992_960 | lg 1024
+    lg:          $desktop, // lg: xl 1200_1140 | xl 1280
 ) !default;

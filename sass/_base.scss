@@ -31,7 +31,7 @@ html {
 body {
     margin: 0 auto; // Remove the margin in all browsers.
 
-    background: $body-bg;
+    @if $body-bg { background: $body-bg; }
     color: $body-color; // var(--color);
     @if $body-letter-spacing { letter-spacing: $body-letter-spacing; }
 }
@@ -253,8 +253,8 @@ hr {
     height: 0; // 1
     color: inherit; // 2
 
-    border: 0 solid var(--border-color, #{$hr-border-color});
-    border-top-width: var(--border-width, 1px); //var(--hr-border, #{$hr-border}); // 3
+    border: 0 var(--border-color, #{$hr-border-color});
+    border-top-width: var(--border-width, #{$hr-border-width}); //var(--hr-border, #{$hr-border}); // 3
     margin: $hr-margin;
 }
 
@@ -288,17 +288,16 @@ a {
     //     'outline-offset':  1px,
     //     'outline':         3px solid dark(color(warning), 40)
     // );
-    // &:focus {
-    //     @if $link-focus {
-    //         @each $key, $value in $link-focus {
-    //             #{$key}: $value;
-    //         }
-    //     }
-    // }
+
+    &:focus {
+        @each $key, $value in get('focus.link') {
+            #{$key}: $value;
+        }
+    }
 
     &:not([href]):not([tabindex]) {
         &, &:hover, &:focus {
-            color: inherit;
+            --color: inherit;
 
             @if ($link-decoration != none) {
                 text-decoration: none;

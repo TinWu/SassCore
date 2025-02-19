@@ -20,18 +20,6 @@
     }
 }
 
-.hover\:text {
-    @include modifiers(
-        (
-            'primary:hover':        dark(color(), 15),
-            'info:hover':           dark(color(info), 15),
-            'warning:hover':        a11y(dark(color(warning), 15), #fff),
-            'danger:hover':         dark(color(danger), 15),
-        ),
-        '--color'
-    );
-}
-
 .bg {
     @each $state, $value in (
         primary:        color(),
@@ -47,15 +35,26 @@
     }
 }
 
+.hover\:text {
+    @include modifiers(
+        (
+            'primary:hover':        dark(color(), 15),
+            'info:hover':           dark(color(info), 15),
+            'warning:hover':        a11y(dark(color(warning), 15), #fff),
+            'danger:hover':         dark(color(danger), 15),
+        ),
+        '--color'
+    );
+}
 
 .border {
     @each $key, $value in (
         'muted':       dark(color(muted), 4),
     ) {
         &-#{$key} {
-            // --border-color: #{ $value };
+            --border-color: #{ $value };
             // border-color: var(--border-color);
-            border-color: $value;
+            // border-color: $value;
         }
     }
 }
@@ -102,6 +101,6 @@ em[class*='label'] {
     $color: light(color(muted), 45);
 
     background: $color;
-    color: dark($color, 50);
     border: 1px solid dark($color, 7.5);
+    color: dark($color, 50);
 }

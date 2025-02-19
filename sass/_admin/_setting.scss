@@ -22,8 +22,8 @@ $colors: (
     muted:                  #f8f9fa   // 更深灰 #f2f3f4
 );
 
-$border-color:              dark(color(muted), 8);
-$component-active:          color(success);
+$border-color:              function.dark(function.color(muted), 8);
+$component-active:          function.color(success);
 
 
 // == ref: base> custom
@@ -32,27 +32,27 @@ $component-active:          color(success);
 $font-family-sp:            'Roboto'; // https://fonts.google.com/
 
 // <body>
-$body-bg:                   color(muted);
+$body-bg:                   function.color(muted);
 
 // <hr>
-$hr-border-color:           dark(color(muted), 6) !default;
+$hr-border-color:           function.dark(function.color(muted), 6) !default;
 
 // <a>
-$link-color:                color(secondary);
-$link-hover-color:          color(success);
+$link-color:                function.color(secondary);
+$link-hover-color:          function.color(success);
 
 // <table>
 $cell-padding:              .52em .42em;
-$table-striped-color:       light(color(muted), 25);
-$table-hover-color:         dark(color(muted), 3); //light(#FAF0BB, 13)
-$table-border-color:        light(color(secondary), 91);
+$table-striped-color:       function.light(function.color(muted), 25);
+$table-hover-color:         function.dark(function.color(muted), 3); //light(#FAF0BB, 13)
+$table-border-color:        function.light(function.color(secondary), 91);
 
 // <form>
 $input-height:              if($index, 40px, 32px);
 $input-radius:              false;
-$input-border-color:        dark(color(muted), 12);
-$input-disabled-bg:         light(color(muted), 80);
-$input-placeholder-color:   light(#000, 70);
+$input-border-color:        function.dark(function.color(muted), 12);
+$input-disabled-bg:         function.light(function.color(muted), 80);
+$input-placeholder-color:   function.light(#000, 70);
 $input-inner-shadow:        inset 0 1px 2px rgba(#000,.075);
 
 
@@ -78,7 +78,7 @@ $sidebar-width:         if($index, 300px, 220px);
 $sidebar-bg:            #fff;
 
 $sidenav-color:         #3C4B54;
-$sidenav-icon-color:    desaturate(dark($sidebar-bg, 20), 40);
+$sidenav-icon-color:    color.adjust(function.dark($sidebar-bg, 20), $saturation: -40);
 $sidenav-pdx:           12px;
 $sidenav-icon:          17px;
 

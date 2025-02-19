@@ -32,7 +32,7 @@
     $padding-y: pdy($height, $font-size, $line-height);
 
     @if $font-size != $font-size-base {
-        @include torem('font-size', $font-size);
+        @include rem('font-size', $font-size);
     }
     @if $line-height != $line-height-base {
         line-height: $line-height;

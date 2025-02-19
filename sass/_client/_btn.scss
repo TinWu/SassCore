@@ -17,8 +17,9 @@ input.btn {
         opacity: .65;
     }
 
-    background-color: var(--bg, #{color(info)});
     color: var(--color, #fff);
+
+    background-color: var(--bg, #{color(info)});
     outline: 1px solid rgba(#fff, 0.25);
     outline-offset: -12px;
     padding: var(--padding, 24px 16px);
@@ -28,129 +29,25 @@ input.btn {
         --bg: #{color(warning)};
         --color: #{color(secondary)};
 
+        box-shadow: 0 0 8px rgba(#000, 0.3);
         outline-offset: 10px;
         outline-width: 2px;
-        box-shadow: 0 0 8px rgba(#000, 0.3);
     }
 
     @if not $index {
-        &.is-white {
+        &.reverse {
             --bg: #fff;
             --color: #{color(secondary)};
+
             outline-color: $border-color;
 
             &:hover {
                 --bg: #{color(danger)};
                 --color: #fff;
+
                 outline-color: rgba(#fff, 0.3);
             }
         }
     }
 }
 
-
-// reset default value
-// button[class*="hover-"] {
-//     padding: 0;
-//     text-align: inherit;
-//     transition: $transition-duration;
-// }
-
-// # hover effect
-
-
-
-
-
-// .hover\:underline {
-//     color: currentColor;
-//     position: relative;
-
-//     @include el(before) {
-//         border-top: 1px solid currentColor;
-//         width: 100%;
-
-//         position: absolute;
-//         bottom: -2px;
-//         right: 0;
-//         transform: scaleX(0);
-//         transition: .5s;
-//     }
-
-//     &:hover,
-//     &:active {
-//         &::before {
-//             transform: scaleX(1);
-//         }
-//     }
-// }
-
-// .link-underline {
-//     position: relative;
-//     z-index: 2;
-
-//     @include el(before) {
-//         border-top: 0.62em solid light(color(warning), 40);
-//         width: 102%;
-
-//         position: absolute;
-//         bottom: -1px;
-//         left: -1%;
-//         // right: 0;
-//         // transform: scaleX(0);
-//         transition: .5s;
-//         z-index: -1;
-//     }
-
-//     &:hover,
-//     &:active {
-//         &::before {
-//             // transform: scaleX(1);
-//             border-width: 2px;
-//         }
-//     }
-// }
-
-// .hover\:figure-outlink {
-//     position: relative;
-
-//     @include el(before) {
-//         --bg-outlink: #{escape-svg("<svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' clip-rule='evenodd' d='M9.17197 18.3639C9.75776 17.7781 10.7075 17.7781 11.2933 18.3639C11.8791 18.9497 11.8791 19.8994 11.2933 20.4852L9.87908 21.8994C7.73119 24.0473 4.24879 24.0473 2.1009 21.8994C-0.0469807 19.7515 -0.0469807 16.2691 2.1009 14.1212L7.05065 9.17148C9.19853 7.0236 12.6809 7.0236 14.8288 9.17148C15.4146 9.75727 15.4146 10.707 14.8288 11.2928C14.243 11.8786 13.2933 11.8786 12.7075 11.2928C11.7312 10.3165 10.1483 10.3165 9.17197 11.2928L4.22222 16.2425C3.24591 17.2189 3.24591 18.8018 4.22222 19.7781C5.19853 20.7544 6.78145 20.7544 7.75776 19.7781L9.17197 18.3639ZM14.8288 5.63595C14.243 6.22174 13.2933 6.22174 12.7075 5.63595C12.1217 5.05016 12.1217 4.10041 12.7075 3.51463L14.1217 2.10041C16.2696 -0.047469 19.752 -0.047469 21.8999 2.10041C24.0478 4.2483 24.0478 7.73071 21.8999 9.87859L16.9501 14.8283C14.8023 16.9762 11.3199 16.9762 9.17197 14.8283C8.58618 14.2425 8.58618 13.2928 9.17197 12.707C9.75776 12.1212 10.7075 12.1212 11.2933 12.707C12.2696 13.6833 13.8525 13.6833 14.8288 12.707L19.7786 7.75727C20.7549 6.78096 20.7549 5.19805 19.7786 4.22174C18.8023 3.24542 17.2193 3.24542 16.243 4.22174L14.8288 5.63595Z' fill='#ffffff'/></svg>")};
-
-//         background: rgba(#111, 0.4) var(--bg-outlink) no-repeat center/58%;
-//         border-radius: 50%;
-
-//         pointer-events: none;  // for <a> use
-//         width: var(--bg-size, 3rem);
-//         height: var(--bg-size, 3rem);
-//         transition: 1s;
-//         z-index: 1;
-
-//         @include center;
-//     }
-
-//     &.has-caption::before {
-//         top: 33%;
-//     }
-
-//     &.player::before {
-//         --bg-outlink: #{escape-svg("<svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M21.4086 9.35258C23.5305 10.5065 23.5305 13.4935 21.4086 14.6474L8.59662 21.6145C6.53435 22.736 4 21.2763 4 18.9671L4 5.0329C4 2.72368 6.53435 1.26402 8.59661 2.38548L21.4086 9.35258Z' fill='#ffffff'/> </svg>")};
-//         --bg-size: 5rem;
-//     }
-
-//     img {
-//         transition: 0.5s ease-out 0.3s;
-//     }
-
-//     &:hover {
-//         img {
-//             filter: hue-rotate(6deg) brightness(.7);
-//         }
-
-//         &::before {
-//             backdrop-filter: saturate(2);
-//             background-color: rgba(color(warning), 0.6);
-//             transform: translate(-50%, -50%) scale(1.1); //先置中在放大
-//         }
-//     }
-// }

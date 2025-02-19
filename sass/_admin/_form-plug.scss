@@ -14,13 +14,16 @@ $controls-size:            $input-height - 8;
 
 // comm
 .form-check {
-    cursor: pointer;
     display: inline-block;
     vertical-align: middle;
 
     // min-height: $controls-size;
     padding-left: $controls-size + 2;
     position: relative;
+
+    &:not(.disabled) {
+        cursor: pointer;
+    }
 
     .field & {
         margin: 5px 10px 5px 0;

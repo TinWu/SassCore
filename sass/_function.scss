@@ -57,7 +57,11 @@
 }
 
 // to rem
-@function torem($value, $decimal: 2) {
+@function rem($value, $decimal: 2) {
+    @if $value == null or type-of($value) != 'number' or unit($value) == 'undefined' {
+        @return 0;
+    }
+
     @if unit($value) == px or unitless($value) {
         @if $value < 7 and $value > -7 {
             @return if(unitless($value), $value * 1px, $value);

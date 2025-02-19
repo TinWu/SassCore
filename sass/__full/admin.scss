@@ -52,7 +52,7 @@ $user-state-height: 45px;
 
     h2 {
         @extend .mb-10;
-        @include torem('font-size', 28);
+        @include rem('font-size', 28);
     }
 
     small {

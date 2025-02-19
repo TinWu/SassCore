@@ -1,45 +1,4 @@
-grid@charset "UTF-8";
-@use 'sass:math';
-
-$flexs: (
-    // 母元素
-    'flex': (
-        'wrap':     wrap,    // 子元素換行
-        'nowrap':   nowrap,  // 子元素不換行
-    ),
-
-    // 主軸(水平)
-    // justify-content: flex-start|flex-end|center|space-between|space-around|initial|inherit
-    'justify': (
-        'start':    flex-start,
-        'end':      flex-end,
-        'center':   center,
-        'between':  space-between,
-        'evenly':   space-evenly,
-    ),
-
-    // 副軸(垂直)
-    // align-items: stretch|center|flex-start|flex-end|baseline|initial|inherit
-    'items': (
-        'start':    flex-start,
-        'end':      flex-end,
-        'center':   center,
-        'stretch':  stretch,
-    ),
-
-    // 子元素對齊
-    'self': (
-        'start':    flex-start,
-        'center':   center,
-    ),
-
-    // 子元素尺寸
-    'size': (
-        '1':        1 1 0%,  // 占滿剩餘空間
-        'auto':     1 1 auto,
-        'none':     none,
-    ),
-);
+@charset "UTF-8";
 
 $config: (
     'spacing': (
@@ -48,6 +7,45 @@ $config: (
         '16':       64px,   // $spacer * 4,
         '24':       96px,   // $spacer * 6,
         '32':       128px,  // $spacer * 8,
+    ),
+    'flexs': (
+        // 母元素
+        'flex': (
+            'wrap':     wrap,    // 子元素換行
+            'nowrap':   nowrap,  // 子元素不換行
+        ),
+
+        // 主軸(水平)
+        // justify-content: flex-start|flex-end|center|space-between|space-around|initial|inherit
+        'justify': (
+            'start':    flex-start,
+            'end':      flex-end,
+            'center':   center,
+            'between':  space-between,
+            'evenly':   space-evenly,
+        ),
+
+        // 副軸(垂直)
+        // align-items: stretch|center|flex-start|flex-end|baseline|initial|inherit
+        'items': (
+            'start':    flex-start,
+            'end':      flex-end,
+            'center':   center,
+            'stretch':  stretch,
+        ),
+
+        // 子元素對齊
+        'self': (
+            'start':    flex-start,
+            'center':   center,
+        ),
+
+        // 子元素尺寸
+        'size': (
+            '1':        1 1 0%,  // 占滿剩餘空間
+            'auto':     1 1 auto,
+            'none':     none,
+        ),
     ),
 );
 
@@ -66,31 +64,31 @@ $config: (
     display: flex;
 
     // flex-wrap, flex-1, flex-auto
-    @include modifiers(get(flex, $flexs), 'flex-wrap');
-    @include modifiers(get(size, $flexs), 'flex');
-}
-
-.flex-inline {
-    display: inline-flex;
+    @include modifiers(get('flexs.flex'), 'flex-wrap');
+    @include modifiers(get('flexs.size'), 'flex');
 }
 
 .flex-col {
     flex-direction: column;
 }
 
+.flex-inline {
+    display: inline-flex;
+}
+
 // 垂直
 .items {
-    @include modifiers(get(items, $flexs), 'align-items');
+    @include modifiers(get('flexs.items'), 'align-items');
 }
 
 // 水平
 .justify {
-    @include modifiers(get(justify, $flexs), 'justify-content');
+    @include modifiers(get('flexs.justify'), 'justify-content');
 }
 
 // 子元素對齊
 .self {
-    @include modifiers(get(self, $flexs), 'align-self');
+    @include modifiers(get('flexs.self'), 'align-self');
 }
 
 // 子元素尺寸
@@ -123,7 +121,7 @@ $config: (
     }
 }
 
-// # mt-0, p-5
+// # mt-0, p-5 **舊專案有順序問題，維持原樣不要搬到grid
 // src: https://gist.github.com/MatthewRDodds/8f171914ee6b826db29393f33229d509
 @each $abbrev, $prop in (m: margin, p: padding) {
     @each $size, $length in get('spacing') {
@@ -161,17 +159,16 @@ $config: (
 @each $prefix, $property in (x: left, y: top) {
     @each $size, $length in get(spacing) {
         .space-#{$prefix}-#{$size} > :not([hidden]) ~ :not([hidden]) {
-            margin-#{$property}: torem($length);
+            margin-#{$property}: rem($length);
         }
     }
 }
 
 // # row-col (2024 upt flex-basis)
-@include make-grid-columns;
+@include make-grid-columns(12);
 
 
-// # grid(5欄, space) *index要6
-// => grid grid-cols-3 gap-4
+// # grid(5欄, space) => grid grid-cols-3 gap-4
 @include make-cssgrid(
     6,
     (

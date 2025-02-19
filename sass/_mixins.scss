@@ -28,7 +28,8 @@ $placeholders-selectors: () !default;
         @at-root (without: media) {
             @extend %#{$selector};
         }
-    } @else {
+    }
+    @else {
         @content;
     }
 }
@@ -67,23 +68,6 @@ $placeholders-selectors: () !default;
             display: table;
             content: '';
             clear: both;
-        }
-    }
-}
-
-// == container(set width)
-// -----------------------------------------------------------------
-@mixin container($max-width: $max-width, $gap: $gutter, $ex: true) {
-    @include clearfix($ex);
-
-    max-width: $max-width;
-    margin-inline: auto;
-
-    @if $gap {
-        @include static(gap, $ex) {
-            @include mq-max($max-width + ($gap*2)) {
-                padding-inline: $gap;
-            }
         }
     }
 }
@@ -252,7 +236,7 @@ $placeholders-selectors: () !default;
     }
 }
 
-// == 用map產生cass https://gist.github.com/mattfelten/5c6ad6edb70c6ab10f5c377c21eda2f2
+// == 用map產生cass https://gist.github.com/sarahdayan/4d2cc04a636e8039f10a889a0e29fbd9
 // -----------------------------------------------------------------
 //
 // $spacing-map: (
@@ -269,14 +253,11 @@ $placeholders-selectors: () !default;
 //     );
 // }
 //
-@mixin modifiers($map, $attribute, $prefix: '-', $separator: '-', $base: 'base', $remove: null) {
+@mixin modifiers($map, $attribute, $prefix: '-', $separator: '-', $base: 'base') {
     @each $key, $value in $map {
-        @if($remove){
-            $key: str-replace($key, $remove, '');
-        }
         &#{if($key != $base, #{$prefix}#{$key}, '')} {
             @if type-of($value) == 'map' {
-                @include modifiers($value, $attribute, $prefix, $separator, $base, $remove);
+                @include modifiers($value, $attribute, $separator);
             }
             @else if type-of($attribute) == 'list' {
                 @each $a in $attribute {

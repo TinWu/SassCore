@@ -6,46 +6,79 @@
 // ------------------------------------------------------------
 @each $breakpoint, $value in $breakpoints {
     @include mq($breakpoint) {
+
+        .#{$breakpoint}\: {
+            // float => md:pull-left
+            @each $align in (left, right) {
+                &pull-#{$align} {
+                    float: $align;
+                }
+            }
+
+            @each $property, $size in get('font') {
+                &font-#{$property} {
+                    font-size: rem($size);
+                }
+            }
+
+            // => sm\:text-left
+            &text {
+                @include modifiers(get('utils.align'), 'text-align');
+            }
+
+            // 隱藏元件 => sm:hide
+            &hide {
+                display: none;
+            }
+
+            // 顯示元件 => sm:show
+            &show {
+                display: block;
+            }
+        }
+
         // float => md:pull-left
-        @each $align in (left, right) {
-            .#{$breakpoint}\:pull-#{$align} {
-                float: $align;
-            }
-        }
+        // @each $align in (left, right) {
+        //     .#{$breakpoint}\:pull-#{$align} {
+        //         float: $align;
+        //     }
+        // }
 
-        @each $property, $size in get('font') {
-            .#{$breakpoint}\:font-#{$property} {
-                font-size: torem($size);
-            }
-        }
+        // @each $property, $size in get('font') {
+        //     .#{$breakpoint}\:font-#{$property} {
+        //         font-size: rem($size);
+        //     }
+        // }
 
-        // alignment => md:text-left
-        @each $align in get('utils.align') {
-            .#{$breakpoint}\:text-#{$align} {
-                text-align: $align;
-            }
-        }
+        // // alignment => md:text-left
+        // @each $align in get('utils.align') {
+        //     .#{$breakpoint}\:text-#{$align} {
+        //         text-align: $align;
+        //     }
+        // }
 
-        // 隱藏元件 => sm:hide
-        .#{$breakpoint}\:hide {
-            display: none;
-        }
+        // // 隱藏元件 => sm:hide
+        // .#{$breakpoint}\:hide {
+        //     display: none;
+        // }
 
-        // 顯示元件 => sm:show
-        .#{$breakpoint}\:show {
-            display: block;
-        }
+        // // 顯示元件 => sm:show
+        // .#{$breakpoint}\:show {
+        //     display: block;
+        // }
     }
 
     @include mq-max($breakpoint) {
-        // 隱藏元件 => sm-max:hide
-        .#{$breakpoint}-max\:hide {
-            display: none;
-        }
+        .#{$breakpoint}-max\: {
+            // 隱藏元件 => sm-max:hide
+            &hide {
+                display: none;
+            }
 
-        // 顯示元件 => sm-max:show
-        .#{$breakpoint}-max\:show {
-            display: block;
+            // 顯示元件 => sm-max:show
+            &show {
+                display: block;
+            }
         }
     }
 }

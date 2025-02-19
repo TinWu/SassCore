@@ -1,5 +1,4 @@
-@charset "UTF-8";
-
+@use 'sass:math';
 
 // == grid
 // -----------------------------------------------------------------
@@ -11,35 +10,13 @@
 
     // if $gap 有值
     @if $gap {
-        // if 單位是px時轉換為百分比 else 都去單位
-        // $gap: if(unit($gap) == px, math.div($gap, $max-width), stripunit($gap)) * 0.5;
-
-        // if 無單位直接減
-        $width: if(unit($gap) == 'null',($width - $gap), calc($width - $gap));
+        $width: if(unitless($gap), $width - $gap, calc($width - $gap));
     }
 
     @return $width;
 }
 
-@mixin row-cols($size: false, $cols: $grid-columns) {
-    @if $size {
-        flex: 0 0 auto;
-        width: if($size == auto, auto, grid($size, $cols));
-    } @else {
-        // 占用剩下的所有空間
-        // flex: flex-grow flex-shrink flex-basis
-        // => flex-basis: 0; flex-grow: 1;
-        flex: 1 1 0%;
-        max-width: 100%;
-    }
-}
-
-@mixin make-grid-columns($columns: $grid-columns, $breaks: $breakpoints) {
-
-    // 全螢幕通用
-    .flex-col {
-        flex-direction: column;
-    }
+@mixin make-grid-columns($columns, $breaks: $breakpoints) {
 
     .row {
         // for flex
@@ -49,94 +26,112 @@
 
     // 占用剩下的所有空間
     .col {
-        @include row-cols;
+        flex: 1 1 0%;
+        max-width: 100%;
+    }
+
+    %columns {
+        flex: 0 0 auto;
     }
 
     @for $i from 1 through $columns {
         .col-#{$i} {
-            @include row-cols($i);
+            @extend %columns;
+
+            width: grid($i, $columns);
         }
     }
 
     @each $breakpoint, $value in $breaks {
 
         @include mq($value) {
-            .#{$breakpoint}\:row {
-                display: flex;
-                flex-wrap: wrap;
-            }
-
-            .#{$breakpoint}\:flex-col {
-                flex-direction: column;
-            }
-
-            .#{$breakpoint}\:col {
-                @include row-cols;
-            }
-
-            .#{$breakpoint}\:col-auto {
-                @include row-cols(auto);
-            }
-
-            // .sm:col-1 => width: 1/12
-            @for $i from 1 through $columns {
-                .#{$breakpoint}\:col-#{$i} {
-                    @include row-cols($i);
+            .#{$breakpoint}\: {
+                &flex {
+                    display: flex;
+                    @include modifiers(get('flexs.size'), 'flex');
                 }
-            }
 
-            // 2024 upt
-            .#{$breakpoint}\:flex {
-                display: flex;
-                @include modifiers(get(size, $flexs), 'flex');
-            }
+                // 不縮小
+                &shrink-0 {
+                    flex-shrink: 0;
+                }
 
-            // 不縮小
-            .#{$breakpoint}\:shrink-0 {
-                flex-shrink: 0;
-            }
+                // @each $cols in (2, 3, 4, 5) { => 2, 3, 4 在12格都有
+                @each $cols in (5) {
+                    @for $i from 1 through $cols {
 
-            // @each $cols in (2, 3, 4, 5) { => 2, 3, 4 在12格都有
-            @each $cols in (5) {
-                @for $i from 1 through $cols {
+                        @if $i < $cols {
+                            // .sm:basis-1/2 => flex-basis: 1/2
+                            &basis-#{$i}\/#{$cols} {
+                                flex-basis: grid($i, $cols);
+                            }
 
-                    @if $i < $cols {
-                        // .sm:basis-1/2 => flex-basis: 1/2
-                        .#{$breakpoint}\:basis-#{$i}\/#{$cols} {
-                            flex-basis: grid($i, $cols);
-                        }
-
-                        // .sm:width-4/5 => width: 4/5
-                        .#{$breakpoint}\:w-#{$i}\/#{$cols} {
-                            width: grid($i, $cols);
+                            // .sm:width-4/5 => width: 4/5
+                            &w-#{$i}\/#{$cols} {
+                                width: grid($i, $cols);
+                            }
                         }
                     }
                 }
-            }
 
-            // # space
-            // spacing => md:m-0
-            @each $abbrev, $prop in (m: margin, p: padding) {
-                @each $size, $length in get('spacing') {
-                    .#{$breakpoint}\:#{$abbrev}-#{$size} { #{$prop}: $length; }
+                // # space
+                // spacing => md:m-0
+                @each $abbrev, $prop in (m: margin, p: padding) {
+                    @each $size, $length in get('spacing') {
+                        &#{$abbrev}-#{$size} { #{$prop}: $length; }
 
-                    @each $infix, $property in get('utils.spacers') {
-                        .#{$breakpoint}\:#{$abbrev}#{$infix}-#{$size} {
-                            #{$prop}-#{$property}: $length;
+                        @each $infix, $property in get('utils.spacers') {
+                            &#{$abbrev}#{$infix}-#{$size} {
+                                #{$prop}-#{$property}: $length;
 
-                            @if $infix == x { #{$prop}-right: $length; }
-                            @if $infix == y { #{$prop}-bottom: $length; }
+                                @if $infix == x { #{$prop}-right: $length; }
+                                @if $infix == y { #{$prop}-bottom: $length; }
+                            }
                         }
                     }
                 }
-            }
 
-            // .space-x-0 > :not([hidden]) ~ :not([hidden]) => margin-left: 0px
-            @each $prefix, $property in (x: left, y: top) {
-                @each $size, $length in get(spacing) {
-                    .#{$breakpoint}\:space-#{$prefix}-#{$size} > :not([hidden]) ~ :not([hidden]) {
-                        margin-#{$property}: torem($length);
+                // .space-x-0 > :not([hidden]) ~ :not([hidden]) => margin-left: 0px
+                @each $prefix, $property in (x: left, y: top) {
+                    @each $size, $length in get(spacing) {
+                        &space-#{$prefix}-#{$size} > :not([hidden]) ~ :not([hidden]) {
+                            margin-#{$property}: rem($length);
+                        }
                     }
+                }
+
+                &row {
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+
+                &flex-col {
+                    flex-direction: column;
+                }
+
+                &col {
+                    flex: 1 1 0%;
+                    max-width: 100%;
+                }
+
+                &col-auto {
+                    width: auto;
+                }
+
+                $cols: ();
+                // .sm:col-1 => width: 1/12
+                @for $i from 1 through $columns {
+                    $cols: $cols, '&col-#{$i}';
+
+                    &col-#{$i} {
+                        // @include row-cols($i);
+                        width: grid($i, $columns);
+                    }
+                }
+
+                &col-auto,
+                #{$cols} {
+                    flex: 0 0 auto;
                 }
             }
         }
@@ -158,40 +153,42 @@
     // 間距
     @each $class, $value in $gap {
         .gap-#{$class} {
-            gap: torem($value);
+            gap: rem($value);
         }
         .gap-x-#{$class} {
-            column-gap: torem($value);
+            column-gap: rem($value);
         }
         .gap-y-#{$class} {
-            row-gap: torem($value);
+            row-gap: rem($value);
         }
     }
 
     @each $breakpoint, $value in $breaks {
 
         @include mq($value) {
-            .#{$breakpoint}\:grid {
-                display: grid;
-            }
-
-            @for $i from 1 through $columns {
-                .#{$breakpoint}\:grid-cols-#{$i} {
-                    grid-template-columns: repeat($i, minmax(0, 1fr));
-                }
-            }
-
-            @each $class, $value in $gap {
-                .#{$breakpoint}\:gap-#{$class} {
-                    gap: torem($value);
+            .#{$breakpoint}\: {
+                &grid {
+                    display: grid;
                 }
 
-                .#{$breakpoint}\:gap-x-#{$class} {
-                    column-gap: torem($value);
+                @for $i from 1 through $columns {
+                    &grid-cols-#{$i} {
+                        grid-template-columns: repeat($i, minmax(0, 1fr));
+                    }
                 }
 
-                .#{$breakpoint}\:gap-y-#{$class} {
-                    row-gap: torem($value);
+                @each $class, $value in $gap {
+                    &gap-#{$class} {
+                        gap: rem($value);
+                    }
+
+                    &gap-x-#{$class} {
+                        column-gap: rem($value);
+                    }
+
+                    &gap-y-#{$class} {
+                        row-gap: rem($value);
+                    }
                 }
             }
         }

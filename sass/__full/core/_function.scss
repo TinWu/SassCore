@@ -149,7 +149,7 @@
 }
 
 // to rem
-@function torem($number, $base: $font-size-base) {
+@function rem($number, $base: $font-size-base) {
     @if unit($number) == px or unitless($number) {
         $math: math.div( stripunit($number), stripunit($base) ) * 1rem;
         $number: if($number > 0, decimal($math, 2), 0);

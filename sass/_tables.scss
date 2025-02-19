@@ -19,7 +19,7 @@ table {
 th,
 td,
 thead, tbody:not(:last-child) {
-    border: $table-border-style var(--border-color, $table-border-color);
+    border: $table-border-style var(--border-color, #{$table-border-color});
     border-width: var(--cell-bordered);
 }
 
@@ -41,10 +41,10 @@ thead, tbody:not(:last-child) {
 }
 
 
-// plugin
+// # plugin
 // 四邊框線
 .table-bordered {
-    border: var(--border-width, $border-width) $table-border-style var(--border-color, $table-border-color);
+    border: var(--border-width, #{$border-width}) $table-border-style var(--border-color, #{$table-border-color});
 
     th, td {
         --cell-bordered: #{$border-width};
@@ -55,7 +55,8 @@ thead, tbody:not(:last-child) {
 // 斑馬紋條 (必須在變色上面)
 @if $table-striped-color {
     .table-striped {
-        :not(thead) > tr, &-tbody tbody {
+        :not(thead) > tr,
+        &-tbody tbody {
             &:nth-child(#{$table-striped-list}) {
                 background-color: $table-striped-color;
             }
@@ -69,12 +70,17 @@ thead, tbody:not(:last-child) {
         tr, th, td {
             transition: $transition-duration;
         }
+
         tbody {
-            &:hover > tr > [rowspan],
-            > tr:not(.nohover):hover {
-                background-color: $table-hover-color;
+            &:hover > tr > [rowspan] {
+                @include static(hoverbg) {
+                    background-color: $table-hover-color;
+                }
             }
+
             > tr:not(.nohover):hover {
+                @include static(hoverbg);
+
                 th, td {
                     background-color: transparent !important;
                 }

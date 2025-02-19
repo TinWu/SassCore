@@ -7,7 +7,6 @@
 .clearfix            { @include clearfix; }              // 清除浮動: 後面元素不會跟著浮動+母元素會被撐開
 .pull-left           { float: left; }                    // 靠左浮動
 .pull-right          { float: right; }                   // 靠右浮動
-
 .clear               { clear: both; }                    // 清除浮動: 讓後面的元素不會跟著浮動
 
 // 元素類型
@@ -32,24 +31,24 @@
     max-width: 100%;
 }
 
-.transition          { transition: $transition-duration; }
-.overflow-hidden     { overflow: hidden; }
 .cursor-not-allowed  { cursor: not-allowed; } // 禁用符號
 .cursor-pointer      { cursor: pointer; }
 .cursor-help         { cursor: help; }
+.overflow-hidden     { overflow: hidden; }
+.transition          { transition: $transition-duration; }
 
 
 // == text
 // -------------------------------------------------------------------------------
 
-@each $property, $size in get('font') {
-    .font-#{$property} {
-        font-size: torem($size);
-    }
-}
-
-// => .font-bold { font-weight: 700; }
 .font {
+    @each $property, $size in get('font') {
+        &-#{$property} {
+            font-size: if(type-of($size) == number, rem($size), $size);
+        }
+    }
+
+    // => .font-bold { font-weight: 700; }
     @include modifiers(get('utils.weight'), 'font-weight');
 }
 
@@ -61,7 +60,7 @@
     font-style: normal;
 }
 
-// => .leading-loose { line-height: 2 }
+// => .leading-normal { line-height: 1.5; }
 .leading {
     @include modifiers(get('utils.leading'), 'line-height');
 }
@@ -77,10 +76,10 @@
 // == default color
 // -------------------------------------------------------------------------------
 %text-white {
-    color: var(--color, #fff);
+    color: #fff;
 }
 %bg-white {
-    background-color: var(--bg, #fff);
+    background-color: #fff;
 }
 
 .text-white {
@@ -112,6 +111,7 @@
     list-style: none;
     padding-left: 0;
 }
+
 %list-inline {
     > li {
         display: inline-block;
@@ -123,6 +123,7 @@
 }
 
 .list-unstyled { @extend %list-unstyled; }
+
 .list-inline   { @extend %list-unstyled, %list-inline; }
 
 
@@ -130,6 +131,7 @@
 // ------------------------------------------------------------
 .border {
     border-width: var(--border-width, 1px);
+    // 下次用這個試 border: var(--border-width, 1px) var(--border-solid, solid) var(--border-color);
 
     // => border-0
     @include modifiers(
